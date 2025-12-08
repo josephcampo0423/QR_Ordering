@@ -3,21 +3,35 @@
 <head>
   <title>Your Cart</title>
   <script>
-    function loadCart() {
-      let cart = JSON.parse(localStorage.getItem("cart")) || [];
-      let list = document.getElementById("cart-items");
-      let total = 0;
+  function loadCart() {
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    let list = document.getElementById("cart-items");
+    list.innerHTML = "";  // Clear previous list items
+    let total = 0;
 
-      cart.forEach(item => {
-        let li = document.createElement("li");
-        li.textContent = item.name + " - $" + item.price.toFixed(2);
-        list.appendChild(li);
-        total += item.price;
-      });
+    cart.forEach((item, i) => {
+      let li = document.createElement("li");
+      li.textContent = item.name + " - $" + item.price.toFixed(2) + " ";
+      let btn = document.createElement("button");
+      btn.textContent = "Remove";
+      btn.onclick = function() {
+        removeItem(i);
+      };
+      li.appendChild(btn);
+      list.appendChild(li);
+      total += item.price;
+    });
 
-      document.getElementById("total").textContent = total.toFixed(2);
-    }
-  </script>
+    document.getElementById("total").textContent = total.toFixed(2);
+  }
+
+  function removeItem(index) {
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    cart.splice(index, 1);  // Remove one item at position index
+    localStorage.setItem("cart", JSON.stringify(cart));
+    loadCart();
+  }
+</script>
 </head>
 
 <body onload="loadCart()">
