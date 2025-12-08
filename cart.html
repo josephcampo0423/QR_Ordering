@@ -2,6 +2,23 @@
 <html>
 <head>
   <title>Your Cart</title>
+  <style>
+    .remove-btn {
+      margin-left: 15px;
+      color: white;
+      background: #d9534f;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 3px;
+      cursor: pointer;
+    }
+    .remove-btn:hover {
+      background: #c9302c;
+    }
+    .cart-controls {
+      margin-top: 20px;
+    }
+  </style>
   <script>
   function loadCart() {
     let cart = JSON.parse(localStorage.getItem("cart")) || [];
@@ -11,9 +28,10 @@
 
     cart.forEach((item, i) => {
       let li = document.createElement("li");
-      li.textContent = item.name + " - $" + item.price.toFixed(2) + " ";
+      li.textContent = item.name + " - $" + item.price.toFixed(2);
       let btn = document.createElement("button");
       btn.textContent = "Remove";
+      btn.className = "remove-btn";
       btn.onclick = function() {
         removeItem(i);
       };
@@ -31,6 +49,11 @@
     localStorage.setItem("cart", JSON.stringify(cart));
     loadCart();
   }
+
+  function clearCart() {
+    localStorage.removeItem("cart");
+    loadCart();
+  }
 </script>
 </head>
 
@@ -41,9 +64,9 @@
 
   <h3>Total: $<span id="total">0.00</span></h3>
 
-  <br>
-  <a href="menu.html">
-    <button>Back to Menu</button>
-  </a>
+  <div class="cart-controls">
+    <button onclick="clearCart()">Clear Cart</button>
+    <a href="menu.html"><button>Back to Menu</button></a>
+  </div>
 </body>
 </html>
