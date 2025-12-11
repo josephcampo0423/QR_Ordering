@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Mingle Bistro — Sharing Plates</title>
+
+<style>
+:root{
+  --gold:#D4AF37;
+  --bg:#0f0f0f;
+  --card:#151515;
+  --muted:#bfbfbf;
+  --glass-border: rgba(212,175,55,0.16);
+  --text:#ffffff;
+  --option-bg: rgba(255,255,255,0.02);
+  --option-border: rgba(255,255,255,0.04);
+}
+
+/* Reset / Base */
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+
+/* Top header - centered */
+.top-header{
+  padding:20px 16px 10px 16px;
+  border-bottom:1px solid rgba(255,255,255,0.03);
+  background:linear-gradient(180deg, rgba(0,0,0,0.02), transparent);
+  text-align:center;
+}
+.restaurant-name{
+  font-size:26px;
+  font-weight:900;
+  color:var(--gold);
+  line-height:1;
+  letter-spacing:0.6px;
+}
+
+/* Container */
+.container{padding:12px 12px 140px 12px}
+
+/* Tabs (centered) */
+.tab-row{display:flex;gap:8px;overflow:auto;padding:12px 6px 6px;white-space:nowrap;justify-content:center}
+.tab{padding:10px 14px;border-radius:999px;border:1px solid rgba(255,255,255,0.03);color:var(--gold);background:transparent;cursor:pointer;font-weight:700;flex:0 0 auto}
+.tab.active{background:rgba(212,175,55,0.08)}
+
+/* Section title (inside tab content) */
+.section-title{color:var(--gold);font-weight:800;margin:6px 6px 12px 6px;font-size:16px;border-left:4px solid var(--gold);padding-left:10px}
+
+/* Grid */
+.grid{display:grid;grid-template-columns:1fr;gap:12px}
+@media(min-width:900px){ .grid{grid-template-columns:repeat(2,1fr)} }
+
+/* Item Card */
+.item-card{
+  background:var(--card);
+  padding:14px;
+  border-radius:12px;
+  box-shadow:0 8px 22px rgba(0,0,0,0.6);
+  cursor:pointer;
+  transition:transform .10s ease,box-shadow .12s ease;
+  border:1px solid rgba(255,255,255,0.02);
+}
+.item-card:hover{box-shadow:0 18px 36px rgba(0,0,0,0.55)}
+.item-card:active{transform:scale(.998)}
+.item-row{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.item-left{min-width:0}
+.item-title{font-weight:900;font-size:15px;white-space:normal;line-height:1.05}
+.item-desc{color:var(--muted);font-size:13px;margin-top:6px;white-space:normal}
+.price{color:#ddd;font-weight:800;min-width:54px;text-align:right}
+
+/* Modal backdrop & card */
+.modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.62);backdrop-filter:blur(6px);align-items:center;justify-content:center;z-index:120000;padding:18px}
+.modal-card{
+  width:clamp(340px,92vw,560px);
+  max-height:86vh;
+  background:linear-gradient(180deg, #0f0f0f, #0c0c0c);
+  border-radius:16px;padding:18px;border:1px solid var(--glass-border);overflow:auto;
+  box-shadow:0 22px 50px rgba(0,0,0,0.7);
+  transform:translateY(6px);opacity:0;transition:transform .20s ease,opacity .20s ease;
+}
+.modal-bg.show .modal-card{transform:translateY(0);opacity:1}
+
+/* modal header */
+.modal-title{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+.modal-title > div{flex:1;min-width:0}
+.modal-name{font-weight:900;color:var(--gold);font-size:18px;line-height:1.05}
+.modal-price{font-weight:800;color:#fff;font-size:14px;opacity:0.95;margin-top:6px}
+.modal-desc{color:var(--muted);margin-top:12px;font-size:14px;white-space:normal}
+
+/* fixed close button size (prevents stretching) */
+.modal-close-btn{
+  flex:0 0 auto;width:36px;height:36px;border-radius:50%;border:1px solid var(--gold);background:transparent;color:var(--gold);display:flex;align-items:center;justify-content:center;cursor:pointer;font-weight:700;font-size:15px;padding:0;
+}
+
+/* Option cards (premium) */
+.option-block{margin-top:12px}
+.option-cards{display:flex;gap:10px;flex-wrap:wrap}
+.option-card{
+  display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:12px;background:var(--option-bg);border:1px solid var(--option-border);cursor:pointer;min-width:120px;flex:0 0 auto;
+  transition:transform .12s ease,box-shadow .12s ease;
+}
+.option-card input{margin:0}
+.option-card .label-text{font-weight:700;color:#ddd;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.option-card .price-addon{font-weight:800;color:var(--gold);font-size:13px;white-space:nowrap;margin-left:6px}
+
+/* ensure very long addon text doesn't wrap and stays succinct */
+.option-card .label-text, .option-card .price-addon {max-width:180px;}
+
+/* textarea (special request) */
+textarea{width:100%;height:84px;border-radius:12px;border:1px solid rgba(255,255,255,0.06);background:rgba(0,0,0,0.35);padding:10px;color:#fff;font-size:14px;resize:none;outline:none;margin-top:8px}
+
+/* qty row */
+.qty-row{display:flex;align-items:center;gap:12px;margin-top:12px}
+.qty-btn{width:38px;height:38px;border-radius:10px;border:1px solid rgba(255,255,255,0.06);background:transparent;color:#fff;font-size:18px;display:flex;align-items:center;justify-content:center;cursor:pointer}
+.qty-val{min-width:36px;text-align:center;font-weight:800}
+
+/* Add + Cancel buttons */
+.add-row{margin-top:16px;text-align:center}
+.btn-pill{display:inline-block;width:100%;padding:12px 18px;border-radius:999px;text-align:center;background:transparent;color:var(--gold);border:1px solid var(--gold);font-weight:800;font-size:15px;cursor:pointer}
+.cancel-btn{display:block;margin:12px auto 0 auto;width:68%;padding:12px;border-radius:12px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);color:#ddd;font-weight:700;cursor:pointer}
+
+/* flying-clone (the miniature modal that will fly) */
+.flying-clone{
+  position:fixed;
+  z-index:130000;
+  pointer-events:none;
+  border-radius:12px;
+  overflow:hidden;
+  box-shadow:0 24px 60px rgba(0,0,0,0.7);
+  transform-origin:center center;
+  background:linear-gradient(180deg,#0e0e0e,#0b0b0b);
+}
+
+/* bottom pagination */
+.footer-pages{position:fixed;left:0;right:0;bottom:0;padding:10px;background:linear-gradient(180deg,rgba(0,0,0,0),#070707 20%);display:flex;justify-content:center;gap:8px;z-index:900}
+.page-num{padding:8px 12px;border-radius:8px;background:rgba(255,255,255,0.03);color:#ddd;border:1px solid rgba(255,255,255,0.03);font-weight:600}
+.page-num.current{background:var(--gold);color:#000;border-color:var(--gold)}
+
+/* premium cart bottom-right */
+#cartWrap{position:fixed;bottom:96px;right:18px;z-index:1000} /* raised above pagination */
+#cartBtn{
+  width:56px;height:56px;border-radius:14px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(212,175,55,0.02));
+  border:1px solid rgba(212,175,55,0.14);display:flex;align-items:center;justify-content:center;cursor:pointer;position:relative;
+  transition:transform .22s ease, box-shadow .22s ease;
+}
+#cartBtn:hover{transform:translateY(-3px);box-shadow:0 14px 30px rgba(0,0,0,0.45)}
+#cartBtn svg{width:30px;height:30px;stroke:var(--gold);fill:none;stroke-width:1.4}
+#cartBadge{position:absolute;top:-6px;right:-6px;background:#000;color:var(--gold);padding:5px 9px;border-radius:999px;font-weight:800;font-size:12px;display:none;min-width:20px;text-align:center}
+
+/* responsive */
+@media(max-width:420px){
+  .restaurant-name{font-size:20px}
+  #cartWrap{bottom:86px; right:14px}
+  #cartBtn{width:50px;height:50px}
+  .modal-card{width:92vw}
+  .option-card{min-width:100px}
+}
+</style>
+</head>
+<!-- PART 1 END - Now paste PART 2 (HTML body) exactly after this -->
