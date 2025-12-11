@@ -1,72 +1,394 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Your Cart</title>
-  <style>
-    .remove-btn {
-      margin-left: 15px;
-      color: white;
-      background: #d9534f;
-      border: none;
-      padding: 5px 10px;
-      border-radius: 3px;
-      cursor: pointer;
-    }
-    .remove-btn:hover {
-      background: #c9302c;
-    }
-    .cart-controls {
-      margin-top: 20px;
-    }
-  </style>
-  <script>
-  function loadCart() {
-    let cart = JSON.parse(localStorage.getItem("cart")) || [];
-    let list = document.getElementById("cart-items");
-    list.innerHTML = "";  // Clear previous list items
-    let total = 0;
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cart - Mingle Bistro</title>
 
-    cart.forEach((item, i) => {
-      let li = document.createElement("li");
-      li.textContent = item.name + " - $" + item.price.toFixed(2);
-      let btn = document.createElement("button");
-      btn.textContent = "Remove";
-      btn.className = "remove-btn";
-      btn.onclick = function() {
-        removeItem(i);
-      };
-      li.appendChild(btn);
-      list.appendChild(li);
-      total += item.price;
-    });
+<style>
+:root{
+  --bg:#000;
+  --gold:#D4AF37;
+  --text:#f2f2f2;
+}
 
-    document.getElementById("total").textContent = total.toFixed(2);
+body{
+  margin:0;
+  background:var(--bg);
+  font-family:Arial, sans-serif;
+  color:var(--text);
+  padding:18px;
+}
+
+.success-fade{
+  opacity:0;
+  transform:translateY(10px);
+  animation:successFadeIn .5s ease forwards;
+}
+
+@keyframes successFadeIn{
+  to{
+    opacity:1;
+    transform:translateY(0);
   }
+}
 
-  function removeItem(index) {
-    let cart = JSON.parse(localStorage.getItem("cart")) || [];
-    cart.splice(index, 1);  // Remove one item at position index
-    localStorage.setItem("cart", JSON.stringify(cart));
-    loadCart();
-  }
+/* -------------------- HEADER -------------------- */
+h1{
+  font-size:22px;
+  font-weight:800;
+  color:var(--gold);
+  margin-bottom:10px;
+}
 
-  function clearCart() {
-    localStorage.removeItem("cart");
-    loadCart();
+/* -------------------- CART ITEM -------------------- */
+.cart-item{
+  border:1px solid rgba(255,255,255,0.08);
+  background:rgba(18,18,18,0.55);
+  padding:14px;
+  border-radius:14px;
+  margin-bottom:14px;
+  opacity:0;
+  transform:translateY(12px);
+  animation:fadeSlide .45s ease forwards;
+}
+
+@keyframes fadeSlide{
+  to{
+    opacity:1;
+    transform:translateY(0);
   }
-</script>
+}
+
+.item-name{
+  font-size:17px;
+  font-weight:700;
+  color:var(--gold);
+}
+
+.item-request{
+  font-size:13px;
+  color:#ccc;
+  margin-top:3px;
+}
+
+/* -------------------- QUANTITY -------------------- */
+.qty-row{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-top:10px;
+}
+
+.qty-btn{
+  width:34px;
+  height:34px;
+  border-radius:50%;
+  border:1px solid var(--gold);
+  background:transparent;
+  color:var(--gold);
+  font-size:20px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  cursor:pointer;
+}
+
+.qty-number{
+  font-size:16px;
+  font-weight:700;
+}
+
+/* -------------------- BUTTONS -------------------- */
+.remove-btn{
+  margin-top:10px;
+  padding:8px;
+  border-radius:10px;
+  border:1px solid rgba(255,255,255,0.08);
+  background:rgba(40,0,0,0.4);
+  color:#ff8080;
+  font-size:14px;
+  cursor:pointer;
+}
+
+.place-btn,
+.back-btn{
+  width:100%;
+  padding:14px;
+  border-radius:50px;
+  border:1px solid var(--gold);
+  background:transparent;
+  color:var(--gold);
+  font-size:16px;
+  font-weight:700;
+  margin-top:18px;
+  cursor:pointer;
+}
+
+/* -------------------- LOADING MODAL -------------------- */
+#loadingOverlay{
+  position:fixed;
+  top:0; left:0; right:0; bottom:0;
+  background:rgba(0,0,0,0.75);
+  display:none;
+  justify-content:center;
+  align-items:center;
+  backdrop-filter:blur(3px);
+  z-index:999;
+}
+
+.loader{
+  border:4px solid rgba(212,175,55,0.2);
+  border-top:4px solid var(--gold);
+  border-radius:50%;
+  width:48px;
+  height:48px;
+  animation:spin 1s linear infinite;
+}
+
+@keyframes spin{
+  0% { transform:rotate(0deg); }
+  100% { transform:rotate(360deg); }
+}
+
+/* -------------------- SUCCESS PAGE -------------------- */
+#successPage{
+  display:none;
+  text-align:center;
+  padding-top:40px;
+}
+
+.success-title{
+  font-size:24px;
+  color:var(--gold);
+  font-weight:800;
+  margin-bottom:10px;
+}
+
+.success-msg{
+  color:#ddd;
+  font-size:16px;
+}
+
+.empty-text{
+  margin-top:40px;
+  color:#aaa;
+  font-size:15px;
+  text-align:center;
+}
+</style>
 </head>
 
-<body onload="loadCart()">
-  <h1>Your Cart</h1>
+<body>
 
-  <ul id="cart-items"></ul>
+<h1 id="tableLabel"></h1>
 
-  <h3>Total: $<span id="total">0.00</span></h3>
+<div id="cartContainer"></div>
 
-  <div class="cart-controls">
-    <button onclick="clearCart()">Clear Cart</button>
-    <a href="menu.html"><button>Back to Menu</button></a>
+<button class="back-btn" onclick="goBack()">← Back to Menu</button>
+<button onclick="continueOrdering()"
+  style="
+    width:100%; padding:14px; margin-top:12px;
+    border-radius:50px; border:1px solid rgba(255,255,255,0.15);
+    background:rgba(255,255,255,0.05); color:#ddd;
+    font-size:15px; font-weight:600; cursor:pointer;">
+  Continue Ordering
+</button>
+<button class="place-btn" onclick="placeOrder()">Place Order</button>
+
+<!-- Loading Animation -->
+<div id="loadingOverlay">
+  <div class="loader"></div>
+</div>
+
+<!-- Success Page -->
+<div id="successPage">
+  <div class="success-title">Order Sent!</div>
+
+  <div id="successDetails" 
+       style="margin-top:16px; text-align:left; color:#ddd; font-size:14px;">
   </div>
+
+  <button onclick="goBackAfterSuccess()"
+    style="
+      width:100%; padding:14px; margin-top:22px;
+      border-radius:50px; border:1px solid var(--gold);
+      background:transparent; color:var(--gold);
+      font-size:16px; font-weight:700; cursor:pointer;">
+    Back to Menu
+  </button>
+</div>
+
+<script>
+// -----------------------------
+// GET TABLE NUMBER FROM URL
+// -----------------------------
+function getTableNumber(){
+  const params = new URLSearchParams(window.location.search);
+  return params.get("table") || "Unknown";
+}
+
+function continueOrdering(){
+  const table = getTableNumber();
+  window.location.href = `sharing_plates.html?table=${table}`;
+}
+
+document.getElementById("tableLabel").textContent =
+  "Table " + getTableNumber() + " — Order Summary";
+
+// -----------------------------
+// CART FUNCTIONS
+// -----------------------------
+function getCart(){
+  return JSON.parse(localStorage.getItem("cart") || "[]");
+}
+
+function saveCart(c){
+  localStorage.setItem("cart", JSON.stringify(c));
+}
+
+function renderCart(){
+  const cart = getCart();
+  const container = document.getElementById("cartContainer");
+  container.innerHTML = "";
+
+  if(cart.length === 0){
+    container.innerHTML = `<div class="empty-text">Your cart is empty.</div>`;
+    return;
+  }
+
+  cart.forEach((item, index)=>{
+    const div = document.createElement("div");
+    div.className = "cart-item";
+
+    div.innerHTML = `
+      <div class="item-name">${item.name}</div>
+      ${item.request ? `<div class="item-request">Special: ${item.request}</div>` : ""}
+      
+      <div class="qty-row">
+        <button class="qty-btn" onclick="decreaseQty(${index})">-</button>
+        <div class="qty-number">${item.qty}</div>
+        <button class="qty-btn" onclick="increaseQty(${index})">+</button>
+      </div>
+
+      <button class="remove-btn" onclick="removeItem(${index})">Remove</button>
+    `;
+
+    container.appendChild(div);
+  });
+}
+
+// -----------------------------
+// QTY CONTROLS
+// -----------------------------
+function increaseQty(i){
+  const cart = getCart();
+  cart[i].qty++;
+  saveCart(cart);
+  renderCart();
+}
+
+function decreaseQty(i){
+  const cart = getCart();
+  if(cart[i].qty > 1){
+    cart[i].qty--;
+  }
+  saveCart(cart);
+  renderCart();
+}
+
+// -----------------------------
+// REMOVE ITEM
+// -----------------------------
+function removeItem(i){
+  const cart = getCart();
+  cart.splice(i,1);
+  saveCart(cart);
+  renderCart();
+}
+
+// -----------------------------
+// BACK TO MENU
+// -----------------------------
+function goBack(){
+  const table = getTableNumber();
+  window.location.href = `sharing_plates.html?table=${table}`;
+}
+
+// -----------------------------
+// PLACE ORDER (NO PRINT YET)
+// -----------------------------
+function placeOrder(){
+  const cart = getCart();
+  const table = getTableNumber();
+
+  if(cart.length === 0){
+    alert("Your cart is empty.");
+    return;
+  }
+
+  // Show loading
+  document.getElementById("loadingOverlay").style.display = "flex";
+
+  setTimeout(()=>{
+
+    // Build order summary
+    let summaryHTML = `
+      <div style="font-size:16px; color:var(--gold); font-weight:700;">
+        Table ${table}
+      </div>
+
+      <div style="margin-top:6px; font-size:13px; color:#bbb;">
+        ${new Date().toLocaleString()}
+      </div>
+
+      <div style="margin-top:16px; border-top:1px solid rgba(255,255,255,0.15); padding-top:10px;">
+    `;
+
+    cart.forEach(item=>{
+      summaryHTML += `
+        <div style="margin-bottom:14px;">
+          <div style="
+            font-size:15px; 
+            font-weight:700; 
+            color:var(--gold);
+            display:flex; 
+            justify-content:space-between;
+          ">
+            <span>${item.name}</span>
+            <span style="color:#fff;">× ${item.qty}</span>
+          </div>
+      `;
+    });
+
+    summaryHTML += `</div>`;
+    document.getElementById("successDetails").innerHTML =
+  `<div class="success-fade">${summaryHTML}</div>`;
+
+    // Switch views
+    document.getElementById("loadingOverlay").style.display = "none";
+    document.getElementById("cartContainer").style.display = "none";
+    document.querySelector(".back-btn").style.display = "none";
+    document.querySelector(".place-btn").style.display = "none";
+
+    document.getElementById("successPage").style.display = "block";
+
+    // Clear cart
+    localStorage.removeItem("cart");
+
+  }, 1500);
+}
+
+// -----------------------------
+// BACK TO MENU FROM SUCCESS PAGE
+// -----------------------------
+function goBackAfterSuccess(){
+  const table = getTableNumber();
+  window.location.href = `sharing_plates.html?table=${table}`;
+}
+
+renderCart();
+</script>
+
 </body>
 </html>
