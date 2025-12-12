@@ -111,14 +111,16 @@ body{
 
 /* remove button */
 .remove-btn{
-  border:1px solid var(--border);
+  border:none;
   background:transparent;
-  color:#ccc;
-  padding:8px 10px;
-  border-radius:8px;
-  font-weight:700;
+  padding:6px;
   cursor:pointer;
-  font-size:12px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.remove-btn svg{
+  pointer-events:none;
 }
 
 /* Price (small) */
@@ -337,9 +339,9 @@ function renderCart(){
     meta.className = "item-meta";
 
     const lines = [];
-    if(it.option) lines.push("Option: " + it.option);
+    if(it.prosciutto) lines.push("Option: " + it.prosciutto);
     if(it.fries) lines.push("Fries: " + it.fries);
-    if(it.spicy) lines.push("Spice: " + (it.spicy==="non-spicy" ? "Non-Spicy" : "Spicy"));
+    if(it.spicy) lines.push("Spice: " + (it.spicy === "non-spicy" ? "Non-Spicy" : "Spicy"));
     if(it.request) lines.push("Special: " + it.request);
 
     meta.textContent = lines.join("\n");
@@ -373,7 +375,18 @@ function renderCart(){
 
     const remove = document.createElement("button");
     remove.className = "remove-btn";
-    remove.textContent = "Remove";
+
+    remove.innerHTML = `
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+           stroke="var(--gold)" stroke-width="2" stroke-linecap="round"
+           stroke-linejoin="round">
+        <polyline points="3 6 5 6 21 6"></polyline>
+        <path d="M19 6l-1 14H6L5 6m5 0V4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2"></path>
+        <line x1="10" y1="11" x2="10" y2="17"></line>
+        <line x1="14" y1="11" x2="14" y2="17"></line>
+      </svg>
+    `;
+
     remove.onclick = ()=>removeItem(idx);
 
     qty.append(minus,val,plus,remove);
@@ -435,10 +448,10 @@ function placeOrder(){
       const meta = document.createElement("div");
       meta.className = "success-meta";
       const parts=[];
-      if(it.option) parts.push("Option: "+it.option);
-      if(it.fries) parts.push("Fries: "+it.fries);
-      if(it.spicy) parts.push("Spice: "+(it.spicy==="non-spicy"?"Non-Spicy":"Spicy"));
-      if(it.request) parts.push("Special: "+it.request);
+      if(it.prosciutto) parts.push("Option: " + it.prosciutto);
+      if(it.fries) parts.push("Fries: " + it.fries);
+      if(it.spicy) parts.push("Spice: " + (it.spicy === "non-spicy" ? "Non-Spicy" : "Spicy"));
+      if(it.request) parts.push("Special: " + it.request);
       meta.textContent = parts.join(" • ");
       list.appendChild(meta);
     }
