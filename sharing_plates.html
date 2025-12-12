@@ -560,6 +560,7 @@ let currentItem = null;
 
 function openItem(item){
   currentItem = item;
+  window._currentItem = item;
   document.getElementById('modalNamePrice').textContent = item.name;
   document.getElementById('modalPrice').textContent = "$" + item.price;
   document.getElementById('modalDesc').textContent = item.desc;
