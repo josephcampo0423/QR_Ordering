@@ -1,472 +1,312 @@
 <!doctype html>
-<html lang="en">
+<html>
 <head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Review Your Order — Mingle Bistro</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="utf-8">
+<title>Checkout — Mingle Bistro</title>
 
 <style>
 :root{
   --gold:#D4AF37;
-  --bg:#0e0e0e;
-  --card:#141414;
-  --muted:#bbbbbb;
-  --border:rgba(255,255,255,0.05);
+  --bg:#0f0f0f;
+  --card:#161616;
+  --muted:#d0d0d0;
+  --danger:#ff6464;
 }
 
-/* Base */
-*{box-sizing:border-box}
 body{
-  background:var(--bg);
   margin:0;
+  background:var(--bg);
   color:#fff;
-  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+  font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
 }
 
-/* HEADER */
 .header{
-  padding:18px 14px;
   text-align:center;
-  border-bottom:1px solid var(--border);
-}
-.header-title{
-  font-size:20px;
-  font-weight:800;
+  padding:20px 10px;
+  font-size:22px;
   color:var(--gold);
-  letter-spacing:0.3px;
-}
-
-/* Container */
-.container{padding:16px;max-width:850px;margin:0 auto;}
-
-/* Empty Cart */
-.empty{
-  padding:40px 12px;
-  text-align:center;
-  border:1px solid var(--border);
-  border-radius:12px;
-  background:rgba(255,255,255,0.02);
-}
-.empty .emoji{font-size:42px;margin-bottom:12px}
-.empty button{
-  padding:12px 18px;
-  border-radius:10px;
-  border:1px solid var(--gold);
-  background:var(--gold);
-  color:black;
   font-weight:800;
-  cursor:pointer;
+  letter-spacing:0.5px;
+  border-bottom:1px solid rgba(255,255,255,0.08);
 }
 
-/* Cart list */
+.container{
+  padding:14px;
+  max-width:700px;
+  margin:auto;
+}
+
+.section-title{
+  font-size:17px;
+  font-weight:700;
+  margin-bottom:14px;
+  color:var(--gold);
+}
+
 .cart-item{
   display:flex;
-  gap:12px;
+  justify-content:space-between;
   background:var(--card);
-  border:1px solid var(--border);
   padding:12px;
-  border-radius:10px;
-  margin-bottom:12px;
-}
-
-.item-left{flex:1}
-.item-name{font-size:15px;font-weight:800;color:#fff}
-.item-meta{color:var(--muted);font-size:13px;margin-top:6px;white-space:pre-line}
-
-/* Right column */
-.item-right{
-  display:flex;
-  flex-direction:column;
-  align-items:flex-end;
-  gap:6px;
-}
-
-/* Qty + remove row */
-.qty-row{
-  display:flex;
+  border-radius:12px;
+  margin-bottom:10px;
   align-items:center;
-  gap:6px;
 }
 
-/* Premium qty buttons */
-.qty-btn{
-  width:34px;
-  height:34px;
-  border-radius:10px;
-  border:1px solid var(--gold);
-  background:transparent;
-  color:var(--gold);
-  font-size:18px;
-  font-weight:800;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  cursor:pointer;
-}
-.qty-val{
-  min-width:28px;
-  text-align:center;
-  font-weight:800;
+.item-info{
+  flex:1;
+  padding-right:8px;
 }
 
-/* remove button */
-.remove-btn{
-  border:none;
-  background:transparent;
-  padding:6px;
-  cursor:pointer;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-}
-.remove-btn svg{
-  pointer-events:none;
+.item-name{
+  font-size:15px;
+  font-weight:700;
 }
 
-/* Price (small) */
-.item-price{
+.item-option{
   font-size:13px;
   color:var(--muted);
-  font-weight:800;
+  margin-top:4px;
 }
 
-/* Charges + totals */
+.item-req{
+  font-size:13px;
+  margin-top:6px;
+  color:#ccc;
+}
+
+.qty-box{
+  display:flex;
+  align-items:center;
+  gap:6px;
+}
+
+.qty-btn{
+  width:28px;
+  height:28px;
+  border-radius:6px;
+  border:1px solid rgba(255,255,255,0.2);
+  background:transparent;
+  color:#fff;
+  font-size:16px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  cursor:pointer;
+}
+
+.qty-val{
+  width:22px;
+  text-align:center;
+  font-weight:700;
+}
+
+.delete-btn{
+  background:transparent;
+  border:none;
+  color:var(--danger);
+  font-size:22px;
+  padding:0 4px;
+  cursor:pointer;
+}
+
 .summary-box{
-  margin-top:16px;
-  padding:14px;
-  border-radius:10px;
-  background:rgba(255,255,255,0.02);
-  border:1px solid var(--border);
+  background:var(--card);
+  padding:16px;
+  border-radius:12px;
+  margin-top:20px;
+  font-size:14px;
 }
 
-.summary-line{
+.summary-row{
   display:flex;
   justify-content:space-between;
-  padding:6px 0;
-  font-size:14px;
-  color:var(--muted);
-}
-.summary-line.total{
-  font-size:18px;
-  font-weight:900;
-  color:var(--gold);
+  margin-bottom:8px;
 }
 
-/* Buttons */
-.actions{
-  margin-top:18px;
-  text-align:center;
+.total{
+  font-size:18px;
+  font-weight:800;
+  color:var(--gold);
+  margin-top:10px;
+  border-top:1px solid rgba(255,255,255,0.1);
+  padding-top:10px;
 }
 
 .btn-primary{
   width:100%;
+  margin-top:20px;
   padding:14px;
+  border-radius:999px;
+  border:1px solid var(--gold);
   background:var(--gold);
   color:#000;
-  border:1px solid var(--gold);
-  border-radius:12px;
-  font-weight:900;
-  font-size:15px;
+  font-weight:800;
+  font-size:16px;
   cursor:pointer;
 }
 
 .btn-secondary{
-  margin-top:10px;
   width:100%;
+  margin-top:14px;
   padding:12px;
+  border-radius:999px;
+  border:1px solid var(--gold);
   background:transparent;
-  border:1px solid var(--border);
-  color:#ddd;
-  border-radius:12px;
+  color:var(--gold);
+  font-weight:700;
+  font-size:15px;
   cursor:pointer;
 }
 
-/* Success overlay */
+/* SUCCESS OVERLAY */
 #successOverlay{
   position:fixed;
   inset:0;
-  background:rgba(0,0,0,0.75);
+  background:rgba(0,0,0,0.85);
   display:none;
   justify-content:center;
   align-items:center;
-  padding:16px;
-  z-index:5000;
+  padding:20px;
+  z-index:9999;
 }
 
-.success-card{
+.success-box{
+  background:#141414;
+  padding:22px;
+  max-width:420px;
   width:100%;
-  max-width:520px;
-  background:#111;
-  border:1px solid var(--border);
-  border-radius:14px;
-  padding:18px;
+  border-radius:16px;
+  text-align:center;
+  border:1px solid rgba(255,255,255,0.1);
 }
 
-.order-title{
+.success-title{
   font-size:20px;
-  font-weight:900;
+  font-weight:800;
   color:var(--gold);
 }
-.order-time{font-size:13px;color:var(--muted);margin-top:4px}
 
-.success-item{
+.success-summary{
+  text-align:left;
+  font-size:14px;
   margin-top:12px;
-  display:flex;
-  justify-content:space-between;
   color:#ddd;
-}
-.success-meta{
-  color:var(--muted);
-  font-size:13px;
-  margin-left:4px;
-}
-
-/* Close buttons */
-.success-buttons{
-  margin-top:18px;
-  display:flex;
-  gap:10px;
-  justify-content:flex-end;
+  line-height:1.45;
 }
 </style>
 </head>
 <body>
 
-<div class="header">
-  <div class="header-title">Review Your Order</div>
-</div>
+<div class="header">Checkout</div>
 
 <div class="container">
 
-  <!-- EMPTY STATE -->
-  <div id="emptyState" class="empty" style="display:none;">
-    <div class="emoji">🛒</div>
-    <div style="font-weight:800;font-size:16px;margin-bottom:6px">Your basket is empty</div>
-    <button onclick="location.href='page1.html'">Continue Ordering</button>
-  </div>
-
-  <!-- CART ITEMS -->
   <div id="cartList"></div>
 
-  <!-- SUMMARY -->
-  <div id="summaryBox" class="summary-box" style="display:none;">
-    <div class="summary-line">
-      <span>Subtotal</span>
-      <span id="sumSubtotal">$0.00</span>
-    </div>
-    <div class="summary-line">
-      <span>Service Charge (10%)</span>
-      <span id="sumService">$0.00</span>
-    </div>
-    <div class="summary-line">
-      <span>GST (9%)</span>
-      <span id="sumGST">$0.00</span>
-    </div>
-    <div class="summary-line total">
-      <span>Grand Total</span>
-      <span id="sumTotal">$0.00</span>
-    </div>
+  <div class="summary-box">
+    <div class="summary-row"><span>Subtotal</span> <span id="subTotal">$0.00</span></div>
+    <div class="summary-row"><span>GST (9%)</span> <span id="gst">$0.00</span></div>
+    <div class="summary-row"><span>Service Charge (10%)</span> <span id="svc">$0.00</span></div>
+    <div class="total"><span>Total</span> <span id="grandTotal">$0.00</span></div>
   </div>
 
-  <!-- ACTIONS -->
-  <div class="actions" id="actionButtons" style="display:none;">
-    <button class="btn-primary" onclick="placeOrder()">Place Order</button>
-    <button class="btn-secondary" onclick="location.href='page1.html'">
-      Continue Ordering
-    </button>
-    <button class="btn-secondary" onclick="clearCart()">Clear Cart</button>
-  </div>
+  <button class="btn-primary" onclick="placeOrder()">Place Order</button>
+  <button class="btn-secondary" onclick="location.href='sharing_plates.html'">Continue Ordering</button>
 
 </div>
 
 <!-- SUCCESS OVERLAY -->
 <div id="successOverlay">
-  <div class="success-card">
-    <div class="order-title" id="orderNumber">Order #0000</div>
-    <div class="order-time" id="orderTime"></div>
+  <div class="success-box">
+    <div class="success-title">Order Successfully Placed</div>
+    <div class="success-summary" id="successSummary"></div>
 
-    <div id="successList"></div>
-
-    <div class="success-buttons">
-      <button class="btn-secondary" onclick="closeSuccess()">Close</button>
-      <button class="btn-primary" onclick="location.href='page1.html'">Continue Ordering</button>
-    </div>
+    <button class="btn-primary" onclick="location.href='sharing_plates.html'">Continue Ordering</button>
   </div>
 </div>
 
 <script>
-function getCart(){ return JSON.parse(localStorage.getItem("cart") || "[]"); }
-function saveCart(c){ localStorage.setItem("cart", JSON.stringify(c)); }
-function clearCart(){ saveCart([]); renderCart(); }
+function getCart(){ return JSON.parse(localStorage.getItem('cart')||'[]'); }
+function saveCart(c){ localStorage.setItem('cart', JSON.stringify(c)); }
 
-/* Render Cart */
 function renderCart(){
   const cart = getCart();
-  const wrap = document.getElementById("cartList");
-  const summary = document.getElementById("summaryBox");
-  const actions = document.getElementById("actionButtons");
-  const emptyState = document.getElementById("emptyState");
-
-  wrap.innerHTML = "";
-
-  if(cart.length === 0){
-    emptyState.style.display = "block";
-    summary.style.display = "none";
-    actions.style.display = "none";
-    return;
-  }
-
-  emptyState.style.display = "none";
-  summary.style.display = "block";
-  actions.style.display = "block";
+  const list = document.getElementById("cartList");
+  list.innerHTML = "";
 
   let subtotal = 0;
 
-  cart.forEach((it, idx)=>{
+  cart.forEach((it, index)=>{
     subtotal += it.price * it.qty;
 
-    const row = document.createElement("div");
-    row.className = "cart-item";
+    const div = document.createElement("div");
+    div.className = "cart-item";
 
-    const left = document.createElement("div");
-    left.className = "item-left";
+    div.innerHTML = `
+      <div class="item-info">
+        <div class="item-name">${it.name}</div>
+        ${it.prosciutto ? `<div class="item-option">Option: ${it.prosciutto}</div>` : ""}
+        ${it.request ? `<div class="item-req">Request: ${it.request}</div>` : ""}
+      </div>
 
-    const name = document.createElement("div");
-    name.className = "item-name";
-    name.textContent = it.name;
+      <div class="qty-box">
+        <button class="qty-btn" onclick="changeQty(${index}, -1)">−</button>
+        <div class="qty-val">${it.qty}</div>
+        <button class="qty-btn" onclick="changeQty(${index}, 1)">+</button>
+      </div>
 
-    const meta = document.createElement("div");
-    meta.className = "item-meta";
-
-    const lines = [];
-    if(it.prosciutto) lines.push("Option: " + it.prosciutto);
-    if(it.fries) lines.push("Fries: " + it.fries);
-    if(it.spicy) lines.push("Spice: " + (it.spicy === "non-spicy" ? "Non-Spicy" : "Spicy"));
-    if(it.request) lines.push("Special: " + it.request);
-    meta.textContent = lines.join("\n");
-
-    left.appendChild(name);
-    left.appendChild(meta);
-
-    const right = document.createElement("div");
-    right.className = "item-right";
-
-    const itemPrice = document.createElement("div");
-    itemPrice.className = "item-price";
-    itemPrice.textContent = "$" + it.price.toFixed(2);
-
-    const qty = document.createElement("div");
-    qty.className = "qty-row";
-
-    const minus = document.createElement("button");
-    minus.className = "qty-btn";
-    minus.textContent = "−";
-    minus.onclick = ()=>updateQty(idx, -1);
-
-    const val = document.createElement("div");
-    val.className = "qty-val";
-    val.textContent = it.qty;
-
-    const plus = document.createElement("button");
-    plus.className = "qty-btn";
-    plus.textContent="＋";
-    plus.onclick = ()=>updateQty(idx, 1);
-
-    const remove = document.createElement("button");
-    remove.className = "remove-btn";
-
-    remove.innerHTML = `
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
-           stroke="var(--gold)" stroke-width="2" stroke-linecap="round"
-           stroke-linejoin="round">
-          <polyline points="3 6 5 6 21 6"></polyline>
-          <path d="M19 6l-1 14H6L5 6m5 0V4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2"></path>
-          <line x1="10" y1="11" x2="10" y2="17"></line>
-          <line x1="14" y1="11" x2="14" y2="17"></line>
-      </svg>
+      <button class="delete-btn" onclick="removeItem(${index})">🗑️</button>
     `;
 
-    remove.onclick = ()=>removeItem(idx);
-
-    qty.append(minus,val,plus,remove);
-
-    right.append(itemPrice, qty);
-
-    row.append(left, right);
-    wrap.appendChild(row);
+    list.appendChild(div);
   });
 
-  const service = subtotal * 0.10;
-  const gst = (subtotal + service) * 0.09;
-  const total = subtotal + service + gst;
+  const gst = subtotal * 0.09;
+  const svc = subtotal * 0.10;
+  const total = subtotal + gst + svc;
 
-  document.getElementById("sumSubtotal").textContent = "$" + subtotal.toFixed(2);
-  document.getElementById("sumService").textContent = "$" + service.toFixed(2);
-  document.getElementById("sumGST").textContent = "$" + gst.toFixed(2);
-  document.getElementById("sumTotal").textContent = "$" + total.toFixed(2);
+  document.getElementById("subTotal").textContent = "$" + subtotal.toFixed(2);
+  document.getElementById("gst").textContent = "$" + gst.toFixed(2);
+  document.getElementById("svc").textContent = "$" + svc.toFixed(2);
+  document.getElementById("grandTotal").textContent = "$" + total.toFixed(2);
 }
 
-/* Update quantity */
-function updateQty(idx,delta){
+function changeQty(i, delta){
   const cart = getCart();
-  cart[idx].qty += delta;
-  if(cart[idx].qty < 1) cart[idx].qty = 1;
+  cart[i].qty += delta;
+  if(cart[i].qty < 1) cart[i].qty = 1;
   saveCart(cart);
   renderCart();
 }
 
-/* Remove item */
-function removeItem(idx){
+function removeItem(i){
   const cart = getCart();
-  cart.splice(idx,1);
+  cart.splice(i,1);
   saveCart(cart);
   renderCart();
 }
 
-/* Place order */
 function placeOrder(){
   const cart = getCart();
-  if(cart.length===0) return;
+  if(cart.length === 0){ alert("Cart is empty"); return; }
 
-  const id = "MB" + Math.floor(1000 + Math.random()*9000);
-  const ts = new Date().toLocaleString();
-
-  document.getElementById("orderNumber").textContent = "Order #" + id;
-  document.getElementById("orderTime").textContent = ts;
-
-  const list = document.getElementById("successList");
-  list.innerHTML="";
-
+  let txt = "";
   cart.forEach(it=>{
-    const div = document.createElement("div");
-    div.className="success-item";
-    div.innerHTML = `<div>x ${it.qty} ${it.name}</div><div>$${(it.qty*it.price).toFixed(2)}</div>`;
-    list.appendChild(div);
-
-    if(it.option || it.fries || it.spicy || it.request){
-      const meta = document.createElement("div");
-      meta.className = "success-meta";
-      const parts=[];
-      if(it.prosciutto) parts.push("Option: " + it.prosciutto);
-      if(it.fries) parts.push("Fries: " + it.fries);
-      if(it.spicy) parts.push("Spice: " + (it.spicy === "non-spicy" ? "Non-Spicy" : "Spicy"));
-      if(it.request) parts.push("Special: " + it.request);
-      meta.textContent = parts.join(" • ");
-      list.appendChild(meta);
-    }
+    txt += `<b>${it.name}</b> × ${it.qty}<br>`;
+    if(it.prosciutto) txt += `Option: ${it.prosciutto}<br>`;
+    if(it.request) txt += `Request: ${it.request}<br>`;
+    txt += `<br>`;
   });
 
-  document.getElementById("successOverlay").style.display="flex";
+  document.getElementById("successSummary").innerHTML = txt;
 
-  clearCart();
+  document.getElementById("successOverlay").style.display = "flex";
+
+  localStorage.removeItem('cart');
 }
 
-/* Close */
-function closeSuccess(){
-  document.getElementById("successOverlay").style.display="none";
-}
-
-/* Init */
 renderCart();
 </script>
 
