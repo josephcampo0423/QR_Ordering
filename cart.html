@@ -430,35 +430,68 @@ function placeOrder(){
   if(cart.length===0) return;
 
   const id = "MB" + Math.floor(1000 + Math.random()*9000);
-  const ts = new Date().toLocaleString();
+  const ts = new Date();
+  const tsReadable = ts.toLocaleString();
 
   document.getElementById("orderNumber").textContent = "Order #" + id;
-  document.getElementById("orderTime").textContent = ts;
+  document.getElementById("orderTime").textContent = tsReadable;
 
   const list = document.getElementById("successList");
   list.innerHTML="";
 
+  // compute subtotal
+  let subtotal = 0;
+  cart.forEach(it=>{
+    subtotal += (Number(it.price) || 0) * (Number(it.qty) || 1);
+  });
+
+  const service = subtotal * 0.10;                 // 10%
+  const gst = (subtotal + service) * 0.09;         // 9% on (subtotal + service)
+  const total = subtotal + service + gst;
+
+  // items
   cart.forEach(it=>{
     const div = document.createElement("div");
     div.className="success-item";
-    div.innerHTML = `<div>x ${it.qty} ${it.name}</div><div>$${(it.qty*it.price).toFixed(2)}</div>`;
+    div.innerHTML = `<div>x ${it.qty} ${it.name}</div><div>$${((it.qty*it.price)||0).toFixed(2)}</div>`;
     list.appendChild(div);
 
-    if(it.option || it.fries || it.spicy || it.request){
+    // details (show prosciutto/fries/spicy/request)
+    if(it.prosciutto || it.fries || it.spicy || it.request){
       const meta = document.createElement("div");
       meta.className = "success-meta";
       const parts=[];
-      if(it.prosciutto) parts.push("Option: " + it.prosciutto);
-      if(it.fries) parts.push("Fries: " + it.fries);
-      if(it.spicy) parts.push("Spice: " + (it.spicy === "non-spicy" ? "Non-Spicy" : "Spicy"));
-      if(it.request) parts.push("Special: " + it.request);
+      if(it.prosciutto) parts.push("Option: "+it.prosciutto);
+      if(it.fries) parts.push("Fries: "+it.fries);
+      if(it.spicy) parts.push("Spice: "+(it.spicy==="non-spicy"?"Non-Spicy":"Spicy"));
+      if(it.request) parts.push("Special: "+it.request);
       meta.textContent = parts.join(" • ");
       list.appendChild(meta);
     }
   });
 
+  // add totals lines under successList
+  const totalsBlock = document.createElement("div");
+  totalsBlock.style.marginTop = '12px';
+  totalsBlock.style.borderTop = '1px solid rgba(255,255,255,0.04)';
+  totalsBlock.style.paddingTop = '10px';
+  totalsBlock.innerHTML = `
+    <div style="display:flex;justify-content:space-between;color:#ddd"><div>Subtotal</div><div>$${subtotal.toFixed(2)}</div></div>
+    <div style="display:flex;justify-content:space-between;color:#ddd;margin-top:6px"><div>Service (10%)</div><div>$${service.toFixed(2)}</div></div>
+    <div style="display:flex;justify-content:space-between;color:#ddd;margin-top:6px"><div>GST (9%)</div><div>$${gst.toFixed(2)}</div></div>
+    <div style="display:flex;justify-content:space-between;color:var(--gold);font-weight:900;margin-top:8px"><div>Total</div><div>$${total.toFixed(2)}</div></div>
+  `;
+  list.appendChild(totalsBlock);
+
+  // show overlay
   document.getElementById("successOverlay").style.display="flex";
 
+  // save order snapshot (optional)
+  const orders = JSON.parse(localStorage.getItem('orders')||'[]');
+  orders.unshift({ id: id, created: ts.toISOString(), readable: tsReadable, items: cart.slice(), subtotal, service, gst, total });
+  localStorage.setItem('orders', JSON.stringify(orders));
+
+  // clear cart (we clear after snapshot so order snapshot contains items)
   clearCart();
 }
 
