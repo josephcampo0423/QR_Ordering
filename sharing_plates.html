@@ -691,7 +691,91 @@ function completeAdd(){
 /* assign add button click */
 document.getElementById('modalAddBtn').onclick = function(e){
   e.preventDefault();
-  animateModalCloneToCartAndAdd();
+  if(!window._currentItem){ alert('No item selected'); return; }
+  const item = window._currentItem;
+
+  // Build display name (we'll also store option fields separately)
+  let finalName = item.name;
+  let finalPrice = Number(item.price) || 0;
+
+  // prosciutto option (for truffle brie)
+  let prosciuttoStr = '';
+  if(item.prosciutto){
+    const opt = document.querySelector('input[name="truf_opt"]:checked');
+    if(!opt){
+      alert('Please choose Regular or With Aged Prosciutto');
+      return;
+    }
+    if(opt.value === 'with'){
+      // store human readable text
+      prosciuttoStr = 'With Aged Prosciutto (+$7)';
+      finalPrice = finalPrice + 7;   // add the extra $7 to price
+      // append small label to display name if you prefer:
+      finalName = item.name + ' (With Aged Prosciutto)';
+    } else {
+      prosciuttoStr = 'Regular';
+      finalName = item.name + ' (Regular)';
+    }
+  }
+
+  // fries option
+  let friesStr = '';
+  if(item.type === 'fries'){
+    const fc = document.querySelector('input[name="fries_choice"]:checked');
+    if(!fc){
+      alert('Please choose Skin-on or Twister fries');
+      return;
+    }
+    friesStr = fc.value;
+    finalName = finalName + ' — ' + friesStr;
+  }
+
+  // spice option (for mussels)
+  let spicyChoice = '';
+  if(item.hasSpiceOption){
+    const sp = document.querySelector('input[name="spice_choice"]:checked');
+    if(sp) spicyChoice = sp.value; // 'spicy' or 'non-spicy'
+    finalName = finalName + (spicyChoice === 'non-spicy' ? ' (Non-Spicy)' : ' (Spicy)');
+  }
+
+  // qty
+  const qty = Number(document.getElementById('qtyValue').textContent) || 1;
+  if(qty < 1){ alert('Quantity must be at least 1'); return; }
+
+  // special request
+  const request = (document.getElementById('specialRequestInput') || {value:''}).value.trim();
+
+  // Build cart object fields exactly as cart.html expects:
+  // { id, name, price, qty, prosciutto, fries, spicy, request }
+  // note: price is per-unit (including +$7 if With Prosciutto)
+  const cartItem = {
+    id: item.id || item.name.toLowerCase().replace(/\s+/g,'_'),
+    name: finalName,
+    price: Number(finalPrice),
+    qty: qty,
+    prosciutto: prosciuttoStr,   // empty string if not applicable
+    fries: friesStr,             // empty string if not applicable
+    spicy: spicyChoice,          // empty string if not applicable
+    request: request
+  };
+
+  // push into localStorage cart
+  const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+  cart.push(cartItem);
+  localStorage.setItem('cart', JSON.stringify(cart));
+
+  // small visual feedback (you likely have an animation function; call if exists)
+  if(typeof animateModalCloneToCartAndAdd === 'function'){
+    // if the page has the premium animation, call it (this will close modal after)
+    animateModalCloneToCartAndAdd();
+  } else {
+    // fallback: close modal
+    const bg = document.getElementById('modalBg');
+    if(bg){ bg.classList.remove('show'); setTimeout(()=> bg.style.display='none',160); document.body.classList.remove('noscroll'); }
+    // update any cart badge if present
+    try{ if(typeof refreshCartBadge === 'function') refreshCartBadge(); }catch(e){}
+    alert('Added to cart: ' + cartItem.name + (request ? (' — ' + request) : ''));
+  }
 };
 
 /* OPEN CART PAGE */
