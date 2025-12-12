@@ -1,332 +1,460 @@
 <!doctype html>
-<html>
+<html lang="en">
 <head>
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta charset="utf-8">
-<title>Checkout — Mingle Bistro</title>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Review Your Order — Mingle Bistro</title>
 
 <style>
 :root{
   --gold:#D4AF37;
   --bg:#0e0e0e;
-  --card:#161616;
-  --muted:#bcbcbc;
+  --card:#141414;
+  --muted:#bbbbbb;
+  --border:rgba(255,255,255,0.05);
 }
 
-html,body{
-  margin:0;
+/* Base */
+*{box-sizing:border-box}
+body{
   background:var(--bg);
-  color:white;
+  margin:0;
+  color:#fff;
   font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
 }
 
+/* HEADER */
 .header{
+  padding:18px 14px;
   text-align:center;
-  padding:20px 10px;
-  font-size:24px;
+  border-bottom:1px solid var(--border);
+}
+.header-title{
+  font-size:20px;
   font-weight:800;
   color:var(--gold);
-  letter-spacing:0.5px;
+  letter-spacing:0.3px;
 }
 
-.container{
-  padding:20px;
-  max-width:900px;
-  margin:auto;
-}
+/* Container */
+.container{padding:16px;max-width:850px;margin:0 auto;}
 
-.section-title{
-  font-size:18px;
-  color:var(--gold);
-  margin-bottom:10px;
-  font-weight:700;
-}
-
-.cart-item{
-  background:var(--card);
-  padding:14px;
+/* Empty Cart */
+.empty{
+  padding:40px 12px;
+  text-align:center;
+  border:1px solid var(--border);
   border-radius:12px;
-  margin-bottom:14px;
-  box-shadow:0 6px 16px rgba(0,0,0,0.5);
+  background:rgba(255,255,255,0.02);
+}
+.empty .emoji{font-size:42px;margin-bottom:12px}
+.empty button{
+  padding:12px 18px;
+  border-radius:10px;
+  border:1px solid var(--gold);
+  background:var(--gold);
+  color:black;
+  font-weight:800;
+  cursor:pointer;
 }
 
-.cart-row{
+/* Cart list */
+.cart-item{
   display:flex;
-  justify-content:space-between;
-  align-items:flex-start;
-  gap:10px;
+  gap:12px;
+  background:var(--card);
+  border:1px solid var(--border);
+  padding:12px;
+  border-radius:10px;
+  margin-bottom:12px;
 }
 
-.item-name{
-  font-size:15px;
-  font-weight:700;
-  margin-bottom:6px;
+.item-left{flex:1}
+.item-name{font-size:15px;font-weight:800;color:#fff}
+.item-meta{color:var(--muted);font-size:13px;margin-top:6px;white-space:pre-line}
+
+/* Right column */
+.item-right{
+  display:flex;
+  flex-direction:column;
+  align-items:flex-end;
+  gap:6px;
 }
 
-.item-sub{
-  font-size:13px;
-  color:var(--muted);
-  margin-bottom:6px;
-  white-space:pre-wrap;
-}
-
-.qty-controls{
+/* Qty + remove row */
+.qty-row{
   display:flex;
   align-items:center;
   gap:6px;
-  margin-top:8px;
 }
 
+/* Premium qty buttons */
 .qty-btn{
-  width:30px;
-  height:30px;
-  border-radius:8px;
-  border:1px solid rgba(255,255,255,0.15);
+  width:34px;
+  height:34px;
+  border-radius:10px;
+  border:1px solid var(--gold);
   background:transparent;
-  color:white;
-  font-size:16px;
+  color:var(--gold);
+  font-size:18px;
+  font-weight:800;
+  display:flex;
+  justify-content:center;
+  align-items:center;
   cursor:pointer;
 }
-
-.qty-num{
-  width:28px;
+.qty-val{
+  min-width:28px;
   text-align:center;
-  font-weight:700;
+  font-weight:800;
 }
 
+/* remove button */
 .remove-btn{
-  border:none;
-  background:none;
+  border:1px solid var(--border);
+  background:transparent;
+  color:#ccc;
+  padding:8px 10px;
+  border-radius:8px;
+  font-weight:700;
   cursor:pointer;
-  padding:4px;
-}
-.remove-btn svg{
-  width:20px;
-  height:20px;
-  stroke:#ff4d4d;
+  font-size:12px;
 }
 
-.summary-box{
-  background:var(--card);
-  padding:16px;
-  border-radius:12px;
-  margin-top:20px;
+/* Price (small) */
+.item-price{
+  font-size:13px;
+  color:var(--muted);
+  font-weight:800;
 }
-.summary-row{
+
+/* Charges + totals */
+.summary-box{
+  margin-top:16px;
+  padding:14px;
+  border-radius:10px;
+  background:rgba(255,255,255,0.02);
+  border:1px solid var(--border);
+}
+
+.summary-line{
   display:flex;
   justify-content:space-between;
-  margin:6px 0;
+  padding:6px 0;
   font-size:14px;
+  color:var(--muted);
 }
-.summary-total{
-  font-size:17px;
-  font-weight:800;
+.summary-line.total{
+  font-size:18px;
+  font-weight:900;
   color:var(--gold);
-  margin-top:10px;
+}
+
+/* Buttons */
+.actions{
+  margin-top:18px;
+  text-align:center;
 }
 
 .btn-primary{
   width:100%;
   padding:14px;
-  border-radius:999px;
   background:var(--gold);
-  color:black;
-  font-weight:800;
-  border:none;
-  font-size:16px;
-  margin-top:20px;
-  cursor:pointer;
-}
-
-.btn-secondary{
-  width:100%;
-  padding:12px;
-  border-radius:12px;
-  background:transparent;
+  color:#000;
   border:1px solid var(--gold);
-  color:var(--gold);
-  font-weight:700;
-  margin-top:12px;
+  border-radius:12px;
+  font-weight:900;
   font-size:15px;
   cursor:pointer;
 }
 
-/* Success Modal */
-.success-bg{
-  display:none;
+.btn-secondary{
+  margin-top:10px;
+  width:100%;
+  padding:12px;
+  background:transparent;
+  border:1px solid var(--border);
+  color:#ddd;
+  border-radius:12px;
+  cursor:pointer;
+}
+
+/* Success overlay */
+#successOverlay{
   position:fixed;
   inset:0;
-  background:rgba(0,0,0,0.7);
-  backdrop-filter:blur(6px);
+  background:rgba(0,0,0,0.75);
+  display:none;
   justify-content:center;
   align-items:center;
-  z-index:999;
+  padding:16px;
+  z-index:5000;
 }
 
 .success-card{
-  width:90%;
-  max-width:420px;
-  background:var(--card);
-  border-radius:16px;
-  padding:20px;
-  text-align:center;
-  border:1px solid rgba(212,175,55,0.2);
+  width:100%;
+  max-width:520px;
+  background:#111;
+  border:1px solid var(--border);
+  border-radius:14px;
+  padding:18px;
 }
 
-.order-lines{
-  font-size:13px;
-  color:#ddd;
-  white-space:pre-wrap;
-  text-align:left;
+.order-title{
+  font-size:20px;
+  font-weight:900;
+  color:var(--gold);
+}
+.order-time{font-size:13px;color:var(--muted);margin-top:4px}
+
+.success-item{
   margin-top:12px;
+  display:flex;
+  justify-content:space-between;
+  color:#ddd;
+}
+.success-meta{
+  color:var(--muted);
+  font-size:13px;
+  margin-left:4px;
+}
+
+/* Close buttons */
+.success-buttons{
+  margin-top:18px;
+  display:flex;
+  gap:10px;
+  justify-content:flex-end;
 }
 </style>
 </head>
-
 <body>
 
-<div class="header">Checkout</div>
+<div class="header">
+  <div class="header-title">Review Your Order</div>
+</div>
 
 <div class="container">
 
-  <div id="cartItems"></div>
-
-  <div class="summary-box">
-    <div class="summary-row"><span>Subtotal</span><span id="subTotal">$0.00</span></div>
-    <div class="summary-row"><span>Service Charge 10%</span><span id="svcCharge">$0.00</span></div>
-    <div class="summary-row"><span>GST 9%</span><span id="gst">$0.00</span></div>
-    <div class="summary-total"><span>Total</span><span id="grandTotal" style="float:right">$0.00</span></div>
+  <!-- EMPTY STATE -->
+  <div id="emptyState" class="empty" style="display:none;">
+    <div class="emoji">🛒</div>
+    <div style="font-weight:800;font-size:16px;margin-bottom:6px">Your basket is empty</div>
+    <button onclick="location.href='page1.html'">Continue Ordering</button>
   </div>
 
-  <button class="btn-primary" onclick="placeOrder()">Place Order</button>
+  <!-- CART ITEMS -->
+  <div id="cartList"></div>
 
-  <button class="btn-secondary" onclick="location.href='sharing_plates.html'">Continue Ordering</button>
+  <!-- SUMMARY -->
+  <div id="summaryBox" class="summary-box" style="display:none;">
+    <div class="summary-line">
+      <span>Subtotal</span>
+      <span id="sumSubtotal">$0.00</span>
+    </div>
+    <div class="summary-line">
+      <span>Service Charge (10%)</span>
+      <span id="sumService">$0.00</span>
+    </div>
+    <div class="summary-line">
+      <span>GST (9%)</span>
+      <span id="sumGST">$0.00</span>
+    </div>
+    <div class="summary-line total">
+      <span>Grand Total</span>
+      <span id="sumTotal">$0.00</span>
+    </div>
+  </div>
+
+  <!-- ACTIONS -->
+  <div class="actions" id="actionButtons" style="display:none;">
+    <button class="btn-primary" onclick="placeOrder()">Place Order</button>
+    <button class="btn-secondary" onclick="location.href='page1.html'">
+      Continue Ordering
+    </button>
+    <button class="btn-secondary" onclick="clearCart()">Clear Cart</button>
+  </div>
 
 </div>
 
-
-<!-- SUCCESS MODAL -->
-<div id="successBg" class="success-bg">
+<!-- SUCCESS OVERLAY -->
+<div id="successOverlay">
   <div class="success-card">
-    <div style="font-size:20px;font-weight:800;color:var(--gold);">
-      Order Successfully Placed ✔
+    <div class="order-title" id="orderNumber">Order #0000</div>
+    <div class="order-time" id="orderTime"></div>
+
+    <div id="successList"></div>
+
+    <div class="success-buttons">
+      <button class="btn-secondary" onclick="closeSuccess()">Close</button>
+      <button class="btn-primary" onclick="location.href='page1.html'">Continue Ordering</button>
     </div>
-
-    <div id="successSummary" class="order-lines"></div>
-
-    <button class="btn-primary" onclick="location.href='sharing_plates.html'">Continue Ordering</button>
   </div>
 </div>
 
 <script>
 function getCart(){ return JSON.parse(localStorage.getItem("cart") || "[]"); }
 function saveCart(c){ localStorage.setItem("cart", JSON.stringify(c)); }
+function clearCart(){ saveCart([]); renderCart(); }
 
+/* Render Cart */
 function renderCart(){
-  const box = document.getElementById("cartItems");
   const cart = getCart();
+  const wrap = document.getElementById("cartList");
+  const summary = document.getElementById("summaryBox");
+  const actions = document.getElementById("actionButtons");
+  const emptyState = document.getElementById("emptyState");
+
+  wrap.innerHTML = "";
 
   if(cart.length === 0){
-    box.innerHTML = `<div style="text-align:center;color:#aaa;margin-top:40px;">Your cart is empty</div>`;
-    updateTotals();
+    emptyState.style.display = "block";
+    summary.style.display = "none";
+    actions.style.display = "none";
     return;
   }
 
-  box.innerHTML = "";
+  emptyState.style.display = "none";
+  summary.style.display = "block";
+  actions.style.display = "block";
 
-  cart.forEach((it,idx)=>{
-    const div = document.createElement("div");
-    div.className = "cart-item";
+  let subtotal = 0;
+
+  cart.forEach((it, idx)=>{
+    subtotal += it.price * it.qty;
+
+    const row = document.createElement("div");
+    row.className = "cart-item";
+
+    const left = document.createElement("div");
+    left.className = "item-left";
+
+    const name = document.createElement("div");
+    name.className = "item-name";
+    name.textContent = it.name;
+
+    const meta = document.createElement("div");
+    meta.className = "item-meta";
 
     const lines = [];
+    if(it.option) lines.push("Option: " + it.option);
+    if(it.fries) lines.push("Fries: " + it.fries);
+    if(it.spicy) lines.push("Spice: " + (it.spicy==="non-spicy" ? "Non-Spicy" : "Spicy"));
+    if(it.request) lines.push("Special: " + it.request);
 
-    if(it.request) lines.push("Special Request: " + it.request);
-    if(it.prosciutto) lines.push("Option: " + it.prosciutto);
-    if(it.friesType) lines.push("Fries Type: " + it.friesType);
+    meta.textContent = lines.join("\n");
 
-    div.innerHTML = `
-      <div class="cart-row">
-        <div>
-          <div class="item-name">${it.name}</div>
-          <div class="item-sub">${lines.join("\n")}</div>
+    left.appendChild(name);
+    left.appendChild(meta);
 
-          <div class="qty-controls">
-            <button class="qty-btn" onclick="changeQty(${idx},-1)">−</button>
-            <div class="qty-num">${it.qty}</div>
-            <button class="qty-btn" onclick="changeQty(${idx},1)">+</button>
-          </div>
-        </div>
+    const right = document.createElement("div");
+    right.className = "item-right";
 
-        <div style="text-align:right;">
-          <div style="font-weight:700;margin-bottom:6px">$${(it.price*it.qty).toFixed(2)}</div>
-          <button class="remove-btn" onclick="removeItem(${idx})">
-            <svg fill="none" stroke-width="2" viewBox="0 0 24 24">
-              <path d="M3 6h18"/>
-              <path d="M8 6V4h8v2"/>
-              <path d="M19 6l-1 14H6L5 6"/>
-              <path d="M10 11v6M14 11v6"/>
-            </svg>
-          </button>
-        </div>
-      </div>
-    `;
+    const itemPrice = document.createElement("div");
+    itemPrice.className = "item-price";
+    itemPrice.textContent = "$" + it.price.toFixed(2);
 
-    box.appendChild(div);
+    const qty = document.createElement("div");
+    qty.className = "qty-row";
+
+    const minus = document.createElement("button");
+    minus.className = "qty-btn";
+    minus.textContent = "−";
+    minus.onclick = ()=>updateQty(idx, -1);
+
+    const val = document.createElement("div");
+    val.className = "qty-val";
+    val.textContent = it.qty;
+
+    const plus = document.createElement("button");
+    plus.className = "qty-btn";
+    plus.textContent="＋";
+    plus.onclick = ()=>updateQty(idx, 1);
+
+    const remove = document.createElement("button");
+    remove.className = "remove-btn";
+    remove.textContent = "Remove";
+    remove.onclick = ()=>removeItem(idx);
+
+    qty.append(minus,val,plus,remove);
+
+    right.append(itemPrice, qty);
+
+    row.append(left, right);
+    wrap.appendChild(row);
   });
 
-  updateTotals();
-}
-
-function changeQty(i,d){
-  const cart = getCart();
-  cart[i].qty += d;
-  if(cart[i].qty < 1) cart[i].qty = 1;
-  saveCart(cart);
-  renderCart();
-}
-
-function removeItem(i){
-  const cart = getCart();
-  cart.splice(i,1);
-  saveCart(cart);
-  renderCart();
-}
-
-function updateTotals(){
-  const c = getCart();
-  const subtotal = c.reduce((s,it)=>s + it.price*it.qty,0);
   const service = subtotal * 0.10;
   const gst = (subtotal + service) * 0.09;
   const total = subtotal + service + gst;
 
-  document.getElementById("subTotal").textContent = "$" + subtotal.toFixed(2);
-  document.getElementById("svcCharge").textContent = "$" + service.toFixed(2);
-  document.getElementById("gst").textContent = "$" + gst.toFixed(2);
-  document.getElementById("grandTotal").textContent = "$" + total.toFixed(2);
+  document.getElementById("sumSubtotal").textContent = "$" + subtotal.toFixed(2);
+  document.getElementById("sumService").textContent = "$" + service.toFixed(2);
+  document.getElementById("sumGST").textContent = "$" + gst.toFixed(2);
+  document.getElementById("sumTotal").textContent = "$" + total.toFixed(2);
 }
 
+/* Update quantity */
+function updateQty(idx,delta){
+  const cart = getCart();
+  cart[idx].qty += delta;
+  if(cart[idx].qty < 1) cart[idx].qty = 1;
+  saveCart(cart);
+  renderCart();
+}
+
+/* Remove item */
+function removeItem(idx){
+  const cart = getCart();
+  cart.splice(idx,1);
+  saveCart(cart);
+  renderCart();
+}
+
+/* Place order */
 function placeOrder(){
-  const c = getCart();
-  if(c.length === 0){ alert("Your cart is empty"); return; }
+  const cart = getCart();
+  if(cart.length===0) return;
 
-  let text = "";
-  c.forEach(it=>{
-    text += `${it.name} x${it.qty}\n`;
+  const id = "MB" + Math.floor(1000 + Math.random()*9000);
+  const ts = new Date().toLocaleString();
 
-    if(it.prosciutto) text += `• Option: ${it.prosciutto}\n`;
-    if(it.friesType) text += `• Fries Type: ${it.friesType}\n`;
-    if(it.request) text += `• Request: ${it.request}\n`;
+  document.getElementById("orderNumber").textContent = "Order #" + id;
+  document.getElementById("orderTime").textContent = ts;
 
-    text += "\n";
+  const list = document.getElementById("successList");
+  list.innerHTML="";
+
+  cart.forEach(it=>{
+    const div = document.createElement("div");
+    div.className="success-item";
+    div.innerHTML = `<div>x ${it.qty} ${it.name}</div><div>$${(it.qty*it.price).toFixed(2)}</div>`;
+    list.appendChild(div);
+
+    if(it.option || it.fries || it.spicy || it.request){
+      const meta = document.createElement("div");
+      meta.className = "success-meta";
+      const parts=[];
+      if(it.option) parts.push("Option: "+it.option);
+      if(it.fries) parts.push("Fries: "+it.fries);
+      if(it.spicy) parts.push("Spice: "+(it.spicy==="non-spicy"?"Non-Spicy":"Spicy"));
+      if(it.request) parts.push("Special: "+it.request);
+      meta.textContent = parts.join(" • ");
+      list.appendChild(meta);
+    }
   });
 
-  document.getElementById("successSummary").textContent = text;
+  document.getElementById("successOverlay").style.display="flex";
 
-  document.getElementById("successBg").style.display = "flex";
-
-  // Clear cart after placing order
-  localStorage.removeItem("cart");
+  clearCart();
 }
+
+/* Close */
+function closeSuccess(){
+  document.getElementById("successOverlay").style.display="none";
+}
+
+/* Init */
 renderCart();
 </script>
 
