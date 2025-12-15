@@ -121,18 +121,6 @@ textarea{width:100%;height:84px;border-radius:12px;border:1px solid rgba(255,255
 .btn-pill{display:inline-block;width:100%;padding:12px 18px;border-radius:999px;text-align:center;background:transparent;color:var(--gold);border:1px solid var(--gold);font-weight:800;font-size:15px;cursor:pointer}
 .cancel-btn{display:block;margin:12px auto 0 auto;width:68%;padding:12px;border-radius:12px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);color:#ddd;font-weight:700;cursor:pointer}
 
-/* flying-clone (the miniature modal that will fly) */
-.flying-clone{
-  position:fixed;
-  z-index:130000;
-  pointer-events:none;
-  border-radius:12px;
-  overflow:hidden;
-  box-shadow:0 24px 60px rgba(0,0,0,0.7);
-  transform-origin:center center;
-  background:linear-gradient(180deg,#0e0e0e,#0b0b0b);
-}
-
 /* bottom pagination */
 .footer-pages{position:fixed;left:0;right:0;bottom:0;padding:10px;background:linear-gradient(180deg,rgba(0,0,0,0),#070707 20%);display:flex;justify-content:center;gap:8px;z-index:900}
 .page-num{padding:8px 12px;border-radius:8px;background:rgba(255,255,255,0.03);color:#ddd;border:1px solid rgba(255,255,255,0.03);font-weight:600}
@@ -157,6 +145,28 @@ textarea{width:100%;height:84px;border-radius:12px;border:1px solid rgba(255,255
   .modal-card{width:92vw}
   .option-card{min-width:100px}
 }
+
+/* simple modern add-to-cart feedback */
+@keyframes btnPop {
+  0% { transform: scale(1); }
+  40% { transform: scale(0.94); }
+  100% { transform: scale(1); }
+}
+
+@keyframes cartPulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.12); }
+  100% { transform: scale(1); }
+}
+
+.btn-animate {
+  animation: btnPop 0.25s ease;
+}
+
+.cart-animate {
+  animation: cartPulse 0.35s ease;
+}
+
 </style>
 </head>
 
@@ -495,8 +505,6 @@ textarea{width:100%;height:84px;border-radius:12px;border:1px solid rgba(255,255
   </div>
 </div>
 
-<!-- flying clone holder (animation) -->
-<div id="flyingCloneHolder"></div>
 
 <!-- pagination -->
 <div class="footer-pages" role="navigation" aria-label="Pages">
@@ -623,49 +631,11 @@ function pushToCart(itemObj){
   saveCart();
 }
 
-/* FLY-TO-CART ANIMATION (premium C) */
-function animateModalCloneToCart(){
-  const modalCard = document.querySelector('.modal-card');
-  if (!modalCard) return;
-
-  const rect = modalCard.getBoundingClientRect();
-  const clone = modalCard.cloneNode(true);
-
-  clone.className = 'flying-clone';
-  clone.style.top = rect.top + "px";
-  clone.style.left = rect.left + "px";
-  clone.style.width = rect.width + "px";
-  clone.style.height = rect.height + "px";
-
-  clone.querySelector('.add-row')?.remove();
-  clone.querySelector('.modal-close-btn')?.remove();
-
-  document.body.appendChild(clone);
-
-  const cart = document.getElementById('cartBtn').getBoundingClientRect();
-
-  clone.animate([
-    { transform:'scale(1)', opacity:1 },
-    {
-      transform:'scale(0.25)',
-      top:(cart.top + cart.height/2) + "px",
-      left:(cart.left + cart.width/2) + "px",
-      opacity:0
-    }
-  ], { duration:650, easing:'cubic-bezier(.22,.61,.36,1)' });
-
-  setTimeout(()=>clone.remove(), 700);
-}
-
-
 /* assign add button click */
 document.getElementById('modalAddBtn').onclick = function (e) {
   e.preventDefault();
 
-  if (!currentItem) {
-    alert("No item selected");
-    return;
-  }
+  if (!currentItem) return;
 
   let finalName = currentItem.name;
   let finalPrice = Number(currentItem.price);
@@ -682,7 +652,6 @@ document.getElementById('modalAddBtn').onclick = function (e) {
       alert("Please select an option");
       return;
     }
-
     if (opt.value === "with") {
       option = "With Aged Prosciutto";
       finalPrice += 7;
@@ -711,7 +680,7 @@ document.getElementById('modalAddBtn').onclick = function (e) {
     finalName += spicy === "non-spicy" ? " (Non-Spicy)" : " (Spicy)";
   }
 
-  /* SAVE TO CART (ONCE) */
+  /* SAVE CART */
   cart.push({
     id: currentItem.id,
     name: finalName,
@@ -725,10 +694,18 @@ document.getElementById('modalAddBtn').onclick = function (e) {
 
   saveCart();
 
-  /* ANIMATE FIRST */
-  animateModalCloneToCart();
+  /* MODERN FEEDBACK (NO FLICKER) */
+  const btn = document.getElementById('modalAddBtn');
+  const cartBtn = document.getElementById('cartBtn');
 
-  /* THEN CLOSE MODAL */
+  btn.classList.add('btn-animate');
+  cartBtn.classList.add('cart-animate');
+
+  setTimeout(() => {
+    btn.classList.remove('btn-animate');
+    cartBtn.classList.remove('cart-animate');
+  }, 400);
+
   closeModalInstant();
 };
 
