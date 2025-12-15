@@ -198,11 +198,10 @@ textarea{width:100%;height:84px;border-radius:12px;border:1px solid rgba(255,255
   width:22px;
   height:22px;
   border-radius:50%;
-  background:
-    radial-gradient(circle at 30% 30%, #fff2b8, #d4af37 55%, #9f7c1c);
+  background: radial-gradient(circle at 30% 30%, #ffffff, #f2f2f2 60%);
   box-shadow:
-    inset 0 1px 2px rgba(255,255,255,0.5),
-    0 8px 20px rgba(0,0,0,0.6);
+    inset 0 1px 2px rgba(255,255,255,0.9),
+    0 8px 22px rgba(0,0,0,0.55);
   pointer-events:none;
 }
 
@@ -635,11 +634,6 @@ function openItem(item){
   setTimeout(()=> bg.classList.add('show'), 10);
 }
 
-function closeModalInstant(){
-  const bg = document.getElementById('modalBg');
-  bg.classList.remove('show');
-  bg.style.display = "none";
-}
 function closeModalAnimated(){
   const bg = document.getElementById('modalBg');
   bg.classList.remove('show');
@@ -732,8 +726,12 @@ document.getElementById('modalAddBtn').onclick = function (e) {
   });
 
   saveCart();
+  bubbleToCart();
+
+  /* small delay so animation is visible */
+  setTimeout(closeModalInstant, 180);
   
-  function bubbleToCart(){
+function bubbleToCart(){
   const modal = document.querySelector('.modal-card');
   const cartBtn = document.getElementById('cartBtn');
   if(!modal || !cartBtn) return;
@@ -744,47 +742,26 @@ document.getElementById('modalAddBtn').onclick = function (e) {
   const bubble = document.createElement('div');
   bubble.className = 'cart-bubble';
 
-  bubble.style.top = (m.top + m.height/2 - 11) + 'px';
-  bubble.style.left = (m.left + m.width/2 - 11) + 'px';
+  bubble.style.top = (m.top + m.height / 2 - 11) + 'px';
+  bubble.style.left = (m.left + m.width / 2 - 11) + 'px';
 
   document.body.appendChild(bubble);
 
   bubble.animate([
+    { transform: 'scale(6)', opacity: 0.95 },
     {
-      transform:'scale(6)',
-      opacity:0.95
-    },
-    {
-      top:(c.top + c.height/2 - 11) + 'px',
-      left:(c.left + c.width/2 - 11) + 'px',
-      transform:'scale(1)',
-      opacity:0.9
+      top: (c.top + c.height / 2 - 11) + 'px',
+      left: (c.left + c.width / 2 - 11) + 'px',
+      transform: 'scale(1)',
+      opacity: 0.9
     }
   ],{
-    duration:650,
-    easing:'cubic-bezier(.22,.61,.36,1)'
+    duration: 650,
+    easing: 'cubic-bezier(.22,.61,.36,1)'
   });
 
-  setTimeout(()=>bubble.remove(),680);
-  
-  bubbleToCart();
-  closeModalInstant();
+  setTimeout(() => bubble.remove(), 700);
 }
-
-  /* MODERN FEEDBACK (NO FLICKER) */
-  const btn = document.getElementById('modalAddBtn');
-  const cartBtn = document.getElementById('cartBtn');
-
-  btn.classList.add('btn-animate');
-  cartBtn.classList.add('cart-animate');
-
-  setTimeout(() => {
-    btn.classList.remove('btn-animate');
-    cartBtn.classList.remove('cart-animate');
-  }, 400);
-
-  closeModalInstant();
-};
 
 /* OPEN CART PAGE */
 document.getElementById('cartBtn').onclick = function(){
