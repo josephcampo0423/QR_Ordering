@@ -134,15 +134,25 @@ textarea{width:100%;height:84px;border-radius:12px;border:1px solid rgba(255,255
   width:56px;
   height:56px;
   border-radius:50%;
-  background: transparent;
-  border:1px solid rgba(212,175,55,0.35);
-  backdrop-filter: blur(2px);
-  box-shadow: 0 10px 22px rgba(0,0,0,0.45);
+
+  /* translucent gold glass */
+  background: rgba(212,175,55,0.12);
+
+  border: 1px solid rgba(212,175,55,0.45);
+
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+
+  box-shadow:
+    inset 0 1px 1px rgba(255,255,255,0.35),
+    0 12px 26px rgba(0,0,0,0.55);
+
   display:flex;
   align-items:center;
   justify-content:center;
   cursor:pointer;
-  transition:transform .25s ease, box-shadow .25s ease;
+
+  transition:transform .25s ease, box-shadow .25s ease, background .25s ease;
 }
 
 #cartBtn:hover{
@@ -156,7 +166,7 @@ textarea{width:100%;height:84px;border-radius:12px;border:1px solid rgba(255,255
   width:28px;
   height:28px;
   stroke: var(--gold);
-  opacity: 0.85;
+  opacity: 0.9;
 }
 
 /* responsive */
