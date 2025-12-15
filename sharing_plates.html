@@ -621,10 +621,12 @@ function pushToCart(itemObj){
 /* FLY-TO-CART ANIMATION (premium C) */
 function animateModalCloneToCart(){
   const modalCard = document.querySelector('.modal-card');
+  if (!modalCard) return;
+
   const rect = modalCard.getBoundingClientRect();
   const clone = modalCard.cloneNode(true);
 
-  clone.classList.add('flying-clone');
+  clone.className = 'flying-clone';
   clone.style.top = rect.top + "px";
   clone.style.left = rect.left + "px";
   clone.style.width = rect.width + "px";
@@ -633,86 +635,51 @@ function animateModalCloneToCart(){
   clone.querySelector('.add-row')?.remove();
   clone.querySelector('.modal-close-btn')?.remove();
 
-  document.getElementById('flyingCloneHolder').appendChild(clone);
+  document.body.appendChild(clone);
 
-  const cartIcon = document.getElementById('cartBtn').getBoundingClientRect();
-  const destX = cartIcon.left + cartIcon.width/2 - rect.width*0.15;
-  const destY = cartIcon.top + cartIcon.height/2 - rect.height*0.15;
+  const cart = document.getElementById('cartBtn').getBoundingClientRect();
 
   clone.animate([
-    { transform:"scale(1)", top: rect.top+"px", left: rect.left+"px", opacity:1 },
-    { transform:"scale(0.3)", top: destY+"px", left: destX+"px", opacity:0.1 }
-  ], { duration:700, easing:"cubic-bezier(.18,.89,.32,1.28)" });
+    { transform:'scale(1)', opacity:1 },
+    {
+      transform:'scale(0.25)',
+      top:(cart.top + cart.height/2) + "px",
+      left:(cart.left + cart.width/2) + "px",
+      opacity:0
+    }
+  ], { duration:650, easing:'cubic-bezier(.22,.61,.36,1)' });
 
-  setTimeout(()=>clone.remove(), 720);
+  setTimeout(()=>clone.remove(), 700);
 }
 
-function completeAdd(){
-  if(!currentItem) return;
-
-  const qty = Number(document.getElementById('qtyValue').textContent);
-  let request = document.getElementById('specialRequestInput').value.trim();
-
-  let selectedOption = "";
-  if(currentItem.prosciutto){
-    const opt = document.querySelector('input[name="truf_opt"]:checked');
-    selectedOption = opt ? opt.value : "";
-  }
-
-  let selectedFries = "";
-  if(currentItem.type === "fries"){
-    const f = document.querySelector('input[name="fries_choice"]:checked');
-    selectedFries = f ? f.value : "";
-  }
-
-  let spicyChoice = "";
-  if(currentItem.hasSpiceOption){
-    const s = document.querySelector('input[name="spice_choice"]:checked');
-    spicyChoice = s ? s.value : "";
-  }
-
-  pushToCart({
-    id: currentItem.id,
-    name: currentItem.name,
-    price: currentItem.price,
-    qty: qty,
-    option: selectedOption,
-    fries: selectedFries,
-    spicy: spicyChoice,
-    request: request
-  });
-
-  closeModal();
-}
 
 /* assign add button click */
 document.getElementById('modalAddBtn').onclick = function (e) {
   e.preventDefault();
-  if (!window._currentItem) {
+
+  if (!currentItem) {
     alert("No item selected");
     return;
   }
 
-  const item = window._currentItem;
-
-  let finalName = item.name;
-  let finalPrice = Number(item.price);
+  let finalName = currentItem.name;
+  let finalPrice = Number(currentItem.price);
   let option = "";
   let fries = "";
   let spicy = "";
   let request = document.getElementById("specialRequestInput").value.trim();
   let qty = Number(document.getElementById("qtyValue").textContent);
 
-  /* Prosciutto option (Truffle Brie) */
-  if (item.prosciutto) {
+  /* Truffle Brie option */
+  if (currentItem.prosciutto) {
     const opt = document.querySelector('input[name="truf_opt"]:checked');
     if (!opt) {
-      alert("Please select Regular or With Aged Prosciutto");
+      alert("Please select an option");
       return;
     }
 
     if (opt.value === "with") {
-      option = "With Aged Prosciutto (+$7)";
+      option = "With Aged Prosciutto";
       finalPrice += 7;
       finalName += " (With Aged Prosciutto)";
     } else {
@@ -721,8 +688,8 @@ document.getElementById('modalAddBtn').onclick = function (e) {
     }
   }
 
-  /* Fries selection */
-  if (item.type === "fries") {
+  /* Fries */
+  if (currentItem.type === "fries") {
     const f = document.querySelector('input[name="fries_choice"]:checked');
     if (!f) {
       alert("Please choose fries type");
@@ -732,36 +699,32 @@ document.getElementById('modalAddBtn').onclick = function (e) {
     finalName += " — " + fries;
   }
 
-  /* Spicy option */
-  if (item.hasSpiceOption) {
+  /* Spice */
+  if (currentItem.hasSpiceOption) {
     const s = document.querySelector('input[name="spice_choice"]:checked');
-    if (s) spicy = s.value;
+    spicy = s ? s.value : "spicy";
     finalName += spicy === "non-spicy" ? " (Non-Spicy)" : " (Spicy)";
   }
 
-  /* Build final object */
-  const cartItem = {
-    id: item.id,
+  /* SAVE TO CART (ONCE) */
+  cart.push({
+    id: currentItem.id,
     name: finalName,
-    price: finalPrice, // per-unit (correctly includes +$7)
+    price: finalPrice,
     qty: qty,
-    option: option,     // << IMPORTANT!
+    option: option,
     fries: fries,
     spicy: spicy,
     request: request
-  };
+  });
 
-  /* Save to localStorage cart */
-  const cart = JSON.parse(localStorage.getItem("cart") || "[]");
-  cart.push(cartItem);
-  localStorage.setItem("cart", JSON.stringify(cart));
-  updateCartBadge();
+  saveCart();
 
-  /* Run premium animation */
-  if (typeof animateModalCloneToCartAndAdd === "function") {
-    animateModalCloneToCart();
-    closeModal();
-  }
+  /* ANIMATE FIRST */
+  animateModalCloneToCart();
+
+  /* THEN CLOSE MODAL */
+  closeModal();
 };
 
 /* OPEN CART PAGE */
