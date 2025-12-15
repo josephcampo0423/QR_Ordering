@@ -640,6 +640,12 @@ function closeModalAnimated(){
   setTimeout(()=> bg.style.display = "none", 180);
 }
 
+function closeModalInstant(){
+  const bg = document.getElementById('modalBg');
+  bg.classList.remove('show');
+  bg.style.display = "none";
+}
+
 /* Qty */
 function qtyChange(dir){
   let q = Number(document.getElementById('qtyValue').textContent);
@@ -667,6 +673,7 @@ function pushToCart(itemObj){
 /* assign add button click */
 document.getElementById('modalAddBtn').onclick = function (e) {
   e.preventDefault();
+  e.stopPropagation();
 
   if (!currentItem) return;
 
@@ -726,10 +733,18 @@ document.getElementById('modalAddBtn').onclick = function (e) {
   });
 
   saveCart();
-  bubbleToCart();
 
-  /* small delay so animation is visible */
-  setTimeout(closeModalInstant, 180);
+  /* visual feedback */
+  this.classList.add('btn-animate');
+  bubbleToCart();
+  document.getElementById('cartBtn').classList.add('cart-animate');
+
+  setTimeout(() => {
+    this.classList.remove('btn-animate');
+    document.getElementById('cartBtn').classList.remove('cart-animate');
+    closeModalInstant();
+  }, 220);
+};
   
 function bubbleToCart(){
   const modal = document.querySelector('.modal-card');
