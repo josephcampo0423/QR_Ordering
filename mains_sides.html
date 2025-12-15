@@ -94,23 +94,6 @@ a{color:inherit;text-decoration:none}
   flex:0 0 auto;width:36px;height:36px;border-radius:50%;border:1px solid var(--gold);background:transparent;color:var(--gold);display:flex;align-items:center;justify-content:center;cursor:pointer;font-weight:700;font-size:15px;padding:0;
 }
 
-/* Doneness options */
-.doneness-option{
-  margin-top:12px;
-  display:flex;
-  gap:8px;
-  flex-wrap:wrap;
-}
-.doneness-option label{
-  padding:6px 10px;
-  border:1px solid rgba(255,255,255,0.06);
-  border-radius:8px;
-  font-size:13px;
-  font-weight:700;
-  cursor:pointer;
-}
-.doneness-option input{display:none;}
-
 /* Option cards (premium) */
 .option-block{margin-top:12px}
 .option-cards{display:flex;gap:10px;flex-wrap:wrap}
@@ -121,6 +104,11 @@ a{color:inherit;text-decoration:none}
 .option-card input{margin:0}
 .option-card .label-text{font-weight:700;color:#ddd;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .option-card .price-addon{font-weight:800;color:var(--gold);font-size:13px;white-space:nowrap;margin-left:6px}
+
+/* Doneness selector (for steaks/platter) */
+#donenessOption{margin-top:12px}
+#donenessOption .option-cards{gap:8px}
+#donenessOption .option-card{padding:6px 10px;min-width:100px;font-size:12px}
 
 /* textarea (special request) */
 textarea{width:100%;height:84px;border-radius:12px;border:1px solid rgba(255,255,255,0.06);background:rgba(0,0,0,0.35);padding:10px;color:#fff;font-size:14px;resize:none;outline:none;margin-top:8px}
@@ -141,7 +129,7 @@ textarea{width:100%;height:84px;border-radius:12px;border:1px solid rgba(255,255
 .page-num.current{background:var(--gold);color:#000;border-color:var(--gold)}
 
 /* GOLD PREMIUM CART ICON */
-#cartWrap{position:fixed;bottom:96px;right:18px;z-index:1000} /* raised above pagination */
+#cartWrap{position:fixed;bottom:96px;right:18px;z-index:1000}
 #cartBtn{
   width:56px;
   height:56px;
@@ -172,6 +160,34 @@ textarea{width:100%;height:84px;border-radius:12px;border:1px solid rgba(255,255
   height:28px;
   opacity: 0.95;
 }
+#cartBadge{
+  position:absolute;
+  top:-6px;
+  right:-6px;
+  width:22px;
+  height:22px;
+  border-radius:50%;
+  background: radial-gradient(circle at 30% 30%, #ffffff, #eaeaea 65%);
+  box-shadow:
+    inset 0 1px 2px rgba(255,255,255,0.9),
+    0 8px 22px rgba(0,0,0,0.55);
+  color:#000;
+  font-weight:700;
+  font-size:12px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  pointer-events:none;
+  z-index:1001;
+  display:none;
+}
+
+/* animations */
+@keyframes btnPop {0% { transform: scale(1); } 40% { transform: scale(0.94); } 100% { transform: scale(1); }}
+@keyframes cartPulse {0% { transform: scale(1); } 50% { transform: scale(1.12); } 100% { transform: scale(1); }}
+.btn-animate {animation: btnPop 0.25s ease;}
+.cart-animate {animation: cartPulse 0.35s ease;}
+.cart-bubble{position:fixed;z-index:140000;width:22px;height:22px;border-radius:50%;background: radial-gradient(circle at 30% 30%, #ffffff, #eaeaea 65%);box-shadow:inset 0 1px 2px rgba(255,255,255,0.9),0 8px 22px rgba(0,0,0,0.55);pointer-events:none;}
 
 /* responsive */
 @media(max-width:420px){
@@ -180,27 +196,6 @@ textarea{width:100%;height:84px;border-radius:12px;border:1px solid rgba(255,255
   #cartBtn{width:50px;height:50px}
   .modal-card{width:92vw}
   .option-card{min-width:100px}
-  .doneness-option label{font-size:12px;padding:5px 8px}
-}
-
-/* simple modern add-to-cart feedback */
-@keyframes btnPop {0% { transform: scale(1); }40% { transform: scale(0.94); }100% { transform: scale(1); }}
-@keyframes cartPulse {0% { transform: scale(1); }50% { transform: scale(1.12); }100% { transform: scale(1); }}
-.btn-animate { animation: btnPop 0.25s ease; }
-.cart-animate { animation: cartPulse 0.35s ease; }
-
-/* BUBBLE TO CART ANIMATION */
-.cart-bubble{
-  position:fixed;
-  z-index:140000;
-  width:22px;
-  height:22px;
-  border-radius:50%;
-  background: radial-gradient(circle at 30% 30%, #ffffff, #eaeaea 65%);
-  box-shadow:
-    inset 0 1px 2px rgba(255,255,255,0.9),
-    0 8px 22px rgba(0,0,0,0.55);
-  pointer-events:none;
 }
 </style>
 </head>
@@ -224,8 +219,8 @@ textarea{width:100%;height:84px;border-radius:12px;border:1px solid rgba(255,255
   <div class="tab-panel" data-panel="mains" style="display:block">
     <div class="section-title">Mains</div>
     <div class="grid">
+      <!-- Mains items with full description -->
 
-      <!-- Example: Ribeye -->
       <div class="item-card" onclick="openItem({id:'ribeye',name:'CHAR-GRILLED GRAIN FED ANGUS BEEF RIBEYE 250GM',price:40,desc:'A primary cut with perfect balance of flavour & tenderness, Served with beef jus & roasted garlic',doneness:true})">
         <div class="item-row">
           <div class="item-left">
@@ -236,7 +231,6 @@ textarea{width:100%;height:84px;border-radius:12px;border:1px solid rgba(255,255
         </div>
       </div>
 
-      <!-- Flank, Striploin, etc. similar format -->
       <div class="item-card" onclick="openItem({id:'flank',name:'CHAR-GRILLED WAGYU MBS 4-5 FLANK STEAK 250GM',price:45,desc:'A secondary cut australian wagyu with a robust flavour profile. Served with peruvian aji verde & roasted garlic',doneness:true})">
         <div class="item-row">
           <div class="item-left">
@@ -257,7 +251,7 @@ textarea{width:100%;height:84px;border-radius:12px;border:1px solid rgba(255,255
         </div>
       </div>
 
-      <div class="item-card" onclick="openItem({id:'pork',name:'CHAR-GRILLED SPANISH IBERICO PORK SECRETO 250GM',price:40,desc:'Well known as the wagyu of pork for high amount of marbling, tender and rich, served medium well with chimichurri, pickled red cabbage'})">
+      <div class="item-card" onclick="openItem({id:'iberico',name:'CHAR-GRILLED SPANISH IBERICO PORK SECRETO 250GM',price:40,desc:'Well known as the wagyu of pork for high amount of marbling, tender and rich, served medium well with chimichurri, pickled red cabbage'})">
         <div class="item-row">
           <div class="item-left">
             <div class="item-title">CHAR-GRILLED SPANISH IBERICO PORK SECRETO 250GM</div>
@@ -287,7 +281,6 @@ textarea{width:100%;height:84px;border-radius:12px;border:1px solid rgba(255,255
         </div>
       </div>
 
-      <!-- Other mains without doneness -->
       <div class="item-card" onclick="openItem({id:'fishchips',name:'VODKA BATTERED FISH & CHIPS',price:25,desc:'Crispy vodka battered pacific dory, seasoned fries, served with assam fish aioli & avocado guacamole'})">
         <div class="item-row">
           <div class="item-left">
@@ -298,7 +291,7 @@ textarea{width:100%;height:84px;border-radius:12px;border:1px solid rgba(255,255
         </div>
       </div>
 
-      <div class="item-card" onclick="openItem({id:'wagyufoie',name:'SANCHOKU WAGYU & FOIE GRAS BURGER',price:32,desc:'Flame grilled sanchoku wagyu patty, pan seared foie gras, butter brioche bun, red cheddar, fresh onions, tomato, lettuce, jalapeno chipotle aioli, skin on fries'})">
+      <div class="item-card" onclick="openItem({id:'wagyuburger',name:'SANCHOKU WAGYU & FOIE GRAS BURGER',price:32,desc:'Flame grilled sanchoku wagyu patty, pan seared foie gras, butter brioche bun, red cheddar, fresh onions, tomato, lettuce, jalapeno chipotle aioli, skin on fries'})">
         <div class="item-row">
           <div class="item-left">
             <div class="item-title">SANCHOKU WAGYU & FOIE GRAS BURGER</div>
@@ -308,7 +301,7 @@ textarea{width:100%;height:84px;border-radius:12px;border:1px solid rgba(255,255
         </div>
       </div>
 
-      <div class="item-card" onclick="openItem({id:'wagyuburger',name:'SANCHOKU WAGYU BEEF BURGER',price:24,desc:'Flame grilled sanchoku wagyu patty, butter brioche bun, red cheddar, fresh onions, tomato, lettuce, jalapeno chipotle aioli, skin on fries'})">
+      <div class="item-card" onclick="openItem({id:'wagyuburger2',name:'SANCHOKU WAGYU BEEF BURGER',price:24,desc:'Flame grilled sanchoku wagyu patty, butter brioche bun, red cheddar, fresh onions, tomato, lettuce, jalapeno chipotle aioli, skin on fries'})">
         <div class="item-row">
           <div class="item-left">
             <div class="item-title">SANCHOKU WAGYU BEEF BURGER</div>
@@ -331,112 +324,110 @@ textarea{width:100%;height:84px;border-radius:12px;border:1px solid rgba(255,255
     </div>
   </div>
 
-  <!-- ADD-ON SIDES TAB -->
+  <!-- SIDES TAB -->
   <div class="tab-panel" data-panel="sides" style="display:none">
     <div class="section-title">Add-on Sides</div>
     <div class="grid">
-
       <div class="item-card" onclick="openItem({id:'foie',name:'PAN SEARED FOIE GRAS',price:13})">
         <div class="item-row">
-          <div class="item-left"><div class="item-title">PAN SEARED FOIE GRAS</div></div>
+          <div class="item-left">
+            <div class="item-title">PAN SEARED FOIE GRAS</div>
+          </div>
           <div class="price">$13</div>
         </div>
       </div>
-
       <div class="item-card" onclick="openItem({id:'sausage',name:'GRILLED PORK SAUSAGE WITH FENNEL',price:6})">
         <div class="item-row">
           <div class="item-left"><div class="item-title">GRILLED PORK SAUSAGE WITH FENNEL</div></div>
           <div class="price">$6</div>
         </div>
       </div>
-
-      <div class="item-card" onclick="openItem({id:'brussel1',name:'BRUSSEL SPROUTS WITH GUANCIALE & PERUVIAN AJI VERDE',price:13})">
+      <div class="item-card" onclick="openItem({id:'sprouts1',name:'BRUSSEL SPROUTS WITH GUANCIALE & PERUVIAN AJI VERDE',price:13})">
         <div class="item-row">
           <div class="item-left"><div class="item-title">BRUSSEL SPROUTS WITH GUANCIALE & PERUVIAN AJI VERDE</div></div>
           <div class="price">$13</div>
         </div>
       </div>
-
-      <div class="item-card" onclick="openItem({id:'brussel2',name:'BRUSSEL SPROUTS WITH BONITO GLAZE',price:11})">
+      <div class="item-card" onclick="openItem({id:'sprouts2',name:'BRUSSEL SPROUTS WITH BONITO GLAZE',price:11})">
         <div class="item-row">
           <div class="item-left"><div class="item-title">BRUSSEL SPROUTS WITH BONITO GLAZE</div></div>
           <div class="price">$11</div>
         </div>
       </div>
-
       <div class="item-card" onclick="openItem({id:'greeksalad',name:'GREEK SALAD WITH FETA & CITRUS VINAIGRETTE',price:11})">
         <div class="item-row">
           <div class="item-left"><div class="item-title">GREEK SALAD WITH FETA & CITRUS VINAIGRETTE</div></div>
           <div class="price">$11</div>
         </div>
       </div>
-
       <div class="item-card" onclick="openItem({id:'kale',name:'CRISPY KALE WITH CHIPOTLE AIOLI',price:11})">
         <div class="item-row">
           <div class="item-left"><div class="item-title">CRISPY KALE WITH CHIPOTLE AIOLI</div></div>
           <div class="price">$11</div>
         </div>
       </div>
-
       <div class="item-card" onclick="openItem({id:'arugula',name:'ARUGULA SALAD WITH BOCCONCINI CHEESE & TRUFFLE VINAIGRETTE',price:11})">
         <div class="item-row">
           <div class="item-left"><div class="item-title">ARUGULA SALAD WITH BOCCONCINI CHEESE & TRUFFLE VINAIGRETTE</div></div>
           <div class="price">$11</div>
         </div>
       </div>
-
-      <div class="item-card" onclick="openItem({id:'truffle',name:'CREAMY TRUFFLE MASHED POTATOES',price:9})">
+      <div class="item-card" onclick="openItem({id:'trufflepotato',name:'CREAMY TRUFFLE MASHED POTATOES',price:9})">
         <div class="item-row">
           <div class="item-left"><div class="item-title">CREAMY TRUFFLE MASHED POTATOES</div></div>
           <div class="price">$9</div>
         </div>
       </div>
-
     </div>
   </div>
 
 </div>
 
-<!-- Bubble Cart -->
-<div id="cartWrap"><button id="cartBtn" onclick="location.href='cart.html'">
-  <svg fill="currentColor" viewBox="0 0 24 24"><path d="M7 4h-2l-3 9h2l1-3h10l1 3h2l-3-9h-2l-1 3h-4l-1-3zm-2 11c-1.104 0-2 .896-2 2s.896 2 2 2 2-.896 2-2-.896-2-2-2zm12 0c-1.104 0-2 .896-2 2s.896 2 2 2 2-.896 2-2-.896-2-2-2z"/></svg>
-</button></div>
-
 <!-- Pagination -->
 <div class="footer-pages">
-  <div class="page-num" onclick="window.location='sharing_plates.html'">1</div>
+  <div class="page-num" onclick="window.location.href='sharing_plates.html'">1</div>
   <div class="page-num current">2</div>
-  <div class="page-num">3</div>
-  <div class="page-num">4</div>
-  <div class="page-num">5</div>
-  <div class="page-num">6</div>
-  <div class="page-num">7</div>
+  <div class="page-num" onclick="alert('Page 3')">3</div>
+  <div class="page-num" onclick="alert('Page 4')">4</div>
+  <div class="page-num" onclick="alert('Page 5')">5</div>
+  <div class="page-num" onclick="alert('Page 6')">6</div>
+  <div class="page-num" onclick="alert('Page 7')">7</div>
+</div>
+
+<!-- Cart bubble -->
+<div id="cartWrap">
+  <div id="cartBtn" onclick="window.location.href='cart.html'">
+    <svg fill="currentColor" viewBox="0 0 24 24"><path d="M7 18c-1.104 0-2 .896-2 2s.896 2 2 2 2-.896 2-2-.896-2-2-2zm10 0c-1.104 0-2 .896-2 2s.896 2 2 2 2-.896 2-2-.896-2-2-2zm1.156-12H6.21L5.33 4H1v2h2l3.6 7.59-1.35 2.44c-.18.32-.28.69-.28 1.07 0 1.104.896 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49-.03-.02c.13-.25.2-.53.2-.82 0-1.104-.896-2-2-2zm-7.437 8h-5.4l-1.1-2h7.61l-1.11 2z"/></svg>
+    <div id="cartBadge">0</div>
+  </div>
 </div>
 
 <!-- Modal -->
-<div class="modal-bg" id="itemModal">
+<div class="modal-bg" id="modalBg">
   <div class="modal-card">
     <div class="modal-title">
       <div>
-        <div class="modal-name" id="modalName">Item Name</div>
-        <div class="modal-price" id="modalPrice">$0</div>
+        <div class="modal-name" id="modalName"></div>
+        <div class="modal-price" id="modalPrice"></div>
+        <div class="modal-desc" id="modalDesc"></div>
       </div>
       <button class="modal-close-btn" onclick="closeModal()">×</button>
     </div>
-    <div class="modal-desc" id="modalDesc">Description here</div>
-    
-    <!-- Doneness placeholder -->
-    <div class="doneness-option" id="donenessDiv"></div>
 
-    <!-- Option placeholder -->
-    <div class="option-block" id="optionDiv"></div>
-
-    <textarea id="specialRequest" placeholder="Special request"></textarea>
+    <div id="donenessOption" style="display:none">
+      <div style="font-weight:700;color:#ddd;margin-bottom:6px;font-size:13px;">Select Doneness</div>
+      <div class="option-cards">
+        <label class="option-card"><input type="radio" name="doneness" value="Medium Rare"> <span class="label-text">Medium Rare</span></label>
+        <label class="option-card"><input type="radio" name="doneness" value="Medium"> <span class="label-text">Medium</span></label>
+        <label class="option-card"><input type="radio" name="doneness" value="Medium Well"> <span class="label-text">Medium Well</span></label>
+        <label class="option-card"><input type="radio" name="doneness" value="Well Done"> <span class="label-text">Well Done</span></label>
+      </div>
+    </div>
 
     <div class="qty-row">
-      <button class="qty-btn" onclick="changeQty(-1)">-</button>
+      <button class="qty-btn" onclick="updateQty(-1)">-</button>
       <div class="qty-val" id="qtyVal">1</div>
-      <button class="qty-btn" onclick="changeQty(1)">+</button>
+      <button class="qty-btn" onclick="updateQty(1)">+</button>
     </div>
 
     <div class="add-row">
@@ -447,46 +438,65 @@ textarea{width:100%;height:84px;border-radius:12px;border:1px solid rgba(255,255
 </div>
 
 <script>
-let qty=1;
-let currentItem=null;
+let cartCount = 0;
+let currentItem = null;
+let currentQty = 1;
 
 function openTab(tab){
-  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>{
+    t.classList.remove('active');
+    t.setAttribute('aria-selected','false');
+  });
+  document.querySelector(`.tab[data-tab="${tab}"]`).classList.add('active');
+  document.querySelector(`.tab[data-tab="${tab}"]`).setAttribute('aria-selected','true');
+
   document.querySelectorAll('.tab-panel').forEach(p=>p.style.display='none');
-  document.querySelector(`[data-tab="${tab}"]`).classList.add('active');
-  document.querySelector(`[data-panel="${tab}"]`).style.display='block';
+  document.querySelector(`.tab-panel[data-panel="${tab}"]`).style.display='block';
 }
 
 function openItem(item){
-  currentItem=item;
-  qty=1;
-  document.getElementById('modalName').innerText=item.name;
-  document.getElementById('modalPrice').innerText='$'+item.price;
-  document.getElementById('modalDesc').innerText=item.desc||'';
-  document.getElementById('qtyVal').innerText=qty;
-  
-  // Doneness
-  const donenessDiv = document.getElementById('donenessDiv');
-  donenessDiv.innerHTML='';
+  currentItem = item;
+  currentQty = 1;
+  document.getElementById('modalName').innerText = item.name;
+  document.getElementById('modalPrice').innerText = "$"+item.price;
+  document.getElementById('modalDesc').innerText = item.desc || '';
+  document.getElementById('qtyVal').innerText = currentQty;
+
   if(item.doneness){
-    ['Medium Rare','Medium','Medium Well','Well Done'].forEach((d,i)=>{
-      const id='doneness_'+i;
-      donenessDiv.innerHTML += `<label><input type="radio" name="doneness" value="${d}" ${i===0?'checked':''}> ${d}</label>`;
-    });
+    document.getElementById('donenessOption').style.display='block';
+  }else{
+    document.getElementById('donenessOption').style.display='none';
   }
 
-  document.getElementById('itemModal').classList.add('show');
+  document.getElementById('modalBg').style.display='flex';
+  setTimeout(()=>document.getElementById('modalBg').classList.add('show'),20);
 }
 
-function closeModal(){document.getElementById('itemModal').classList.remove('show')}
-function changeQty(v){qty=Math.max(1,qty+v);document.getElementById('qtyVal').innerText=qty}
+function closeModal(){
+  document.getElementById('modalBg').classList.remove('show');
+  setTimeout(()=>document.getElementById('modalBg').style.display='none',200);
+}
+
+function updateQty(val){
+  currentQty += val;
+  if(currentQty<1) currentQty=1;
+  document.getElementById('qtyVal').innerText=currentQty;
+}
+
 function addToCart(){
-  // Fly-to-cart animation can be implemented here
+  cartCount += currentQty;
+  document.getElementById('cartBadge').innerText = cartCount;
+  document.getElementById('cartBadge').style.display='flex';
   document.getElementById('cartBtn').classList.add('cart-animate');
   setTimeout(()=>document.getElementById('cartBtn').classList.remove('cart-animate'),350);
   closeModal();
-  alert(currentItem.name+" added to cart!");
 }
+
+// Add button pop animation
+document.querySelectorAll('.btn-pill').forEach(btn=>{
+  btn.addEventListener('click',()=>btn.classList.add('btn-animate'));
+  btn.addEventListener('animationend',()=>btn.classList.remove('btn-animate'));
+});
 </script>
 
 </body>
