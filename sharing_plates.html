@@ -619,20 +619,17 @@ function pushToCart(itemObj){
 }
 
 /* FLY-TO-CART ANIMATION (premium C) */
-function animateModalCloneToCartAndAdd(){
+function animateModalCloneToCart(){
   const modalCard = document.querySelector('.modal-card');
   const rect = modalCard.getBoundingClientRect();
   const clone = modalCard.cloneNode(true);
 
   clone.classList.add('flying-clone');
-  clone.style.position = 'fixed';
   clone.style.top = rect.top + "px";
   clone.style.left = rect.left + "px";
   clone.style.width = rect.width + "px";
   clone.style.height = rect.height + "px";
-  clone.style.opacity = "1";
-  clone.style.transform = "scale(1)";
-  clone.style.overflow = "hidden";
+
   clone.querySelector('.add-row')?.remove();
   clone.querySelector('.modal-close-btn')?.remove();
 
@@ -644,11 +641,10 @@ function animateModalCloneToCartAndAdd(){
 
   clone.animate([
     { transform:"scale(1)", top: rect.top+"px", left: rect.left+"px", opacity:1 },
-    { transform:"scale(0.30)", top: destY+"px", left: destX+"px", opacity:0.10 }
-  ], { duration: 700, easing:"cubic-bezier(.18,.89,.32,1.28)" });
+    { transform:"scale(0.3)", top: destY+"px", left: destX+"px", opacity:0.1 }
+  ], { duration:700, easing:"cubic-bezier(.18,.89,.32,1.28)" });
 
   setTimeout(()=>clone.remove(), 720);
-  completeAdd();
 }
 
 function completeAdd(){
@@ -763,8 +759,7 @@ document.getElementById('modalAddBtn').onclick = function (e) {
 
   /* Run premium animation */
   if (typeof animateModalCloneToCartAndAdd === "function") {
-    animateModalCloneToCartAndAdd();
-  } else {
+    animateModalCloneToCart();
     closeModal();
   }
 };
