@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>Mingle Bistro — Mains & Sides</title>
 
-
 <style>
 :root{
   --gold:#D4AF37;
@@ -18,46 +17,101 @@
   --option-border: rgba(255,255,255,0.04);
 }
 
+/* Reset / Base */
 *{box-sizing:border-box}
-html,body{height:100%;margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif}
+html,body{height:100%;margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;-webkit-font-smoothing:antialiased}
 a{color:inherit;text-decoration:none}
 
-/* header */
-.top-header{padding:20px 16px 10px;text-align:center}
-.restaurant-name{font-size:26px;font-weight:900;color:var(--gold)}
+/* Top header - centered */
+.top-header{
+  padding:20px 16px 10px 16px;
+  border-bottom:1px solid rgba(255,255,255,0.03);
+  background:linear-gradient(180deg, rgba(0,0,0,0.02), transparent);
+  text-align:center;
+}
+.restaurant-name{
+  font-size:26px;
+  font-weight:900;
+  color:var(--gold);
+  line-height:1;
+  letter-spacing:0.6px;
+}
 
-/* container */
-.container{padding:12px 12px 140px}
+/* Container */
+.container{padding:12px 12px 140px 12px}
 
-/* tabs */
-.tab-row{display:flex;gap:8px;justify-content:center;padding:12px}
-.tab{padding:10px 14px;border-radius:999px;border:1px solid rgba(255,255,255,.05);background:transparent;color:var(--gold);font-weight:700;cursor:pointer}
-.tab.active{background:rgba(212,175,55,.08)}
+/* Tabs (centered) */
+.tab-row{display:flex;gap:8px;overflow:auto;padding:12px 6px 6px;white-space:nowrap;justify-content:center}
+.tab{padding:10px 14px;border-radius:999px;border:1px solid rgba(255,255,255,0.03);color:var(--gold);background:transparent;cursor:pointer;font-weight:700;flex:0 0 auto}
+.tab.active{background:rgba(212,175,55,0.08)}
 
-/* section */
-.section-title{color:var(--gold);font-weight:800;margin:10px;font-size:16px;border-left:4px solid var(--gold);padding-left:10px}
+/* Section title (inside tab content) */
+.section-title{color:var(--gold);font-weight:800;margin:6px 6px 12px 6px;font-size:16px;border-left:4px solid var(--gold);padding-left:10px}
 
-/* grid */
+/* Grid */
 .grid{display:grid;grid-template-columns:1fr;gap:12px}
-@media(min-width:900px){.grid{grid-template-columns:repeat(2,1fr)}}
+@media(min-width:900px){ .grid{grid-template-columns:repeat(2,1fr)} }
 
-/* item card */
-.item-card{background:var(--card);padding:14px;border-radius:12px;cursor:pointer}
-.item-row{display:flex;justify-content:space-between;gap:12px}
-.item-title{font-weight:900;font-size:15px}
-.item-desc{color:var(--muted);font-size:13px;margin-top:6px}
-.price{font-weight:800}
+/* Item Card */
+.item-card{
+  background:var(--card);
+  padding:14px;
+  border-radius:12px;
+  box-shadow:0 8px 22px rgba(0,0,0,0.6);
+  cursor:pointer;
+  transition:transform .10s ease,box-shadow .12s ease;
+  border:1px solid rgba(255,255,255,0.02);
+}
+.item-card:hover{box-shadow:0 18px 36px rgba(0,0,0,0.55)}
+.item-card:active{transform:scale(.998)}
+.item-row{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.item-left{min-width:0}
+.item-title{font-weight:900;font-size:15px;white-space:normal;line-height:1.05}
+.item-desc{color:var(--muted);font-size:13px;margin-top:6px;white-space:normal}
+.price{color:#ddd;font-weight:800;min-width:54px;text-align:right}
 
-/* footer pages */
-.footer-pages{position:fixed;bottom:0;left:0;right:0;padding:10px;display:flex;justify-content:center;gap:8px}
-.page-num{padding:8px 12px;border-radius:8px;background:rgba(255,255,255,.05)}
-.page-num.current{background:var(--gold);color:#000}
+/* MODAL, OPTIONS, CART, PAGINATION (unchanged from page 1) */
+.modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.62);backdrop-filter:blur(6px);align-items:center;justify-content:center;z-index:120000;padding:18px}
+.modal-card{
+  width:clamp(340px,92vw,560px);
+  max-height:86vh;
+  background:linear-gradient(180deg, #0f0f0f, #0c0c0c);
+  border-radius:16px;padding:18px;border:1px solid var(--glass-border);overflow:auto;
+  box-shadow:0 22px 50px rgba(0,0,0,0.7);
+  transform:translateY(6px);opacity:0;transition:transform .20s ease,opacity .20s ease;
+}
+.modal-bg.show .modal-card{transform:translateY(0);opacity:1}
+.modal-title{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+.modal-title > div{flex:1;min-width:0}
+.modal-name{font-weight:900;color:var(--gold);font-size:18px;line-height:1.05}
+.modal-price{font-weight:800;color:#fff;font-size:14px;opacity:0.95;margin-top:6px}
+.modal-desc{color:var(--muted);margin-top:12px;font-size:14px;white-space:normal}
+.modal-close-btn{flex:0 0 auto;width:36px;height:36px;border-radius:50%;border:1px solid var(--gold);background:transparent;color:var(--gold);display:flex;align-items:center;justify-content:center;cursor:pointer;font-weight:700;font-size:15px;padding:0}
+
+/* Option cards, qty, add, cancel */
+.option-block{margin-top:12px}
+.option-cards{display:flex;gap:10px;flex-wrap:wrap}
+.option-card{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:12px;background:var(--option-bg);border:1px solid var(--option-border);cursor:pointer;min-width:120px;flex:0 0 auto;transition:transform .12s ease,box-shadow .12s ease}
+.option-card input{margin:0}
+.option-card .label-text{font-weight:700;color:#ddd;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.option-card .price-addon{font-weight:800;color:var(--gold);font-size:13px;white-space:nowrap;margin-left:6px}
+textarea{width:100%;height:84px;border-radius:12px;border:1px solid rgba(255,255,255,0.06);background:rgba(0,0,0,0.35);padding:10px;color:#fff;font-size:14px;resize:none;outline:none;margin-top:8px}
+.qty-row{display:flex;align-items:center;gap:12px;margin-top:12px}
+.qty-btn{width:38px;height:38px;border-radius:10px;border:1px solid rgba(255,255,255,0.06);background:transparent;color:#fff;font-size:18px;display:flex;align-items:center;justify-content:center;cursor:pointer}
+.qty-val{min-width:36px;text-align:center;font-weight:800}
+.add-row{margin-top:16px;text-align:center}
+.btn-pill{display:inline-block;width:100%;padding:12px 18px;border-radius:999px;text-align:center;background:transparent;color:var(--gold);border:1px solid var(--gold);font-weight:800;font-size:15px;cursor:pointer}
+.cancel-btn{display:block;margin:12px auto 0 auto;width:68%;padding:12px;border-radius:12px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);color:#ddd;font-weight:700;cursor:pointer}
+
+/* bottom pagination */
+.footer-pages{position:fixed;left:0;right:0;bottom:0;padding:10px;background:linear-gradient(180deg,rgba(0,0,0,0),#070707 20%);display:flex;justify-content:center;gap:8px;z-index:900}
+.page-num{padding:8px 12px;border-radius:8px;background:rgba(255,255,255,0.03);color:#ddd;border:1px solid rgba(255,255,255,0.03);font-weight:600}
+.page-num.current{background:var(--gold);color:#000;border-color:var(--gold)}
 </style>
 </head>
 
 <body>
 
-<!-- HEADER -->
 <div class="top-header">
   <div class="restaurant-name">MINGLE BISTRO (FUNAN)</div>
 </div>
@@ -65,66 +119,45 @@ a{color:inherit;text-decoration:none}
 <div class="container">
 
   <!-- TABS -->
-  <div class="tab-row">
-    <button class="tab active" onclick="openTab('mains')">Mains</button>
-    <button class="tab" onclick="openTab('sides')">Add-On Sides</button>
+  <div class="tab-row" role="tablist">
+    <button class="tab active" data-tab="mains" onclick="openTab('mains')">Mains</button>
+    <button class="tab" data-tab="sides" onclick="openTab('sides')">Add-On Sides</button>
   </div>
 
   <!-- MAINS -->
   <div class="tab-panel" data-panel="mains" style="display:block">
     <div class="section-title">Mains</div>
     <div class="grid">
-
-      <div class="item-card" onclick="openItem({id:'ribeye',name:'CHAR-GRILLED GRAIN FED ANGUS BEEF RIBEYE 250GM',price:40,desc:'Perfect balance of flavour & tenderness. Served with beef jus & roasted garlic'})">
-        <div class="item-row">
-          <div>
-            <div class="item-title">ANGUS BEEF RIBEYE 250GM</div>
-            <div class="item-desc">Served with beef jus & roasted garlic</div>
-          </div>
-          <div class="price">$40</div>
-        </div>
+      <div class="item-card" onclick="openItem({id:'ribeye',name:'CHAR-GRILLED GRAIN FED ANGUS BEEF RIBEYE 250GM',price:40,desc:'A primary cut with perfect balance of flavour & tenderness. Served with beef jus & roasted garlic'})">
+        <div class="item-row"><div class="item-left"><div class="item-title">ANGUS BEEF RIBEYE 250GM</div><div class="item-desc">Served with beef jus & roasted garlic</div></div><div class="price">$40</div></div>
       </div>
-
-      <div class="item-card" onclick="openItem({id:'wagyuFlank',name:'CHAR-GRILLED WAGYU MBS 4-5 FLANK STEAK 250GM',price:45,desc:'Robust flavour. Served with peruvian aji verde & roasted garlic'})">
-        <div class="item-row">
-          <div>
-            <div class="item-title">WAGYU FLANK STEAK 250GM</div>
-            <div class="item-desc">Peruvian aji verde & roasted garlic</div>
-          </div>
-          <div class="price">$45</div>
-        </div>
+      <div class="item-card" onclick="openItem({id:'wagyuFlank',name:'CHAR-GRILLED WAGYU MBS 4-5 FLANK STEAK 250GM',price:45,desc:'Secondary cut Australian wagyu with robust flavour. Served with peruvian aji verde & roasted garlic'})">
+        <div class="item-row"><div class="item-left"><div class="item-title">WAGYU MBS 4-5 FLANK STEAK 250GM</div><div class="item-desc">Peruvian aji verde & roasted garlic</div></div><div class="price">$45</div></div>
       </div>
-
-      <div class="item-card" onclick="openItem({id:'striploin',name:'CHAR-GRILLED WAGYU MBS 6-7 STRIPLOIN 250GM',price:82,desc:'Japanese wagyu cross-breed. Served with beef jus & roasted garlic'})">
-        <div class="item-row">
-          <div>
-            <div class="item-title">WAGYU STRIPLOIN 250GM</div>
-            <div class="item-desc">MBS 6-7, beef jus & roasted garlic</div>
-          </div>
-          <div class="price">$82</div>
-        </div>
+      <div class="item-card" onclick="openItem({id:'striploin',name:'CHAR-GRILLED WAGYU MBS 6-7 STRIPLOIN 250GM',price:82,desc:'Japanese Wagyu cross-breed, marble score 6-7 striploin, served with beef jus & roasted garlic'})">
+        <div class="item-row"><div class="item-left"><div class="item-title">WAGYU MBS 6-7 STRIPLOIN 250GM</div><div class="item-desc">Beef jus & roasted garlic</div></div><div class="price">$82</div></div>
       </div>
-
-      <div class="item-card" onclick="openItem({id:'pork',name:'CHAR-GRILLED IBERICO PORK SECRETO 250GM',price:40,desc:'Wagyu of pork, rich & tender. Chimichurri & pickled red cabbage'})">
-        <div class="item-row">
-          <div>
-            <div class="item-title">IBERICO PORK SECRETO</div>
-            <div class="item-desc">Chimichurri, pickled red cabbage</div>
-          </div>
-          <div class="price">$40</div>
-        </div>
+      <div class="item-card" onclick="openItem({id:'pork',name:'CHAR-GRILLED SPANISH IBERICO PORK SECRETO 250GM',price:40,desc:'Well known as wagyu of pork, tender & rich, served medium well with chimichurri & pickled red cabbage'})">
+        <div class="item-row"><div class="item-left"><div class="item-title">SPANISH IBERICO PORK SECRETO 250GM</div><div class="item-desc">Chimichurri & pickled red cabbage</div></div><div class="price">$40</div></div>
       </div>
-
-      <div class="item-card" onclick="openItem({id:'chicken',name:'CITRUS & CHIPOTLE HALF CHICKEN',price:20,desc:'Slow cooked 3 hours, finished on grill. Chimichurri & lemon'})">
-        <div class="item-row">
-          <div>
-            <div class="item-title">CITRUS & CHIPOTLE HALF CHICKEN</div>
-            <div class="item-desc">Chimichurri & lemon</div>
-          </div>
-          <div class="price">$20</div>
-        </div>
+      <div class="item-card" onclick="openItem({id:'chicken',name:'CHAR-GRILLED CITRUS & CHIPOTLE HALF CHICKEN',price:20,desc:'Marinated & slow cooked 3 hours, finished on grill & served with chimichurri & lemon'})">
+        <div class="item-row"><div class="item-left"><div class="item-title">CITRUS & CHIPOTLE HALF CHICKEN</div><div class="item-desc">Chimichurri & lemon</div></div><div class="price">$20</div></div>
       </div>
-
+      <div class="item-card" onclick="openItem({id:'platter',name:'PREMIUM PLATTER (4-5 PAX)',price:188,desc:'4 pieces pan seared foie gras, Wagyu M6 flank steak 250gm, Iberico pork secreto 250gm, G.F Angus ribeye 250gm, grilled half spring chicken, duck fat potatoes, arugula salad, brussels sprouts'})">
+        <div class="item-row"><div class="item-left"><div class="item-title">PREMIUM PLATTER (4-5 PAX)</div><div class="item-desc">Assorted mains & sides</div></div><div class="price">$188</div></div>
+      </div>
+      <div class="item-card" onclick="openItem({id:'fishChips',name:'VODKA BATTERED FISH & CHIPS',price:25,desc:'Crispy vodka battered pacific dory, seasoned fries, assam fish aioli & avocado guacamole'})">
+        <div class="item-row"><div class="item-left"><div class="item-title">VODKA BATTERED FISH & CHIPS</div><div class="item-desc">Assam fish aioli & avocado guacamole</div></div><div class="price">$25</div></div>
+      </div>
+      <div class="item-card" onclick="openItem({id:'wagyuFoieBurger',name:'SANCHOKU WAGYU & FOIE GRAS BURGER',price:32,desc:'Flame grilled sanchoku wagyu patty, pan seared foie gras, butter brioche bun, red cheddar, onions, tomato, lettuce, jalapeno chipotle aioli, skin on fries'})">
+        <div class="item-row"><div class="item-left"><div class="item-title">SANCHOKU WAGYU & FOIE GRAS BURGER</div><div class="item-desc">Butter brioche bun, red cheddar, onions, tomato, lettuce, skin on fries</div></div><div class="price">$32</div></div>
+      </div>
+      <div class="item-card" onclick="openItem({id:'wagyuBurger',name:'SANCHOKU WAGYU BEEF BURGER',price:24,desc:'Flame grilled sanchoku wagyu patty, butter brioche bun, red cheddar, onions, tomato, lettuce, jalapeno chipotle aioli, skin on fries'})">
+        <div class="item-row"><div class="item-left"><div class="item-title">SANCHOKU WAGYU BEEF BURGER</div><div class="item-desc">Butter brioche bun, red cheddar, onions, tomato, lettuce</div></div><div class="price">$24</div></div>
+      </div>
+      <div class="item-card" onclick="openItem({id:'fishBurger',name:'CRISPY BATTERED FISH BURGER',price:21,desc:'Crispy battered pacific dory, butter brioche bun, red cheddar, wasabi aioli, butterhead lettuce, skin on fries'})">
+        <div class="item-row"><div class="item-left"><div class="item-title">CRISPY BATTERED FISH BURGER</div><div class="item-desc">Butter brioche bun, red cheddar, wasabi aioli</div></div><div class="price">$21</div></div>
+      </div>
     </div>
   </div>
 
@@ -132,21 +165,14 @@ a{color:inherit;text-decoration:none}
   <div class="tab-panel" data-panel="sides" style="display:none">
     <div class="section-title">Add-On Sides</div>
     <div class="grid">
-
-      <div class="item-card" onclick="openItem({id:'foieSide',name:'PAN SEARED FOIE GRAS',price:13,desc:'Add-on pan seared foie gras'})">
-        <div class="item-row">
-          <div class="item-title">PAN SEARED FOIE GRAS</div>
-          <div class="price">$13</div>
-        </div>
-      </div>
-
-      <div class="item-card" onclick="openItem({id:'truffleMash',name:'CREAMY TRUFFLE MASHED POTATOES',price:9,desc:'Creamy mashed potatoes with truffle'})">
-        <div class="item-row">
-          <div class="item-title">TRUFFLE MASHED POTATOES</div>
-          <div class="price">$9</div>
-        </div>
-      </div>
-
+      <div class="item-card" onclick="openItem({id:'foie',name:'PAN SEARED FOIE GRAS',price:13,desc:''})"><div class="item-row"><div class="item-left"><div class="item-title">PAN SEARED FOIE GRAS</div></div><div class="price">$13</div></div></div>
+      <div class="item-card" onclick="openItem({id:'porkSausage',name:'GRILLED PORK SAUSAGE WITH FENNEL',price:6,desc:''})"><div class="item-row"><div class="item-left"><div class="item-title">GRILLED PORK SAUSAGE WITH FENNEL</div></div><div class="price">$6</div></div></div>
+      <div class="item-card" onclick="openItem({id:'brusselsAji',name:'BRUSSEL SPROUTS WITH GUANCIALE & PERUVIAN AJI VERDE',price:13,desc:''})"><div class="item-row"><div class="item-left"><div class="item-title">BRUSSEL SPROUTS W/ GUANCIALE & AJI VERDE</div></div><div class="price">$13</div></div></div>
+      <div class="item-card" onclick="openItem({id:'brusselsBonito',name:'BRUSSEL SPROUTS WITH BONITO GLAZE',price:11,desc:''})"><div class="item-row"><div class="item-left"><div class="item-title">BRUSSEL SPROUTS W/ BONITO GLAZE</div></div><div class="price">$11</div></div></div>
+      <div class="item-card" onclick="openItem({id:'greekSalad',name:'GREEK SALAD WITH FETA & CITRUS VINAIGRETTE',price:11,desc:''})"><div class="item-row"><div class="item-left"><div class="item-title">GREEK SALAD W/ FETA & VINAIGRETTE</div></div><div class="price">$11</div></div></div>
+      <div class="item-card" onclick="openItem({id:'crispyKale',name:'CRISPY KALE WITH CHIPOTLE AIOLI',price:11,desc:''})"><div class="item-row"><div class="item-left"><div class="item-title">CRISPY KALE WITH CHIPOTLE AIOLI</div></div><div class="price">$11</div></div></div>
+      <div class="item-card" onclick="openItem({id:'arugula',name:'ARUGULA SALAD WITH BOCCONCINI CHEESE & TRUFFLE VINAIGRETTE',price:11,desc:''})"><div class="item-row"><div class="item-left"><div class="item-title">ARUGULA SALAD W/ BOCCONCINI & TRUFFLE VINAIGRETTE</div></div><div class="price">$11</div></div></div>
+      <div class="item-card" onclick="openItem({id:'truffleMash',name:'CREAMY TRUFFLE MASHED POTATOES',price:9,desc:''})"><div class="item-row"><div class="item-left"><div class="item-title">CREAMY TRUFFLE MASHED POTATOES</div></div><div class="price">$9</div></div></div>
     </div>
   </div>
 
@@ -167,6 +193,79 @@ function openTab(tab){
   document.querySelector(`.tab-panel[data-panel="${tab}"]`).style.display='block';
   event.target.classList.add('active');
 }
+</script>
+
+<!-- MODAL & CART JS -->
+<div class="modal-bg" id="modalBg">
+  <div class="modal-card">
+    <div class="modal-title">
+      <div>
+        <div class="modal-name" id="modalName"></div>
+        <div class="modal-price" id="modalPrice"></div>
+        <div class="modal-desc" id="modalDesc"></div>
+      </div>
+      <button class="modal-close-btn" onclick="closeModal()">×</button>
+    </div>
+    <div class="option-block" id="optionBlock"></div>
+    <textarea id="notes" placeholder="Add special notes (optional)"></textarea>
+    <div class="qty-row">
+      <button class="qty-btn" onclick="changeQty(-1)">-</button>
+      <div class="qty-val" id="qtyVal">1</div>
+      <button class="qty-btn" onclick="changeQty(1)">+</button>
+    </div>
+    <div class="add-row">
+      <button class="btn-pill" onclick="addToCart()">Add to Cart</button>
+      <button class="cancel-btn" onclick="closeModal()">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<script>
+let modalQty = 1;
+let currentItem = {};
+
+function openItem(item){
+  currentItem = {...item};
+  modalQty = 1;
+  document.getElementById('modalName').textContent = item.name;
+  document.getElementById('modalPrice').textContent = "$"+item.price;
+  document.getElementById('modalDesc').textContent = item.desc || '';
+  document.getElementById('qtyVal').textContent = modalQty;
+
+  // Reset options if needed (empty for now)
+  const optionBlock = document.getElementById('optionBlock');
+  optionBlock.innerHTML = '';
+
+  document.getElementById('modalBg').style.display = 'flex';
+  setTimeout(()=>document.getElementById('modalBg').classList.add('show'),10);
+}
+
+function closeModal(){
+  const modalBg = document.getElementById('modalBg');
+  modalBg.classList.remove('show');
+  setTimeout(()=>{modalBg.style.display='none';},200);
+}
+
+function changeQty(delta){
+  modalQty += delta;
+  if(modalQty < 1) modalQty = 1;
+  document.getElementById('qtyVal').textContent = modalQty;
+}
+
+function addToCart(){
+  let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+  cart.push({
+    id: currentItem.id,
+    name: currentItem.name,
+    price: currentItem.price,
+    qty: modalQty,
+    notes: document.getElementById('notes').value || ''
+  });
+  localStorage.setItem('cart', JSON.stringify(cart));
+  closeModal();
+  alert(currentItem.name + " added to cart!");
+}
+
 </script>
 
 </body>
