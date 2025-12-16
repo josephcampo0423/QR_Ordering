@@ -266,7 +266,7 @@ textarea{width:100%;height:84px;border-radius:12px;border:1px solid rgba(255,255
   <div class="section-title">Mains</div>
   <div class="grid">
 
-    <div class="item-card" onclick="openItem({id:'ribeye',name:'CHAR-GRILLED GRAIN FED ANGUS BEEF RIBEYE 250GM',price:40,desc:'A primary cut with perfect balance of flavour & tenderness. Served with beef jus & roasted garlic',})">
+    <div class="item-card" onclick="openItem({id:'ribeye',name:'CHAR-GRILLED GRAIN FED ANGUS BEEF RIBEYE 250GM',price:40,desc:'A primary cut with perfect balance of flavour & tenderness. Served with beef jus & roasted garlic',hasDoneness:true})">
       <div class="item-row">
         <div class="item-left">
           <div class="item-title">CHAR-GRILLED GRAIN FED ANGUS BEEF RIBEYE 250GM</div>
@@ -276,7 +276,7 @@ textarea{width:100%;height:84px;border-radius:12px;border:1px solid rgba(255,255
       </div>
     </div>
 
-    <div class="item-card" onclick="openItem({id:'flank',name:'CHAR-GRILLED WAGYU MBS 4-5 FLANK STEAK 250GM',price:45,desc:'A secondary cut Australian wagyu with a robust flavour profile. Served with peruvian aji verde & roasted garlic'})">
+    <div class="item-card" onclick="openItem({id:'flank',name:'CHAR-GRILLED WAGYU MBS 4-5 FLANK STEAK 250GM',price:45,desc:'A secondary cut Australian wagyu with a robust flavour profile. Served with peruvian aji verde & roasted garlic',hasDoneness:true})">
       <div class="item-row">
         <div class="item-left">
           <div class="item-title">CHAR-GRILLED WAGYU MBS 4-5 FLANK STEAK 250GM</div>
@@ -286,7 +286,7 @@ textarea{width:100%;height:84px;border-radius:12px;border:1px solid rgba(255,255
       </div>
     </div>
 
-    <div class="item-card" onclick="openItem({id:'striploin',name:'CHAR-GRILLED WAGYU MBS 6-7 STRIPLOIN 250GM',price:82,desc:'Japanese wagyu cross-breed, marble score 6-7 striploin. Served with beef jus & roasted garlic'})">
+    <div class="item-card" onclick="openItem({id:'striploin',name:'CHAR-GRILLED WAGYU MBS 6-7 STRIPLOIN 250GM',price:82,desc:'Japanese wagyu cross-breed, marble score 6-7 striploin. Served with beef jus & roasted garlic',hasDoneness:true})">
       <div class="item-row">
         <div class="item-left">
           <div class="item-title">CHAR-GRILLED WAGYU MBS 6-7 STRIPLOIN 250GM</div>
@@ -316,7 +316,7 @@ textarea{width:100%;height:84px;border-radius:12px;border:1px solid rgba(255,255
       </div>
     </div>
 
-    <div class="item-card" onclick="openItem({id:'platter',name:'PREMIUM PLATTER (4-5 PAX)',price:188,desc:'4 pieces pan seared foie gras, Wagyu M6 flank steak 250gm, iberico pork secreto 250gm, G.F Angus ribeye 250gm, grilled half spring chicken, duck fat potatoes, arugula salad, brussels sprouts'})">
+    <div class="item-card" onclick="openItem({id:'platter',name:'PREMIUM PLATTER (4-5 PAX)',price:188,desc:'4 pieces pan seared foie gras, Wagyu M6 flank steak 250gm, iberico pork secreto 250gm, G.F Angus ribeye 250gm, grilled half spring chicken, duck fat potatoes, arugula salad, brussels sprouts',hasDoneness:true})">
       <div class="item-row">
         <div class="item-left">
           <div class="item-title">PREMIUM PLATTER (4-5 PAX)</div>
@@ -604,10 +604,14 @@ function openItem(item){
   document.getElementById('prosciuttoOption').style.display = item.prosciutto ? 'block' : 'none';
   document.getElementById('friesSelector').style.display = (item.type === 'fries') ? 'block' : 'none';
   document.getElementById('spiceOption').style.display = item.hasSpiceOption ? 'block' : 'none';
+  document.getElementById('donenessOption').style.display = item.hasDoneness ? 'block' : 'none';
 
   /* Reset option selections */
   document.querySelectorAll('#prosciuttoOption input, #friesSelector input, #spiceOption input')
     .forEach(el => el.checked = false);
+    
+  document.querySelectorAll('input[name="doneness"]').forEach(r => r.checked = false);
+  document.querySelectorAll('.doneness-card').forEach(c => c.classList.remove('active'));
 
   /* preselect spicy for mussels */
   if(item.hasSpiceOption){
@@ -671,6 +675,7 @@ document.getElementById('modalAddBtn').onclick = function (e) {
   let option = "";
   let fries = "";
   let spicy = "";
+  let doneness = "";
   let request = document.getElementById("specialRequestInput").value.trim();
   let qty = Number(document.getElementById("qtyValue").textContent);
 
@@ -708,8 +713,19 @@ document.getElementById('modalAddBtn').onclick = function (e) {
     spicy = s ? s.value : "spicy";
     finalName += spicy === "non-spicy" ? " (Non-Spicy)" : " (Spicy)";
   }
+  
+  /* Doneness */
+  if (currentItem.hasDoneness) {
+    const d = document.querySelector('input[name="doneness"]:checked');
+    if (!d) {
+      alert("Please select doneness");
+      return;
+     }
+    doneness = d.value;
+    finalName += " (" + doneness + ")";
+  }
 
-  /* SAVE CART */
+  /*  SAVE CART */
   cart.push({
     id: currentItem.id,
     name: finalName,
@@ -718,6 +734,7 @@ document.getElementById('modalAddBtn').onclick = function (e) {
     option: option,
     fries: fries,
     spicy: spicy,
+    doneness: doneness,
     request: request
   });
 
@@ -775,5 +792,15 @@ function bubbleToCart(){
 document.getElementById('cartBtn').onclick = function(){
   window.location.href = "cart.html";
 };
+
+  document.addEventListener('click', function(e){
+  const card = e.target.closest('.doneness-card');
+  if(!card) return;
+
+  document.querySelectorAll('.doneness-card').forEach(c => c.classList.remove('active'));
+  card.classList.add('active');
+  card.querySelector('input').checked = true;
+});
+
 </script>
 </html>
