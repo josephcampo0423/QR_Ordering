@@ -130,11 +130,19 @@ textarea{width:100%;height:84px;border-radius:12px;border:1px solid rgba(255,255
 #cartWrap{position:fixed;bottom:96px;right:18px;z-index:1000} /* raised above pagination */
 
 /* GOLD PREMIUM CART ICON */
-#cartWrap{position:fixed;bottom:96px;right:18px;z-index:1000}
 #cartBtn{
   width:56px;
   height:56px;
-@@ -146,23 +144,48 @@
+  border-radius:50%;
+  background: rgba(255,255,255,0.02);
+  border:1px solid rgba(212,175,55,0.28);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  box-shadow:
+    0 8px 20px rgba(0,0,0,0.45),
+    inset 0 0 0 0.5px rgba(255,255,255,0.15);
+  display:flex;
+  align-items:center;
   justify-content:center;
   cursor:pointer;
   transition:transform .25s ease, box-shadow .25s ease;
@@ -155,38 +163,13 @@ textarea{width:100%;height:84px;border-radius:12px;border:1px solid rgba(255,255
   height:28px;
   opacity: 0.95;
 }
-#cartBadge{
-  position:absolute;
-  top:-6px;
-  right:-6px;
-  width:22px;
-  height:22px;
-  border-radius:50%;
-  background: radial-gradient(circle at 30% 30%, #ffffff, #eaeaea 65%);
-  box-shadow:
-    inset 0 1px 2px rgba(255,255,255,0.9),
-    0 8px 22px rgba(0,0,0,0.55);
-  color:#000;
-  font-weight:700;
-  font-size:12px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  pointer-events:none;
-  z-index:1001;
-  display:none;
-}
-
-/* animations */
-@keyframes btnPop {0% { transform: scale(1); } 40% { transform: scale(0.94); } 100% { transform: scale(1); }}
-@keyframes cartPulse {0% { transform: scale(1); } 50% { transform: scale(1.12); } 100% { transform: scale(1); }}
-.btn-animate {animation: btnPop 0.25s ease;}
-.cart-animate {animation: cartPulse 0.35s ease;}
-.cart-bubble{position:fixed;z-index:140000;width:22px;height:22px;border-radius:50%;background: radial-gradient(circle at 30% 30%, #ffffff, #eaeaea 65%);box-shadow:inset 0 1px 2px rgba(255,255,255,0.9),0 8px 22px rgba(0,0,0,0.55);pointer-events:none;}
 
 /* responsive */
 @media(max-width:420px){
-@@ -173,19 +196,6 @@
+  .restaurant-name{font-size:20px}
+  #cartWrap{bottom:86px; right:14px}
+  #cartBtn{width:50px;height:50px}
+  .modal-card{width:92vw}
   .option-card{min-width:100px}
 }
 
