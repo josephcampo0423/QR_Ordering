@@ -223,244 +223,107 @@ textarea{width:100%;height:84px;border-radius:12px;border:1px solid rgba(255,255
 
   <!-- Tabs -->
   <div class="tab-row" role="tablist" aria-label="Menu sections">
-    <button class="tab active" data-tab="sharing" onclick="openTab('sharing')" role="tab" aria-selected="true">Sharing Plates</button>
-    <button class="tab" data-tab="sashimi" onclick="openTab('sashimi')" role="tab" aria-selected="false">Sashimi & Crudo</button>
-    <button class="tab" data-tab="fries" onclick="openTab('fries')" role="tab" aria-selected="false">Skin-on & Twister Fries</button>
+  <button class="tab active" data-tab="mains" onclick="openTab('mains')" role="tab" aria-selected="true">
+    Mains
+  </button>
+  <button class="tab" data-tab="addons" onclick="openTab('addons')" role="tab" aria-selected="false">
+    Add-On Sides
+  </button>
   </div>
 
-  <!-- SHARING PLATES TAB -->
-  <div class="tab-panel" data-panel="sharing" style="display:block">
-    <div class="section-title">Sharing Plates</div>
-    <div class="grid">
+  <!-- MAINS TAB -->
+<div class="tab-panel" data-panel="mains" style="display:block">
+  <div class="section-title">Mains</div>
+  <div class="grid">
 
-      <!-- 1 -->
-      <div class="item-card" onclick="openItem({id:'bread',name:'TOASTED GARLIC SOURDOUGH BREAD',price:8,desc:'Toasted sourdough bread with homemade garlic confit butter'})">
-        <div class="item-row">
-          <div class="item-left">
-            <div class="item-title">TOASTED GARLIC SOURDOUGH BREAD</div>
-            <div class="item-desc">Toasted sourdough bread with homemade garlic confit butter</div>
-          </div>
-          <div class="price">$8</div>
+    <div class="item-card" onclick="openItem({id:'ribeye',name:'CHAR-GRILLED GRAIN FED ANGUS BEEF RIBEYE 250GM',price:40,desc:'A primary cut with perfect balance of flavour & tenderness. Served with beef jus & roasted garlic'})">
+      <div class="item-row">
+        <div class="item-left">
+          <div class="item-title">CHAR-GRILLED GRAIN FED ANGUS BEEF RIBEYE 250GM</div>
+          <div class="item-desc">A primary cut with perfect balance of flavour & tenderness. Served with beef jus & roasted garlic</div>
         </div>
+        <div class="price">$40</div>
       </div>
-
-      <!-- 2 -->
-      <div class="item-card" onclick="openItem({id:'wings',name:'CRISPY SPICY MIDWINGS',price:14,desc:'5 Pieces deep fried spicy midwings, homemade curry, spice mix, curry ketchup'})">
-        <div class="item-row">
-          <div class="item-left">
-            <div class="item-title">CRISPY SPICY MIDWINGS</div>
-            <div class="item-desc">5 Pieces deep fried spicy midwings, homemade curry, spice mix, curry ketchup</div>
-          </div>
-          <div class="price">$14</div>
-        </div>
-      </div>
-
-      <!-- 3 -->
-      <div class="item-card" onclick="openItem({id:'foie',name:'FOIE GRAS WITH MALIBU COMPRESSED ROCK MELON',price:23,desc:'Pan seared hungarian foie gras, malibu marinated, rock melon, sourdough toast'})">
-        <div class="item-row">
-          <div class="item-left">
-            <div class="item-title">FOIE GRAS WITH MALIBU COMPRESSED ROCK MELON</div>
-            <div class="item-desc">Pan seared hungarian foie gras, malibu marinated, rock melon, sourdough toast</div>
-          </div>
-          <div class="price">$23</div>
-        </div>
-      </div>
-
-      <!-- 4 -->
-      <div class="item-card" onclick="openItem({id:'provola',name:'SMOKED PROVOLA CHEESE TEMPURA WITH AGED PROSCIUTTO',price:21,desc:'Smoked provola cheese, aged prosciutto, fresh tomatoes, arugula, balsamic glaze, honey'})">
-        <div class="item-row">
-          <div class="item-left">
-            <div class="item-title">SMOKED PROVOLA CHEESE TEMPURA WITH AGED PROSCIUTTO</div>
-            <div class="item-desc">Smoked provola cheese, aged prosciutto, fresh tomatoes, arugula, balsamic glaze, honey</div>
-          </div>
-          <div class="price">$21</div>
-        </div>
-      </div>
-
-      <!-- 5 -->
-      <div class="item-card" onclick="openItem({id:'corn',name:'FRIED CORN RIBS WITH ASSAM AIOLI',price:15,desc:'Sweet corn ribs, assam aioli, homemade curry spice, fried curry leaves'})">
-        <div class="item-row">
-          <div class="item-left">
-            <div class="item-title">FRIED CORN RIBS WITH ASSAM AIOLI</div>
-            <div class="item-desc">Sweet corn ribs, assam aioli, homemade curry spice, fried curry leaves</div>
-          </div>
-          <div class="price">$15</div>
-        </div>
-      </div>
-
-      <!-- 6 -->
-      <div class="item-card" onclick="openItem({id:'brusch',name:'SOURDOUGH BRUSCHETTA WITH SMOKED SALMON',price:16,desc:'Toasted sourdough, garlic confit butter, smoked salmon, bonito aioli, fresh Japanese cucumbers, red onions'})">
-        <div class="item-row">
-          <div class="item-left">
-            <div class="item-title">SOURDOUGH BRUSCHETTA WITH SMOKED SALMON</div>
-            <div class="item-desc">Toasted sourdough, garlic confit butter, smoked salmon, bonito aioli, fresh Japanese cucumbers, red onions</div>
-          </div>
-          <div class="price">$16</div>
-        </div>
-      </div>
-
-      <!-- 7 -->
-      <div class="item-card" onclick="openItem({id:'truffle',name:'BAKED TRUFFLE BRIE CHEESE',price:21,desc:'Baked brie cheese, truffle paste, white truffle oil, hot honey, toasted sourdough',prosciutto:true})">
-        <div class="item-row">
-          <div class="item-left">
-            <div class="item-title">BAKED TRUFFLE BRIE CHEESE</div>
-            <div class="item-desc">Baked brie cheese, truffle paste, white truffle oil, hot honey, toasted sourdough</div>
-          </div>
-          <div class="price">$21</div>
-        </div>
-      </div>
-
-      <!-- 8 -->
-      <div class="item-card" onclick="openItem({id:'squid',name:'SZECHUAN SPICE CRISPY SQUID',price:16,desc:'Crispy fried squid, szechuan spice, garlic sprouts, dried chillies'})">
-        <div class="item-row">
-          <div class="item-left">
-            <div class="item-title">SZECHUAN SPICE CRISPY SQUID</div>
-            <div class="item-desc">Crispy fried squid, szechuan spice, garlic sprouts, dried chillies</div>
-          </div>
-          <div class="price">$16</div>
-        </div>
-      </div>
-
-      <!-- 9 -->
-      <div class="item-card" onclick="openItem({id:'mussels',name:'SPICY LIVE MUSSELS & WHITE CLAMS STEW',price:20,desc:'White clams, live greenshell mussels, cherry tomatoes, katsuobushi, stewed in pomodoro & prawn broth',hasSpiceOption:true})">
-        <div class="item-row">
-          <div class="item-left">
-            <div class="item-title">SPICY LIVE MUSSELS & WHITE CLAMS STEW</div>
-            <div class="item-desc">White clams, live greenshell mussels, cherry tomatoes, katsuobushi, stewed in pomodoro & prawn broth</div>
-          </div>
-          <div class="price">$20</div>
-        </div>
-      </div>
-
-      <!-- 10 -->
-      <div class="item-card" onclick="openItem({id:'burrata',name:'BURRATA & AGED PROSCIUTTO SALAD',price:25,desc:'Burrata cheese, aged prosciutto, arugula leaves, cherry tomatoes, peach, balsamic vinaigrette'})">
-        <div class="item-row">
-          <div class="item-left">
-            <div class="item-title">BURRATA & AGED PROSCIUTTO SALAD</div>
-            <div class="item-desc">Burrata cheese, aged prosciutto, arugula leaves, cherry tomatoes, peach, balsamic vinaigrette</div>
-          </div>
-          <div class="price">$25</div>
-        </div>
-      </div>
-
     </div>
-  </div>
 
-  <!-- SASHIMI & CRUDO TAB -->
-  <div class="tab-panel" data-panel="sashimi" style="display:none">
-    <div class="section-title">Sashimi & Crudo</div>
-    <div class="grid">
-
-      <div class="item-card" onclick="openItem({id:'scallop',name:'HOKKAIDO SCALLOPS CRUDO',price:19,desc:'6 slices hokkaido scallops, yuzu & citrus vinaigrette, peruvian teardrop peppers, pickled onions'})">
-        <div class="item-row">
-          <div class="item-left">
-            <div class="item-title">HOKKAIDO SCALLOPS CRUDO</div>
-            <div class="item-desc">6 slices hokkaido scallops, yuzu & citrus vinaigrette, peruvian teardrop peppers, pickled onions</div>
-          </div>
-          <div class="price">$19</div>
+    <div class="item-card" onclick="openItem({id:'flank',name:'CHAR-GRILLED WAGYU MBS 4-5 FLANK STEAK 250GM',price:45,desc:'Australian wagyu flank steak with robust flavour profile. Served with peruvian aji verde & roasted garlic'})">
+      <div class="item-row">
+        <div class="item-left">
+          <div class="item-title">CHAR-GRILLED WAGYU MBS 4-5 FLANK STEAK 250GM</div>
+          <div class="item-desc">Australian wagyu flank steak with robust flavour profile. Served with peruvian aji verde & roasted garlic</div>
         </div>
+        <div class="price">$45</div>
       </div>
-
-      <div class="item-card" onclick="openItem({id:'salmon',name:'SALMON SASHIMI',price:15,desc:'5 pieces salmon sashimi, house made nam jim chilli, wasabi, shiso leaf, Japanese cucumbers'})">
-        <div class="item-row">
-          <div class="item-left">
-            <div class="item-title">SALMON SASHIMI</div>
-            <div class="item-desc">5 pieces salmon sashimi, house made nam jim chilli, wasabi, shiso leaf, Japanese cucumbers</div>
-          </div>
-          <div class="price">$15</div>
-        </div>
-      </div>
-
-      <div class="item-card" onclick="openItem({id:'octopus',name:'OCTOPUS SASHIMI',price:13,desc:'5 pieces octopus sashimi, house made nam jim chilli, wasabi, shiso leaf, Japanese cucumbers'})">
-        <div class="item-row">
-          <div class="item-left">
-            <div class="item-title">OCTOPUS SASHIMI</div>
-            <div class="item-desc">5 pieces octopus sashimi, house made nam jim chilli, wasabi, shiso leaf, Japanese cucumbers</div>
-          </div>
-          <div class="price">$13</div>
-        </div>
-      </div>
-
-      <div class="item-card" onclick="openItem({id:'tartare',name:'SPICY SALMON TARTARE WITH CRISPY POPPADUMS',price:18,desc:'Salmon sashimi tartare, spicy aji verde, mexican hot sauce, mango, fresh onions, crispy poppadums, shiso leaf'})">
-        <div class="item-row">
-          <div class="item-left">
-            <div class="item-title">SPICY SALMON TARTARE WITH CRISPY POPPADUMS</div>
-            <div class="item-desc">Salmon sashimi tartare, spicy aji verde, mexican hot sauce, mango, fresh onions, crispy poppadums, shiso leaf</div>
-          </div>
-          <div class="price">$18</div>
-        </div>
-      </div>
-
-      <div class="item-card" onclick="openItem({id:'oysters',name:'JAPANESE HYOGO PREFECTURE OYSTERS — 1/2 DOZEN',price:28,desc:'6 pieces Japanese hyogo prefecture oysters, house made nam jim chilli'})">
-        <div class="item-row">
-          <div class="item-left">
-            <div class="item-title">JAPANESE HYOGO PREFECTURE OYSTERS — 1/2 DOZEN</div>
-            <div class="item-desc">6 pieces Japanese hyogo prefecture oysters, house made nam jim chilli</div>
-          </div>
-          <div class="price">$28</div>
-        </div>
-      </div>
-
     </div>
-  </div>
 
-  <!-- FRIES TAB -->
-  <div class="tab-panel" data-panel="fries" style="display:none">
-    <div class="section-title">Skin-on & Twister Fries</div>
-    <div class="grid">
-
-      <div class="item-card" onclick="openItem({id:'salted',name:'SALTED FRIES',price:8,desc:'Served with homemade curry ketchup',type:'fries'})">
-        <div class="item-row">
-          <div class="item-left">
-            <div class="item-title">SALTED FRIES</div>
-            <div class="item-desc">Served with homemade curry ketchup</div>
-          </div>
-          <div class="price">$8</div>
+    <div class="item-card" onclick="openItem({id:'striploin',name:'CHAR-GRILLED WAGYU MBS 6-7 STRIPLOIN 250GM',price:82,desc:'Japanese wagyu cross-breed striploin, marble score 6-7. Served with beef jus & roasted garlic'})">
+      <div class="item-row">
+        <div class="item-left">
+          <div class="item-title">CHAR-GRILLED WAGYU MBS 6-7 STRIPLOIN 250GM</div>
+          <div class="item-desc">Japanese wagyu cross-breed striploin, marble score 6-7. Served with beef jus & roasted garlic</div>
         </div>
+        <div class="price">$82</div>
       </div>
-
-      <div class="item-card" onclick="openItem({id:'truffleFries',name:'TRUFFLE & GRANA PADANO FRIES',price:15,desc:'White truffle oil, grana padano cheese',type:'fries'})">
-        <div class="item-row">
-          <div class="item-left">
-            <div class="item-title">TRUFFLE & GRANA PADANO FRIES</div>
-            <div class="item-desc">White truffle oil, grana padano cheese</div>
-          </div>
-          <div class="price">$15</div>
-        </div>
-      </div>
-
-      <div class="item-card" onclick="openItem({id:'noriFries',name:'NORI FRIES WITH WASABI AIOLI',price:13,desc:'Japanese nori, wasabi aioli',type:'fries'})">
-        <div class="item-row">
-          <div class="item-left">
-            <div class="item-title">NORI FRIES WITH WASABI AIOLI</div>
-            <div class="item-desc">Japanese nori, wasabi aioli</div>
-          </div>
-          <div class="price">$13</div>
-        </div>
-      </div>
-
-      <div class="item-card" onclick="openItem({id:'malaFries',name:'MALA GARLIC FRIES',price:13,desc:'Homemade Szechuan spice mix, fresh garlic, dried chillies',type:'fries'})">
-        <div class="item-row">
-          <div class="item-left">
-            <div class="item-title">MALA GARLIC FRIES</div>
-            <div class="item-desc">Homemade Szechuan spice mix, fresh garlic, dried chillies</div>
-          </div>
-          <div class="price">$13</div>
-        </div>
-      </div>
-
-      <div class="item-card" onclick="openItem({id:'nachoFries',name:'NACHO CHEESE & ASSAM AIOLI FRIES',price:14,desc:'Nacho cheese sauce, assam aioli, sweet relish, pickled jalapeno, red onions',type:'fries'})">
-        <div class="item-row">
-          <div class="item-left">
-            <div class="item-title">NACHO CHEESE & ASSAM AIOLI FRIES</div>
-            <div class="item-desc">Nacho cheese sauce, assam aioli, sweet relish, pickled jalapeno, red onions</div>
-          </div>
-          <div class="price">$14</div>
-        </div>
-      </div>
-
     </div>
+
+    <div class="item-card" onclick="openItem({id:'iberico',name:'CHAR-GRILLED SPANISH IBERICO PORK SECRETO 250GM',price:40,desc:'Highly marbled iberico pork secreto, tender and rich. Served medium well with chimichurri & pickled red cabbage'})">
+      <div class="item-row">
+        <div class="item-left">
+          <div class="item-title">CHAR-GRILLED SPANISH IBERICO PORK SECRETO 250GM</div>
+          <div class="item-desc">Highly marbled iberico pork secreto, tender and rich. Served medium well with chimichurri & pickled red cabbage</div>
+        </div>
+        <div class="price">$40</div>
+      </div>
+    </div>
+
+    <div class="item-card" onclick="openItem({id:'chicken',name:'CHAR-GRILLED CITRUS & CHIPOTLE HALF CHICKEN',price:20,desc:'Marinated & slow cooked for 3 hours, finished on the grill. Served with chimichurri & lemon'})">
+      <div class="item-row">
+        <div class="item-left">
+          <div class="item-title">CHAR-GRILLED CITRUS & CHIPOTLE HALF CHICKEN</div>
+          <div class="item-desc">Marinated & slow cooked for 3 hours, finished on the grill. Served with chimichurri & lemon</div>
+        </div>
+        <div class="price">$20</div>
+      </div>
+    </div>
+
   </div>
+</div>
+
+<!-- ADD-ON SIDES TAB -->
+<div class="tab-panel" data-panel="addons" style="display:none">
+  <div class="section-title">Add-On Sides</div>
+  <div class="grid">
+
+    <div class="item-card" onclick="openItem({id:'foieSide',name:'PAN SEARED FOIE GRAS',price:13,desc:''})">
+      <div class="item-row">
+        <div class="item-title">PAN SEARED FOIE GRAS</div>
+        <div class="price">$13</div>
+      </div>
+    </div>
+
+    <div class="item-card" onclick="openItem({id:'sausage',name:'GRILLED PORK SAUSAGE WITH FENNEL',price:6,desc:''})">
+      <div class="item-row">
+        <div class="item-title">GRILLED PORK SAUSAGE WITH FENNEL</div>
+        <div class="price">$6</div>
+      </div>
+    </div>
+
+    <div class="item-card" onclick="openItem({id:'brusselsAji',name:'BRUSSEL SPROUTS WITH GUANCIALE & PERUVIAN AJI VERDE',price:13,desc:''})">
+      <div class="item-row">
+        <div class="item-title">BRUSSEL SPROUTS WITH GUANCIALE & PERUVIAN AJI VERDE</div>
+        <div class="price">$13</div>
+      </div>
+    </div>
+
+    <div class="item-card" onclick="openItem({id:'truffleMash',name:'CREAMY TRUFFLE MASHED POTATOES',price:9,desc:''})">
+      <div class="item-row">
+        <div class="item-title">CREAMY TRUFFLE MASHED POTATOES</div>
+        <div class="price">$9</div>
+      </div>
+    </div>
+
+  </div>
+</div>
 
 </div><!-- /.container -->
 
