@@ -126,26 +126,22 @@ textarea{width:100%;height:84px;border-radius:12px;border:1px solid rgba(255,255
 .page-num{padding:8px 12px;border-radius:8px;background:rgba(255,255,255,0.03);color:#ddd;border:1px solid rgba(255,255,255,0.03);font-weight:600}
 .page-num.current{background:var(--gold);color:#000;border-color:var(--gold)}
 
+/* premium cart bottom-right */
+#cartWrap{position:fixed;bottom:96px;right:18px;z-index:1000} /* raised above pagination */
+
 /* GOLD PREMIUM CART ICON */
 #cartWrap{position:fixed;bottom:96px;right:18px;z-index:1000}
 #cartBtn{
   width:56px;
   height:56px;
-  border-radius:50%;
-  background: rgba(255,255,255,0.02);
-  border:1px solid rgba(212,175,55,0.28);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
-  box-shadow:
-    0 8px 20px rgba(0,0,0,0.45),
-    inset 0 0 0 0.5px rgba(255,255,255,0.15);
-  display:flex;
-  align-items:center;
+@@ -146,23 +144,48 @@
   justify-content:center;
   cursor:pointer;
   transition:transform .25s ease, box-shadow .25s ease;
+
   color: var(--gold);
 }
+
 #cartBtn:hover{
   transform: translateY(-2px) scale(1.04);
   box-shadow:
@@ -153,6 +149,7 @@ textarea{width:100%;height:84px;border-radius:12px;border:1px solid rgba(255,255
     inset 0 0 0 0.5px rgba(255,255,255,0.25);
     color:#f1d36b;
 }
+
 #cartBtn svg{
   width:28px;
   height:28px;
@@ -189,11 +186,21 @@ textarea{width:100%;height:84px;border-radius:12px;border:1px solid rgba(255,255
 
 /* responsive */
 @media(max-width:420px){
-  .restaurant-name{font-size:20px}
-  #cartWrap{bottom:86px; right:14px}
-  #cartBtn{width:50px;height:50px}
-  .modal-card{width:92vw}
+@@ -173,19 +196,6 @@
   .option-card{min-width:100px}
+}
+
+/* simple modern add-to-cart feedback */
+@keyframes btnPop {
+  0% { transform: scale(1); }
+  40% { transform: scale(0.94); }
+  100% { transform: scale(1); }
+}
+
+@keyframes cartPulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.12); }
+  100% { transform: scale(1); }
 }
 
 .btn-animate {
