@@ -395,54 +395,6 @@ textarea{width:100%;height:84px;border-radius:12px;border:1px solid rgba(255,255
 
     <div id="modalDesc" class="modal-desc">Description ...</div>
 
-    <!-- prosciutto option (premium cards) -->
-    <div id="prosciuttoOption" class="option-block" style="display:none">
-      <div style="font-weight:700;color:#ddd;margin-bottom:8px">Choose Option</div>
-      <div class="option-cards">
-        <label class="option-card">
-          <input type="radio" name="truf_opt" value="regular">
-          <span class="label-text">Regular</span>
-        </label>
-
-        <label class="option-card">
-          <input type="radio" name="truf_opt" value="with">
-          <span class="label-text">With Aged Prosciutto</span>
-          <span class="price-addon">+$7</span>
-        </label>
-      </div>
-    </div>
-
-    <!-- fries selectors -->
-    <div id="friesSelector" class="option-block" style="display:none">
-      <div style="font-weight:700;color:#ddd;margin-bottom:8px">Choose Fries Type</div>
-      <div class="option-cards">
-        <label class="option-card">
-          <input type="radio" name="fries_choice" value="Skin-on Fries">
-          <span class="label-text">Skin-on Fries</span>
-        </label>
-
-        <label class="option-card">
-          <input type="radio" name="fries_choice" value="Twister Fries">
-          <span class="label-text">Twister Fries</span>
-        </label>
-      </div>
-    </div>
-
-    <!-- spicy option for mussels -->
-    <div id="spiceOption" class="option-block" style="display:none">
-      <div style="font-weight:700;color:#ddd;margin-bottom:8px">Spice Level</div>
-      <div class="option-cards">
-        <label class="option-card">
-          <input type="radio" name="spice_choice" value="spicy" checked>
-          <span class="label-text">Spicy</span>
-        </label>
-
-        <label class="option-card">
-          <input type="radio" name="spice_choice" value="non-spicy">
-          <span class="label-text">Non-Spicy</span>
-        </label>
-      </div>
-    </div>
     <!-- doneness selector -->
     <div id="donenessOption" class="option-block" style="display:none">
       <div style="font-weight:700;color:#ddd;margin-bottom:8px">
@@ -494,8 +446,8 @@ textarea{width:100%;height:84px;border-radius:12px;border:1px solid rgba(255,255
 
 <!-- pagination -->
 <div class="footer-pages" role="navigation" aria-label="Pages">
-  <a class="page-num current" href="page1.html">1</a>
-  <a class="page-num" href="page2.html">2</a>
+  <a class="page-num" href="sharing_plates.html">1</a>
+  <a class="page-num current" href="mains_sides.html">2</a>
   <a class="page-num" href="page3.html">3</a>
   <a class="page-num" href="page4.html">4</a>
   <a class="page-num" href="page5.html">5</a>
@@ -567,21 +519,10 @@ function openItem(item){
   document.getElementById('modalDesc').textContent = item.desc;
 
   /* Show/hide options */
-  document.getElementById('prosciuttoOption').style.display = item.prosciutto ? 'block' : 'none';
-  document.getElementById('friesSelector').style.display = (item.type === 'fries') ? 'block' : 'none';
-  document.getElementById('spiceOption').style.display = item.hasSpiceOption ? 'block' : 'none';
   document.getElementById('donenessOption').style.display = item.hasDoneness ? 'block' : 'none';
 
-  /* Reset option selections */
-  document.querySelectorAll('#prosciuttoOption input, #friesSelector input, #spiceOption input')
-    .forEach(el => el.checked = false);
-    
+  /* Reset option selections */  
   document.querySelectorAll('input[name="doneness"]').forEach(r => r.checked = false);
-
-  /* preselect spicy for mussels */
-  if(item.hasSpiceOption){
-    document.querySelector('input[name="spice_choice"][value="spicy"]').checked = true;
-  }
 
   document.getElementById('specialRequestInput').value = "";
   document.getElementById('qtyValue').textContent = 1;
@@ -638,47 +579,10 @@ document.getElementById('modalAddBtn').onclick = function (e) {
   let finalName = currentItem.name;
   let finalPrice = Number(currentItem.price);
   let option = "";
-  let fries = "";
-  let spicy = "";
   let doneness = "";
   let request = document.getElementById("specialRequestInput").value.trim();
   let qty = Number(document.getElementById("qtyValue").textContent);
 
-  /* Truffle Brie option */
-  if (currentItem.prosciutto) {
-    const opt = document.querySelector('input[name="truf_opt"]:checked');
-    if (!opt) {
-      alert("Please select an option");
-      return;
-    }
-    if (opt.value === "with") {
-      option = "With Aged Prosciutto";
-      finalPrice += 7;
-      finalName += " (With Aged Prosciutto)";
-    } else {
-      option = "Regular";
-      finalName += " (Regular)";
-    }
-  }
-
-  /* Fries */
-  if (currentItem.type === "fries") {
-    const f = document.querySelector('input[name="fries_choice"]:checked');
-    if (!f) {
-      alert("Please choose fries type");
-      return;
-    }
-    fries = f.value;
-    finalName += " — " + fries;
-  }
-
-  /* Spice */
-  if (currentItem.hasSpiceOption) {
-    const s = document.querySelector('input[name="spice_choice"]:checked');
-    spicy = s ? s.value : "spicy";
-    finalName += spicy === "non-spicy" ? " (Non-Spicy)" : " (Spicy)";
-  }
-  
   /* Doneness */
   if (currentItem.hasDoneness) {
     const d = document.querySelector('input[name="doneness"]:checked');
@@ -697,8 +601,6 @@ document.getElementById('modalAddBtn').onclick = function (e) {
     price: finalPrice,
     qty: qty,
     option: option,
-    fries: fries,
-    spicy: spicy,
     doneness: doneness,
     request: request
   });
