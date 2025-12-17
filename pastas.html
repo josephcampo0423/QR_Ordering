@@ -833,64 +833,35 @@ function pushToCart(itemObj){
 }
 
 /* assign add button click */
-document.getElementById('modalAddBtn').onclick = function (e) {
+document.getElementById('modalAddBtn').onclick = function(e){
   e.preventDefault();
-  e.stopPropagation();
 
-  if (!currentItem) return;
+  let qty = Number(document.getElementById('qtyValue').textContent);
+  let request = document.getElementById('specialRequestInput').value.trim();
 
+  let sizeInput = document.querySelector('input[name="size"]:checked');
+  let basePrice = sizeInput ? Number(sizeInput.dataset.price) : 0;
+  let sizeLabel = sizeInput ? sizeInput.value.toUpperCase() : "";
+
+  let addons = [];
+  let addonTotal = 0;
+
+  document.querySelectorAll('#addonOptions input:checked').forEach(a=>{
+    addons.push(a.dataset.name);
+    addonTotal += Number(a.dataset.price);
+  });
+
+  let finalPrice = basePrice + addonTotal;
   let finalName = currentItem.name;
-  let finalPrice = Number(currentItem.price);
-  let option = "";
-  let fries = "";
-  let spicy = "";
-  let request = document.getElementById("specialRequestInput").value.trim();
-  let qty = Number(document.getElementById("qtyValue").textContent);
 
-  /* Truffle Brie option */
-  if (currentItem.prosciutto) {
-    const opt = document.querySelector('input[name="truf_opt"]:checked');
-    if (!opt) {
-      alert("Please select an option");
-      return;
-    }
-    if (opt.value === "with") {
-      option = "With Aged Prosciutto";
-      finalPrice += 7;
-      finalName += " (With Aged Prosciutto)";
-    } else {
-      option = "Regular";
-      finalName += " (Regular)";
-    }
-  }
+  if(sizeLabel) finalName += ` (${sizeLabel})`;
+  if(addons.length) finalName += ` + ${addons.join(', ')}`;
 
-  /* Fries */
-  if (currentItem.type === "fries") {
-    const f = document.querySelector('input[name="fries_choice"]:checked');
-    if (!f) {
-      alert("Please choose fries type");
-      return;
-    }
-    fries = f.value;
-    finalName += " — " + fries;
-  }
-
-  /* Spice */
-  if (currentItem.hasSpiceOption) {
-    const s = document.querySelector('input[name="spice_choice"]:checked');
-    spicy = s ? s.value : "spicy";
-    finalName += spicy === "non-spicy" ? " (Non-Spicy)" : " (Spicy)";
-  }
-
-  /* SAVE CART */
   cart.push({
     id: currentItem.id,
     name: finalName,
     price: finalPrice,
     qty: qty,
-    option: option,
-    fries: fries,
-    spicy: spicy,
     request: request
   });
 
