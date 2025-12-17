@@ -516,53 +516,17 @@ textarea{width:100%;height:84px;border-radius:12px;border:1px solid rgba(255,255
 
     <div id="modalDesc" class="modal-desc">Description ...</div>
 
-    <!-- prosciutto option (premium cards) -->
-    <div id="prosciuttoOption" class="option-block" style="display:none">
-      <div style="font-weight:700;color:#ddd;margin-bottom:8px">Choose Option</div>
-      <div class="option-cards">
-        <label class="option-card">
-          <input type="radio" name="truf_opt" value="regular">
-          <span class="label-text">Regular</span>
-        </label>
-
-        <label class="option-card">
-          <input type="radio" name="truf_opt" value="with">
-          <span class="label-text">With Aged Prosciutto</span>
-          <span class="price-addon">+$7</span>
-        </label>
-      </div>
+    <!-- SIZE -->
+    <div class="option-group">
+      <div class="option-title">Size</div>
+      <label><input type="radio" name="size" value="tasting" checked> Tasting</label>
+      <label><input type="radio" name="size" value="regular"> Regular</label>
     </div>
-
-    <!-- fries selectors -->
-    <div id="friesSelector" class="option-block" style="display:none">
-      <div style="font-weight:700;color:#ddd;margin-bottom:8px">Choose Fries Type</div>
-      <div class="option-cards">
-        <label class="option-card">
-          <input type="radio" name="fries_choice" value="Skin-on Fries">
-          <span class="label-text">Skin-on Fries</span>
-        </label>
-
-        <label class="option-card">
-          <input type="radio" name="fries_choice" value="Twister Fries">
-          <span class="label-text">Twister Fries</span>
-        </label>
-      </div>
-    </div>
-
-    <!-- spicy option for mussels -->
-    <div id="spiceOption" class="option-block" style="display:none">
-      <div style="font-weight:700;color:#ddd;margin-bottom:8px">Spice Level</div>
-      <div class="option-cards">
-        <label class="option-card">
-          <input type="radio" name="spice_choice" value="spicy" checked>
-          <span class="label-text">Spicy</span>
-        </label>
-
-        <label class="option-card">
-          <input type="radio" name="spice_choice" value="non-spicy">
-          <span class="label-text">Non-Spicy</span>
-        </label>
-      </div>
+    
+    <!-- ADD ONS -->
+    <div class="option-group" id="addonOptions" style="display:none">
+      <div class="option-title">Add-ons</div>
+      <div id="addonList"></div>
     </div>
 
     <!-- special request -->
