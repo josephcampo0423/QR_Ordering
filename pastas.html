@@ -735,22 +735,60 @@ let currentItem = null;
 
 function openItem(item){
   currentItem = item;
-  window._currentItem = item;
-  document.getElementById('modalNamePrice').textContent = item.name;
-  
-  if(item.basePrices){
-  const t = item.basePrices.tasting;
-  const r = item.basePrices.regular;
-  document.getElementById('modalPrice').textContent =
-    t && r ? `$${t} / $${r}` : `$${Object.values(item.basePrices)[0]}`;
-} else {
-  document.getElementById('modalPrice').textContent = "$" + item.price;
-}
 
+  document.getElementById('modalNamePrice').textContent = item.name;
   document.getElementById('modalDesc').textContent = item.desc;
 
-  document.getElementById('specialRequestInput').value = "";
+  // RESET
   document.getElementById('qtyValue').textContent = 1;
+  document.getElementById('specialRequestInput').value = "";
+
+  /* ---------- SIZE OPTIONS ---------- */
+  const sizeWrap = document.getElementById('sizeOption');
+  const sizeBox = document.getElementById('sizeOptions');
+  sizeBox.innerHTML = "";
+
+  if(item.basePrices && item.basePrices.tasting){
+    sizeWrap.style.display = "block";
+
+    Object.entries(item.basePrices).forEach(([key,price],i)=>{
+      sizeBox.innerHTML += `
+        <label class="option-card">
+          <input type="radio" name="size" value="${key}" data-price="${price}" ${i===0?'checked':''}>
+          <span class="label-text">${key.toUpperCase()}</span>
+          <span class="price-addon">$${price}</span>
+        </label>
+      `;
+    });
+
+    document.getElementById('modalPrice').textContent =
+      `$${Object.values(item.basePrices)[0]}`;
+  } else {
+    sizeWrap.style.display = "none";
+    document.getElementById('modalPrice').textContent =
+      "$" + Object.values(item.basePrices)[0];
+  }
+
+  /* ---------- ADDONS ---------- */
+  const addonWrap = document.getElementById('addonOption');
+  const addonBox = document.getElementById('addonOptions');
+  addonBox.innerHTML = "";
+
+  if(item.addons && item.addons.length){
+    addonWrap.style.display = "block";
+
+    item.addons.forEach(add=>{
+      addonBox.innerHTML += `
+        <label class="option-card">
+          <input type="checkbox" data-name="${add.name}" data-price="${add.price}">
+          <span class="label-text">${add.name}</span>
+          <span class="price-addon">+$${add.price}</span>
+        </label>
+      `;
+    });
+  } else {
+    addonWrap.style.display = "none";
+  }
 
   /* Show modal */
   const bg = document.getElementById('modalBg');
