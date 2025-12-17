@@ -737,20 +737,6 @@ function openItem(item){
 
   document.getElementById('modalDesc').textContent = item.desc;
 
-  /* Show/hide options */
-  document.getElementById('prosciuttoOption').style.display = item.prosciutto ? 'block' : 'none';
-  document.getElementById('friesSelector').style.display = (item.type === 'fries') ? 'block' : 'none';
-  document.getElementById('spiceOption').style.display = item.hasSpiceOption ? 'block' : 'none';
-
-  /* Reset option selections */
-  document.querySelectorAll('#prosciuttoOption input, #friesSelector input, #spiceOption input')
-    .forEach(el => el.checked = false);
-
-  /* preselect spicy for mussels */
-  if(item.hasSpiceOption){
-    document.querySelector('input[name="spice_choice"][value="spicy"]').checked = true;
-  }
-
   document.getElementById('specialRequestInput').value = "";
   document.getElementById('qtyValue').textContent = 1;
 
