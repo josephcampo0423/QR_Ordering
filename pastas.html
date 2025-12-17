@@ -68,7 +68,7 @@ a{color:inherit;text-decoration:none}
 .item-left{min-width:0}
 .item-title{font-weight:900;font-size:15px;white-space:normal;line-height:1.05}
 .item-desc{color:var(--muted);font-size:13px;margin-top:6px;white-space:normal}
-.price{color:#ddd;font-weight:800;min-width:54px;text-align:right}
+.price{color:#ddd;font-weight:800;font-size:14px;white-space:nowrap;min-width:84px;text-align:right;line-height:1;}
 
 /* Modal backdrop & card */
 .modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.62);backdrop-filter:blur(6px);align-items:center;justify-content:center;z-index:120000;padding:18px}
@@ -85,8 +85,8 @@ a{color:inherit;text-decoration:none}
 /* modal header */
 .modal-title{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
 .modal-title > div{flex:1;min-width:0}
-.modal-name{font-weight:900;color:var(--gold);font-size:18px;line-height:1.05}
-.modal-price{font-weight:800;color:#fff;font-size:14px;opacity:0.95;margin-top:6px}
+.modal-name{font-weight:900;color:var(--gold);font-size:20px;line-height:1.15;}
+.modal-price{font-size:15px;font-weight:800;color:#fff;margin-top:6px;opacity:0.95;}
 .modal-desc{color:var(--muted);margin-top:12px;font-size:14px;white-space:normal}
 
 /* fixed close button size (prevents stretching) */
@@ -761,8 +761,9 @@ function openItem(item){
       `;
     });
 
+    const prices = Object.values(item.basePrices);
     document.getElementById('modalPrice').textContent =
-      `$${Object.values(item.basePrices)[0]}`;
+      prices.length > 1 ? `$${prices.join(' / $')}` : `$${prices[0]}`;
   } else {
     sizeWrap.style.display = "none";
     document.getElementById('modalPrice').textContent =
