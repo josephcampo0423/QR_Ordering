@@ -239,123 +239,151 @@ textarea{width:100%;height:84px;border-radius:12px;border:1px solid rgba(255,255
     </button>
   </div>
 
-  <!-- SHARING PLATES TAB -->
-  <div class="tab-panel" data-panel="sharing" style="display:block">
-    <div class="section-title">Sharing Plates</div>
-    <div class="grid">
+<!-- SPAGHETTI TAB -->
+<div class="tab-panel" data-panel="spaghetti" style="display:block">
+  <div class="section-title">Spaghetti</div>
+  <div class="grid">
 
-      <!-- 1 -->
-      <div class="item-card" onclick="openItem({id:'bread',name:'TOASTED GARLIC SOURDOUGH BREAD',price:8,desc:'Toasted sourdough bread with homemade garlic confit butter'})">
-        <div class="item-row">
-          <div class="item-left">
-            <div class="item-title">TOASTED GARLIC SOURDOUGH BREAD</div>
-            <div class="item-desc">Toasted sourdough bread with homemade garlic confit butter</div>
+    <!-- AGLIO OLIO -->
+    <div class="item-card" onclick="openItem({
+      id:'aglio',
+      name:'AGLIO OLIO',
+      basePrices:{tasting:11,regular:16},
+      desc:'Extra virgin olive oil, white wine, garlic, dried chilli pepper, taggiasche olives, italian parsley',
+      addons:[
+        {name:'Chicken',price:5},
+        {name:'Bacon & Mushrooms',price:8},
+        {name:'Truffle & Mushrooms',price:9},
+        {name:'2 Grilled Jumbo Black Tiger Prawns',price:10},
+        {name:'Smoked Salmon',price:10},
+        {name:'3 Grilled Hokkaido Scallops',price:16}
+      ]
+    })">
+      <div class="item-row">
+        <div class="item-left">
+          <div class="item-title">AGLIO OLIO</div>
+          <div class="item-desc">
+            Extra virgin olive oil, white wine, garlic, dried chilli pepper,
+            taggiasche olives, italian parsley
           </div>
-          <div class="price">$8</div>
         </div>
+        <div class="price">$11 / $16</div>
       </div>
-
-      <!-- 2 -->
-      <div class="item-card" onclick="openItem({id:'wings',name:'CRISPY SPICY MIDWINGS',price:14,desc:'5 Pieces deep fried spicy midwings, homemade curry, spice mix, curry ketchup'})">
-        <div class="item-row">
-          <div class="item-left">
-            <div class="item-title">CRISPY SPICY MIDWINGS</div>
-            <div class="item-desc">5 Pieces deep fried spicy midwings, homemade curry, spice mix, curry ketchup</div>
-          </div>
-          <div class="price">$14</div>
-        </div>
-      </div>
-
-      <!-- 3 -->
-      <div class="item-card" onclick="openItem({id:'foie',name:'FOIE GRAS WITH MALIBU COMPRESSED ROCK MELON',price:23,desc:'Pan seared hungarian foie gras, malibu marinated, rock melon, sourdough toast'})">
-        <div class="item-row">
-          <div class="item-left">
-            <div class="item-title">FOIE GRAS WITH MALIBU COMPRESSED ROCK MELON</div>
-            <div class="item-desc">Pan seared hungarian foie gras, malibu marinated, rock melon, sourdough toast</div>
-          </div>
-          <div class="price">$23</div>
-        </div>
-      </div>
-
-      <!-- 4 -->
-      <div class="item-card" onclick="openItem({id:'provola',name:'SMOKED PROVOLA CHEESE TEMPURA WITH AGED PROSCIUTTO',price:21,desc:'Smoked provola cheese, aged prosciutto, fresh tomatoes, arugula, balsamic glaze, honey'})">
-        <div class="item-row">
-          <div class="item-left">
-            <div class="item-title">SMOKED PROVOLA CHEESE TEMPURA WITH AGED PROSCIUTTO</div>
-            <div class="item-desc">Smoked provola cheese, aged prosciutto, fresh tomatoes, arugula, balsamic glaze, honey</div>
-          </div>
-          <div class="price">$21</div>
-        </div>
-      </div>
-
-      <!-- 5 -->
-      <div class="item-card" onclick="openItem({id:'corn',name:'FRIED CORN RIBS WITH ASSAM AIOLI',price:15,desc:'Sweet corn ribs, assam aioli, homemade curry spice, fried curry leaves'})">
-        <div class="item-row">
-          <div class="item-left">
-            <div class="item-title">FRIED CORN RIBS WITH ASSAM AIOLI</div>
-            <div class="item-desc">Sweet corn ribs, assam aioli, homemade curry spice, fried curry leaves</div>
-          </div>
-          <div class="price">$15</div>
-        </div>
-      </div>
-
-      <!-- 6 -->
-      <div class="item-card" onclick="openItem({id:'brusch',name:'SOURDOUGH BRUSCHETTA WITH SMOKED SALMON',price:16,desc:'Toasted sourdough, garlic confit butter, smoked salmon, bonito aioli, fresh Japanese cucumbers, red onions'})">
-        <div class="item-row">
-          <div class="item-left">
-            <div class="item-title">SOURDOUGH BRUSCHETTA WITH SMOKED SALMON</div>
-            <div class="item-desc">Toasted sourdough, garlic confit butter, smoked salmon, bonito aioli, fresh Japanese cucumbers, red onions</div>
-          </div>
-          <div class="price">$16</div>
-        </div>
-      </div>
-
-      <!-- 7 -->
-      <div class="item-card" onclick="openItem({id:'truffle',name:'BAKED TRUFFLE BRIE CHEESE',price:21,desc:'Baked brie cheese, truffle paste, white truffle oil, hot honey, toasted sourdough',prosciutto:true})">
-        <div class="item-row">
-          <div class="item-left">
-            <div class="item-title">BAKED TRUFFLE BRIE CHEESE</div>
-            <div class="item-desc">Baked brie cheese, truffle paste, white truffle oil, hot honey, toasted sourdough</div>
-          </div>
-          <div class="price">$21</div>
-        </div>
-      </div>
-
-      <!-- 8 -->
-      <div class="item-card" onclick="openItem({id:'squid',name:'SZECHUAN SPICE CRISPY SQUID',price:16,desc:'Crispy fried squid, szechuan spice, garlic sprouts, dried chillies'})">
-        <div class="item-row">
-          <div class="item-left">
-            <div class="item-title">SZECHUAN SPICE CRISPY SQUID</div>
-            <div class="item-desc">Crispy fried squid, szechuan spice, garlic sprouts, dried chillies</div>
-          </div>
-          <div class="price">$16</div>
-        </div>
-      </div>
-
-      <!-- 9 -->
-      <div class="item-card" onclick="openItem({id:'mussels',name:'SPICY LIVE MUSSELS & WHITE CLAMS STEW',price:20,desc:'White clams, live greenshell mussels, cherry tomatoes, katsuobushi, stewed in pomodoro & prawn broth',hasSpiceOption:true})">
-        <div class="item-row">
-          <div class="item-left">
-            <div class="item-title">SPICY LIVE MUSSELS & WHITE CLAMS STEW</div>
-            <div class="item-desc">White clams, live greenshell mussels, cherry tomatoes, katsuobushi, stewed in pomodoro & prawn broth</div>
-          </div>
-          <div class="price">$20</div>
-        </div>
-      </div>
-
-      <!-- 10 -->
-      <div class="item-card" onclick="openItem({id:'burrata',name:'BURRATA & AGED PROSCIUTTO SALAD',price:25,desc:'Burrata cheese, aged prosciutto, arugula leaves, cherry tomatoes, peach, balsamic vinaigrette'})">
-        <div class="item-row">
-          <div class="item-left">
-            <div class="item-title">BURRATA & AGED PROSCIUTTO SALAD</div>
-            <div class="item-desc">Burrata cheese, aged prosciutto, arugula leaves, cherry tomatoes, peach, balsamic vinaigrette</div>
-          </div>
-          <div class="price">$25</div>
-        </div>
-      </div>
-
     </div>
+
+    <!-- DRY LAKSA -->
+    <div class="item-card" onclick="openItem({
+      id:'drylaksa',
+      name:'DRY LAKSA',
+      basePrices:{tasting:11,regular:16},
+      desc:'Homemade rempah, coconut cream, cherry tomatoes, arugula, chilli oil',
+      addons:[
+        {name:'Chicken',price:5},
+        {name:'2 Grilled Jumbo Black Tiger Prawns',price:10},
+        {name:'Seafood',price:14}
+      ]
+    })">
+      <div class="item-row">
+        <div class="item-left">
+          <div class="item-title">DRY LAKSA</div>
+          <div class="item-desc">
+            Homemade rempah, coconut cream, cherry tomatoes, arugula, chilli oil
+          </div>
+        </div>
+        <div class="price">$11 / $16</div>
+      </div>
+    </div>
+
+    <!-- PRAWN BISQUE -->
+    <div class="item-card" onclick="openItem({
+      id:'bisque',
+      name:'PRAWN BISQUE',
+      basePrices:{regular:30},
+      desc:'Prawn collagen, mascarpone, tomato sauce, gojiberries, tobiko roe, cherry tomatoes, butter, shrimp oil',
+      addons:[
+        {name:'Smoked Salmon',price:30},
+        {name:'2 Grilled Jumbo Black Tiger Prawns',price:32},
+        {name:'3 Grilled Hokkaido Scallops',price:38}
+      ]
+    })">
+      <div class="item-row">
+        <div class="item-left">
+          <div class="item-title">PRAWN BISQUE</div>
+          <div class="item-desc">
+            Prawn collagen, mascarpone, tomato sauce, gojiberries,
+            tobiko roe, cherry tomatoes, butter, shrimp oil
+          </div>
+        </div>
+        <div class="price">$30+</div>
+      </div>
+    </div>
+
+    <!-- SPICY ARRABBIATA -->
+    <div class="item-card" onclick="openItem({
+      id:'arrabbiata',
+      name:'SPICY ARRABBIATA',
+      basePrices:{tasting:11,regular:16},
+      desc:'Spicy garlic tomato sauce, house made chilli oil, dried chilli peppers, fresh basil, cherry tomatoes',
+      addons:[
+        {name:'Chicken',price:5},
+        {name:'Pork Nduja',price:8},
+        {name:'2 Grilled Jumbo Black Tiger Prawns',price:10},
+        {name:'Smoked Salmon',price:10},
+        {name:'3 Grilled Hokkaido Scallops',price:16}
+      ]
+    })">
+      <div class="item-row">
+        <div class="item-left">
+          <div class="item-title">SPICY ARRABBIATA</div>
+          <div class="item-desc">
+            Spicy garlic tomato sauce, house made chilli oil,
+            dried chilli peppers, fresh basil, cherry tomatoes
+          </div>
+        </div>
+        <div class="price">$11 / $16</div>
+      </div>
+    </div>
+
+    <!-- CARBONARA -->
+    <div class="item-card" onclick="openItem({
+      id:'carbonara',
+      name:'CARBONARA GUANCIALE',
+      basePrices:{tasting:19,regular:26},
+      desc:'Cured italian pork cheek, black pepper, pecorino romano DOP, egg yolk'
+    })">
+      <div class="item-row">
+        <div class="item-left">
+          <div class="item-title">CARBONARA GUANCIALE</div>
+          <div class="item-desc">
+            Cured italian pork cheek, black pepper,
+            pecorino romano DOP, egg yolk
+          </div>
+        </div>
+        <div class="price">$19 / $26</div>
+      </div>
+    </div>
+
+    <!-- TRUFFLE & MUSHROOMS -->
+    <div class="item-card" onclick="openItem({
+      id:'trufflemush',
+      name:'TRUFFLE & MUSHROOMS',
+      basePrices:{tasting:19,regular:26},
+      desc:'Mushroom medley, black truffle cream, parmigiano reggiano, white truffle oil, butter'
+    })">
+      <div class="item-row">
+        <div class="item-left">
+          <div class="item-title">TRUFFLE & MUSHROOMS</div>
+          <div class="item-desc">
+            Mushroom medley, black truffle cream,
+            parmigiano reggiano, white truffle oil, butter
+          </div>
+        </div>
+        <div class="price">$19 / $26</div>
+      </div>
+    </div>
+
   </div>
+</div>
 
   <!-- SASHIMI & CRUDO TAB -->
   <div class="tab-panel" data-panel="sashimi" style="display:none">
