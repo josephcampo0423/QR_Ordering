@@ -342,6 +342,7 @@ function renderCart(){
     if(it.prosciutto) lines.push("Option: " + it.prosciutto);
     if(it.fries) lines.push("Fries: " + it.fries);
     if(it.spicy) lines.push("Spice: " + (it.spicy === "non-spicy" ? "Non-Spicy" : "Spicy"));
+    if(it.doneness) lines.push("Doneness: " + it.doneness);
     if(it.request) lines.push("Special: " + it.request);
 
     meta.textContent = lines.join("\n");
@@ -457,17 +458,18 @@ function placeOrder(){
     list.appendChild(div);
 
     // details (show prosciutto/fries/spicy/request)
-    if(it.prosciutto || it.fries || it.spicy || it.request){
-      const meta = document.createElement("div");
-      meta.className = "success-meta";
-      const parts=[];
-      if(it.prosciutto) parts.push("Option: "+it.prosciutto);
-      if(it.fries) parts.push("Fries: "+it.fries);
-      if(it.spicy) parts.push("Spice: "+(it.spicy==="non-spicy"?"Non-Spicy":"Spicy"));
-      if(it.request) parts.push("Special: "+it.request);
-      meta.textContent = parts.join(" • ");
-      list.appendChild(meta);
-    }
+     if(it.prosciutto || it.fries || it.spicy || it.doneness || it.request){
+    const meta = document.createElement("div");
+    meta.className = "success-meta";
+    const parts=[];
+    if(it.prosciutto) parts.push("Option: "+it.prosciutto);
+    if(it.fries) parts.push("Fries: "+it.fries);
+    if(it.spicy) parts.push("Spice: "+(it.spicy==="non-spicy"?"Non-Spicy":"Spicy"));
+    if(it.doneness) parts.push("Doneness: "+it.doneness);
+    if(it.request) parts.push("Special: "+it.request);
+    meta.textContent = parts.join(" • ");
+    list.appendChild(meta);
+  }
   });
 
   // add totals lines under successList
