@@ -105,35 +105,6 @@ a{color:inherit;text-decoration:none}
 .option-card .label-text{font-weight:700;color:#ddd;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .option-card .price-addon{font-weight:800;color:var(--gold);font-size:13px;white-space:nowrap;margin-left:6px}
 
-/* Doneness selector */
-.doneness-cards{
-  display:flex;
-  gap:8px;
-  flex-wrap:wrap;
-}
-
-.doneness-card{
-  padding:8px 10px;
-  border-radius:999px;
-  border:1px solid rgba(255,255,255,0.08);
-  background:rgba(255,255,255,0.03);
-  font-size:12px;
-  font-weight:700;
-  color:#ddd;
-  cursor:pointer;
-  user-select:none;
-  transition:all .15s ease;
-}
-
-.doneness-card input{
-  display:none;
-}
-
-.doneness-card.active{
-  background:rgba(212,175,55,0.18);
-  border-color:var(--gold);
-  color:var(--gold);
-}
 
 /* ensure very long addon text doesn't wrap and stays succinct */
 .option-card .label-text, .option-card .price-addon {max-width:180px;}
@@ -478,30 +449,25 @@ textarea{width:100%;height:84px;border-radius:12px;border:1px solid rgba(255,255
         Doneness
       </div>
     
-      <div class="doneness-cards">
-        <label class="doneness-card">
-          <input type="radio" name="doneness" value="Rare">
-          Rare
-        </label>
-    
-        <label class="doneness-card">
+      <div class="option-cards">
+        <label class="option-card">
           <input type="radio" name="doneness" value="Medium Rare">
-          Medium Rare
+          <span class="label-text">Medium Rare</span>
         </label>
     
-        <label class="doneness-card">
+        <label class="option-card">
           <input type="radio" name="doneness" value="Medium">
-          Medium
+          <span class="label-text">Medium</span>
         </label>
     
-        <label class="doneness-card">
+        <label class="option-card">
           <input type="radio" name="doneness" value="Medium Well">
-          Medium Well
+          <span class="label-text">Medium Well</span>
         </label>
     
-        <label class="doneness-card">
+        <label class="option-card">
           <input type="radio" name="doneness" value="Well Done">
-          Well Done
+          <span class="label-text">Well Done</span>
         </label>
       </div>
     </div>
@@ -611,7 +577,6 @@ function openItem(item){
     .forEach(el => el.checked = false);
     
   document.querySelectorAll('input[name="doneness"]').forEach(r => r.checked = false);
-  document.querySelectorAll('.doneness-card').forEach(c => c.classList.remove('active'));
 
   /* preselect spicy for mussels */
   if(item.hasSpiceOption){
@@ -793,14 +758,6 @@ document.getElementById('cartBtn').onclick = function(){
   window.location.href = "cart.html";
 };
 
-  document.addEventListener('click', function(e){
-  const card = e.target.closest('.doneness-card');
-  if(!card) return;
-
-  document.querySelectorAll('.doneness-card').forEach(c => c.classList.remove('active'));
-  card.classList.add('active');
-  card.querySelector('input').checked = true;
-});
 
 </script>
 </html>
