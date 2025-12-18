@@ -859,7 +859,7 @@ function openItem(item){
     const prices = Object.values(item.basePrices);
     document.getElementById('modalPrice').textContent =
       prices.length > 1 ? `$${prices.join(' / $')}` : `$${prices[0]}`;
-  } else {
+    } else {
     sizeWrap.style.display = "none";
     const modalPrice = document.getElementById('modalPrice');
 
@@ -869,14 +869,14 @@ function openItem(item){
     } else {
       modalPrice.style.display = 'block';
       
-      const prices = Object.values(item.basePrices).filter(p => typeof p === 'number');
+      const prices = Object.values(item.basePrices || {}).filter(p => typeof p === 'number');
 
       if(prices.length){
-        modalPrice.style.display = 'block';
         modalPrice.textContent = "$" + prices[0];
       } else {
         modalPrice.style.display = 'none';
       }
+    }
   }
 
   /* ---------- ADDONS ---------- */
