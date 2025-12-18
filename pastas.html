@@ -147,19 +147,57 @@ a{color:inherit;text-decoration:none}
   padding:8px 14px;
 }
 
-/* ADD-ONS — vertical, no scroll */
+/* ADD-ONS */
 #addonOptions{
-  display:flex;
-  flex-direction:column;
-  gap:8px;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
 }
 
 #addonOptions .option-card{
-  padding:8px 10px;
+  padding:10px 12px;
+  border-radius:14px;
+  background:linear-gradient(180deg,#121212,#0c0c0c);
+  border:1px solid rgba(255,255,255,0.06);
+  box-shadow:0 4px 14px rgba(0,0,0,0.55);
+  transition:all .18s ease;
+}
+
+#addonOptions .option-card:hover{
+  border-color:rgba(212,175,55,0.35);
+  transform:translateY(-1px);
+}
+
+#addonOptions input{
+  display:none;
+}
+
+/* Selected state */
+#addonOptions input:checked + .label-text{
+  color:var(--gold);
+}
+
+#addonOptions input:checked ~ .price-addon{
+  color:var(--gold);
+}
+
+#addonOptions input:checked ~ *{
+  font-weight:800;
 }
 
 #addonOptions .label-text{
-  max-width:160px;
+  max-width:140px;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  font-size:13px;
+}
+
+#addonOptions .price-addon{
+  margin-left:auto;
+  font-size:13px;
+  font-weight:800;
+  color:#aaa;
 }
 
 /* textarea (special request) */
