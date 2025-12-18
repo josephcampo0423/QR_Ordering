@@ -94,33 +94,18 @@ a{color:inherit;text-decoration:none}
   flex:0 0 auto;width:36px;height:36px;border-radius:50%;border:1px solid var(--gold);background:transparent;color:var(--gold);display:flex;align-items:center;justify-content:center;cursor:pointer;font-weight:700;font-size:15px;padding:0;
 }
 
-/* Option cards */
+/* Option blocks */
 .option-block{margin-top:12px}
 
+/* SIZE OPTIONS (single row) */
 .option-cards{
   display:flex;
   gap:10px;
   flex-wrap:nowrap;
-
-/* truncate long addon names */
-.option-card .label-text{
-  flex:1;
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
-  font-size:13px;
 }
 
-/* price aligned right */
-.option-card .price-addon{
-  font-size:13px;
-  font-weight:800;
-  color:var(--gold);
-  white-space:nowrap;
-}
-
+/* Base option card */
 .option-card{
-  .option-card{
   display:flex;
   align-items:center;
   justify-content:space-between;
@@ -132,26 +117,37 @@ a{color:inherit;text-decoration:none}
   cursor:pointer;
 }
 
-.option-card input{margin:0}
-.option-card .label-text{font-weight:700;color:#ddd;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.option-ard .price-addon{font-weight:800;color:var(--gold);font-size:13px;white-space:nowrap;margin-left:6px}
-
-/* SIZE OPTION REFINEMENT */
-#sizeOptions .option-card{
-  padding:8px 14px;
-  min-width:120px;
+/* inputs */
+.option-card input{
+  margin:0;
 }
 
-#sizeOptions .label-text{
+/* label text */
+.option-card .label-text{
+  flex:1;
+  font-weight:700;
+  font-size:13px;
+  color:#ddd;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+/* price addon */
+.option-card .price-addon{
   font-size:13px;
   font-weight:800;
+  color:var(--gold);
+  white-space:nowrap;
 }
 
-#sizeOptions .price-addon{
-  font-size:13px;
+/* SIZE refinement */
+#sizeOptions .option-card{
+  min-width:120px;
+  padding:8px 14px;
 }
 
-/* ADDONS GRID */
+/* ADD-ONS — vertical, no scroll */
 #addonOptions{
   display:flex;
   flex-direction:column;
@@ -159,25 +155,12 @@ a{color:inherit;text-decoration:none}
 }
 
 #addonOptions .option-card{
-  min-width:unset;
   padding:8px 10px;
 }
 
 #addonOptions .label-text{
-  max-width:140px;
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
-  font-size:13px;
+  max-width:160px;
 }
-
-#addonOptions .price-addon{
-  font-size:13px;
-  margin-left:auto;
-}
-
-/* ensure very long addon text doesn't wrap and stays succinct */
-.option-card .label-text, .option-card .price-addon {max-width:180px;}
 
 /* textarea (special request) */
 textarea{width:100%;height:84px;border-radius:12px;border:1px solid rgba(255,255,255,0.06);background:rgba(0,0,0,0.35);padding:10px;color:#fff;font-size:14px;resize:none;outline:none;margin-top:8px}
@@ -268,7 +251,7 @@ textarea{width:100%;height:84px;border-radius:12px;border:1px solid rgba(255,255
 /* BUBBLE TO CART ANIMATION */
 .cart-bubble{
   position:fixed;
-  z-index:140000;
+  z-index:200000;
   width:22px;
   height:22px;
   border-radius:50%;
