@@ -392,7 +392,7 @@ textarea{width:100%;height:84px;border-radius:12px;border:1px solid rgba(255,255
     <div class="item-card" onclick="openItem({
       id:'bisque',
       name:'PRAWN BISQUE',
-      basePrices:{regular:none},
+      basePrices:{regular:null},
       desc:'Prawn collagen, mascarpone, tomato sauce, gojiberries, tobiko roe, cherry tomatoes, butter, shrimp oil',
       addons:[
         {name:'Smoked Salmon',price:30},
@@ -416,7 +416,7 @@ textarea{width:100%;height:84px;border-radius:12px;border:1px solid rgba(255,255
     <div class="item-card" onclick="openItem({
       id:'chickenbroth',
       name:'CHICKEN COLLAGEN BROTH WITH WINE & DANG GUI',
-      basePrices:{regular:none},
+      basePrices:{regular:null},
       desc:'White wine, chinese wine, chicken collagen broth, chinese dang gui, gojiberries, garlic, cherry tomatoes',
       addons:[
         {name:'Clams & Mussels',price:28},
@@ -868,8 +868,15 @@ function openItem(item){
       modalPrice.style.display = 'none';
     } else {
       modalPrice.style.display = 'block';
-      modalPrice.textContent = "$" + Object.values(item.basePrices)[0];
-    }
+      
+      const prices = Object.values(item.basePrices).filter(p => typeof p === 'number');
+
+      if(prices.length){
+        modalPrice.style.display = 'block';
+        modalPrice.textContent = "$" + prices[0];
+      } else {
+        modalPrice.style.display = 'none';
+      }
   }
 
   /* ---------- ADDONS ---------- */
