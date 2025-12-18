@@ -961,17 +961,6 @@ document.getElementById('modalAddBtn').onclick = function(e){
     addonTotal += Number(a.dataset.price);
   });
   
-  /* Auto-select FIRST addon for specific dishes */
-    if (
-    currentItem.id === 'bisque' ||
-    currentItem.id === 'chickenbroth'
-  )
-  
-  {
-    const firstAddon = document.querySelector('.option-card input');
-    if(firstAddon) firstAddon.checked = true;
-  }
-  
   let finalPrice = basePrice + addonTotal;
   let finalName = currentItem.name;
 
