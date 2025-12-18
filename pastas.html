@@ -861,9 +861,15 @@ function openItem(item){
       prices.length > 1 ? `$${prices.join(' / $')}` : `$${prices[0]}`;
   } else {
     sizeWrap.style.display = "none";
-    document.getElementById('modalPrice').textContent =
-      "$" + Object.values(item.basePrices)[0];
-  }
+    const modalPrice = document.getElementById('modalPrice');
+
+    if(item.id === 'bisque' || item.id === 'chickenbroth'){
+      modalPrice.textContent = '';
+      modalPrice.style.display = 'none';
+    } else {
+      modalPrice.style.display = 'block';
+      modalPrice.textContent = "$" + Object.values(item.basePrices)[0];
+    }
 
   /* ---------- ADDONS ---------- */
   const addonWrap = document.getElementById('addonOption');
