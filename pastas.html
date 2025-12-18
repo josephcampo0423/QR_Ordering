@@ -888,7 +888,7 @@ function openItem(item){
                  data-price="${add.price}"
                  ${i === 0 && (item.id === 'bisque' || item.id === 'chickenbroth') ? 'checked' : ''}>
           <span class="label-text">${add.name}</span>
-          <span class="price-addon">${add.price ? '$'+add.price : ''}</span>
+          <span class="price-addon">${add.price ? '+$'+add.price : ''}</span>
         </label>
       `;
     });
