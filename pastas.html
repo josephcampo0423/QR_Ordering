@@ -880,12 +880,15 @@ function openItem(item){
   if(item.addons && item.addons.length){
     addonWrap.style.display = "block";
 
-    item.addons.forEach(add=>{
+    item.addons.forEach((add, i)=>{
       addonBox.innerHTML += `
         <label class="option-card">
-          <input type="checkbox" data-name="${add.name}" data-price="${add.price}">
+          <input type="checkbox"
+                 data-name="${add.name}"
+                 data-price="${add.price}"
+                 ${i === 0 && (item.id === 'bisque' || item.id === 'chickenbroth') ? 'checked' : ''}>
           <span class="label-text">${add.name}</span>
-          <span class="price-addon">${add.price ? '+$'+add.price : ''}</span>
+          <span class="price-addon">${add.price ? '$'+add.price : ''}</span>
         </label>
       `;
     });
