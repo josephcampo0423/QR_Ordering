@@ -96,7 +96,29 @@ a{color:inherit;text-decoration:none}
 
 /* Option cards */
 .option-block{margin-top:12px}
-.option-cards{display:flex;gap:10px;flex-wrap:wrap}
+
+./* ADD-ONS — NO HORIZONTAL SCROLL */
+.option-cards{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+
+/* truncate long addon names */
+.option-card .label-text{
+  max-width:120px;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  font-size:13px;
+}
+
+/* price aligned right */
+.option-card .price-addon{
+  margin-left:auto;
+  font-size:13px;
+}
+
 .option-card{
   display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:12px;background:var(--option-bg);border:1px solid var(--option-border);cursor:pointer;min-width:120px;flex:0 0 auto;
   transition:transform .12s ease,box-shadow .12s ease;
@@ -291,12 +313,13 @@ textarea{width:100%;height:84px;border-radius:12px;border:1px solid rgba(255,255
       basePrices:{tasting:11,regular:16},
       desc:'Extra virgin olive oil, white wine, garlic, dried chilli pepper, taggiasche olives, italian parsley',
       addons:[
+        {name:'Plain',price:0},
         {name:'Chicken',price:5},
         {name:'Bacon & Mushrooms',price:8},
         {name:'Truffle & Mushrooms',price:9},
-        {name:'2 Grilled Jumbo Black Tiger Prawns',price:10},
+        {name:'2 Jumbo Prawns',price:10},
         {name:'Smoked Salmon',price:10},
-        {name:'3 Grilled Hokkaido Scallops',price:16}
+        {name:'3 Hokkaido Scallops',price:16}
       ]
     })">
       <div class="item-row">
@@ -319,7 +342,7 @@ textarea{width:100%;height:84px;border-radius:12px;border:1px solid rgba(255,255
       desc:'Homemade rempah, coconut cream, cherry tomatoes, arugula, chilli oil',
       addons:[
         {name:'Chicken',price:5},
-        {name:'2 Grilled Jumbo Black Tiger Prawns',price:10},
+        {name:'2 Tiger Prawns',price:10},
         {name:'Seafood',price:14}
       ]
     })">
@@ -342,8 +365,8 @@ textarea{width:100%;height:84px;border-radius:12px;border:1px solid rgba(255,255
       desc:'Prawn collagen, mascarpone, tomato sauce, gojiberries, tobiko roe, cherry tomatoes, butter, shrimp oil',
       addons:[
         {name:'Smoked Salmon',price:30},
-        {name:'2 Grilled Jumbo Black Tiger Prawns',price:32},
-        {name:'3 Grilled Hokkaido Scallops',price:38}
+        {name:'2 Tiger Prawns',price:32},
+        {name:'3 Hokkaido Scallops',price:38}
       ]
     })">
       <div class="item-row">
@@ -365,8 +388,8 @@ textarea{width:100%;height:84px;border-radius:12px;border:1px solid rgba(255,255
       basePrices:{regular:28},
       desc:'White wine, chinese wine, chicken collagen broth, chinese dang gui, gojiberries, garlic, cherry tomatoes',
       addons:[
-        {name:'White Clams & Live Greenshell Mussels',price:28},
-        {name:'2 Grilled Jumbo Black Tiger Prawns',price:30},
+        {name:'Clams & Mussels',price:28},
+        {name:'2 Tiger Prawns',price:30},
         {name:'Seafood',price:32}
       ]
     })">
@@ -391,9 +414,9 @@ textarea{width:100%;height:84px;border-radius:12px;border:1px solid rgba(255,255
       addons:[
         {name:'Chicken',price:5},
         {name:'Pork Nduja',price:8},
-        {name:'2 Grilled Jumbo Black Tiger Prawns',price:10},
+        {name:'2 Tiger Prawns',price:10},
         {name:'Smoked Salmon',price:10},
-        {name:'3 Grilled Hokkaido Scallops',price:16}
+        {name:'3 Hokkaido Scallops',price:16}
       ]
     })">
       <div class="item-row">
@@ -450,7 +473,7 @@ textarea{width:100%;height:84px;border-radius:12px;border:1px solid rgba(255,255
     <!-- ALL AMATRICIANA GUANCIALE -->
     <div class="item-card" onclick="openItem({
       id:'amatriciana',
-      name:\"ALL AMATRICIANA GUANCIALE\",
+      name:'ALL AMATRICIANA GUANCIALE',
       basePrices:{tasting:19,regular:26},
       desc:'Cured italian pork cheek, onions, tomato sauce, pecorino romano DOP, fresh basil'
     })">
@@ -831,12 +854,16 @@ function openItem(item){
     addonWrap.style.display = "none";
   }
 
-  /* Show modal */
-  const bg = document.getElementById('modalBg');
-  bg.style.display = "flex";
-  setTimeout(()=> bg.classList.add('show'), 10);
-}
-
+  /* Default select Plain if exists */
+  const plain = [...document.querySelectorAll('.option-card input')]
+    .find(i => i.dataset.name === 'Plain');
+  if(plain) plain.checked = true;
+    /* Show modal */
+    const bg = document.getElementById('modalBg');
+    bg.style.display = "flex";
+    setTimeout(()=> bg.classList.add('show'), 10);
+  }
+  
 function closeModalAnimated(){
   const bg = document.getElementById('modalBg');
   bg.classList.remove('show');
@@ -891,7 +918,16 @@ document.getElementById('modalAddBtn').onclick = function(e){
     addons.push(a.dataset.name);
     addonTotal += Number(a.dataset.price);
   });
-
+  
+  /* Auto-select FIRST addon for specific dishes */
+  if (
+    item.id === 'bisque' ||
+    item.id === 'chickenbroth'
+  ){
+    const firstAddon = document.querySelector('.option-card input');
+    if(firstAddon) firstAddon.checked = true;
+  }
+  
   let finalPrice = basePrice + addonTotal;
   let finalName = currentItem.name;
 
