@@ -97,16 +97,14 @@ a{color:inherit;text-decoration:none}
 /* Option cards */
 .option-block{margin-top:12px}
 
-./* ADD-ONS — NO HORIZONTAL SCROLL */
 .option-cards{
-  display:grid;
-  grid-template-columns:1fr 1fr;
+  display:flex;
   gap:10px;
-}
+  flex-wrap:nowrap;
 
 /* truncate long addon names */
 .option-card .label-text{
-  max-width:120px;
+  flex:1;
   white-space:nowrap;
   overflow:hidden;
   text-overflow:ellipsis;
@@ -115,22 +113,33 @@ a{color:inherit;text-decoration:none}
 
 /* price aligned right */
 .option-card .price-addon{
-  margin-left:auto;
   font-size:13px;
+  font-weight:800;
+  color:var(--gold);
+  white-space:nowrap;
 }
 
 .option-card{
-  display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:12px;background:var(--option-bg);border:1px solid var(--option-border);cursor:pointer;min-width:120px;flex:0 0 auto;
-  transition:transform .12s ease,box-shadow .12s ease;
+  .option-card{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:8px;
+  padding:10px 12px;
+  border-radius:12px;
+  background:var(--option-bg);
+  border:1px solid var(--option-border);
+  cursor:pointer;
 }
+
 .option-card input{margin:0}
 .option-card .label-text{font-weight:700;color:#ddd;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.option-card .price-addon{font-weight:800;color:var(--gold);font-size:13px;white-space:nowrap;margin-left:6px}
+.option-ard .price-addon{font-weight:800;color:var(--gold);font-size:13px;white-space:nowrap;margin-left:6px}
 
 /* SIZE OPTION REFINEMENT */
 #sizeOptions .option-card{
+  padding:8px 14px;
   min-width:120px;
-  padding:8px 10px;
 }
 
 #sizeOptions .label-text{
@@ -144,9 +153,9 @@ a{color:inherit;text-decoration:none}
 
 /* ADDONS GRID */
 #addonOptions{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:10px;
+  display:flex;
+  flex-direction:column;
+  gap:8px;
 }
 
 #addonOptions .option-card{
@@ -846,7 +855,7 @@ function openItem(item){
         <label class="option-card">
           <input type="checkbox" data-name="${add.name}" data-price="${add.price}">
           <span class="label-text">${add.name}</span>
-          <span class="price-addon">+$${add.price}</span>
+          <span class="price-addon">${add.price ? '+$'+add.price : ''}</span>
         </label>
       `;
     });
@@ -920,10 +929,12 @@ document.getElementById('modalAddBtn').onclick = function(e){
   });
   
   /* Auto-select FIRST addon for specific dishes */
-  if (
-    item.id === 'bisque' ||
-    item.id === 'chickenbroth'
-  ){
+    if (
+    currentItem.id === 'bisque' ||
+    currentItem.id === 'chickenbroth'
+  )
+  
+  {
     const firstAddon = document.querySelector('.option-card input');
     if(firstAddon) firstAddon.checked = true;
   }
