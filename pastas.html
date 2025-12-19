@@ -882,9 +882,13 @@ function openItem(item){
   }
 
   /* ---------- ADDONS ---------- */
+const addonOption = document.getElementById('addonOption');
 const addonWrap = document.getElementById('addonWrap');
+
 addonWrap.innerHTML = '';
-addonWrap.style.display = 'block';
+addonOption.style.display = 'block';
+addonWrap.style.display = 'flex';
+
 selectedAddon = null;
 
 if(item.addons && item.addons.length){
