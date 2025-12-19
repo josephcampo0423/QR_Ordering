@@ -147,22 +147,16 @@ a{color:inherit;text-decoration:none}
   padding:8px 14px;
 }
 
-/* ADD-ONS */
-#addonOptions{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:10px;
-}
-
-/* ADD-ONS WRAPPER */
-.addons {
+/* ADD-ONS CONTAINER */
+#addonWrap {
   display: flex;
   flex-direction: column;
   gap: 10px;
   width: 100%;
+  box-sizing: border-box;
 }
 
-/* ADD-ON BUTTON */
+/* ADD-ON OPTION */
 .addon-option {
   display: flex;
   align-items: center;
@@ -174,10 +168,9 @@ a{color:inherit;text-decoration:none}
   width: 100%;
   background: #fff;
   transition: all 0.2s ease;
-  box-sizing: border-box;
 }
 
-/* CIRCLE INDICATOR */
+/* RADIO CIRCLE */
 .addon-option::before {
   content: '';
   width: 14px;
@@ -187,10 +180,9 @@ a{color:inherit;text-decoration:none}
   flex-shrink: 0;
 }
 
-/* ACTIVE STATE */
 .addon-option.active {
   border-color: #000;
-  background: #f7f7f7;
+  background: #f5f5f5;
 }
 
 .addon-option.active::before {
@@ -747,7 +739,7 @@ textarea{width:100%;height:84px;border-radius:12px;border:1px solid rgba(255,255
     <div id="addonOption" class="option-block" style="display:none">
       <div style="font-weight:700;color:#ddd;margin-bottom:8px">Add-ons</div>
       <div class="option-cards" id="addonOptions"></div>
-      <div id="addonWrap" class="addons"></div>
+      <div id="addonWrap"></div>
     </div>
 
     <!-- special request -->
@@ -853,7 +845,7 @@ function openItem(item){
   const sizeBox = document.getElementById('sizeOptions');
   sizeBox.innerHTML = "";
 
-  if(item.basePrices && item.basePrices.tasting){
+  if(item.basePrices && item.basePrices.regular){
     sizeWrap.style.display = "block";
 
     Object.entries(item.basePrices).forEach(([key,price],i)=>{
@@ -890,34 +882,34 @@ function openItem(item){
   }
 
   /* ---------- ADDONS ---------- */
-  const addonWrap = document.getElementById('addonWrap');
+const addonWrap = document.getElementById('addonWrap');
 addonWrap.innerHTML = '';
+addonWrap.style.display = 'block';
+selectedAddon = null;
 
 if(item.addons && item.addons.length){
   item.addons.forEach((addon, index) => {
-    const div = document.createElement('div');
-    div.className = 'addon-option';
-    div.innerHTML = `
+    const el = document.createElement('div');
+    el.className = 'addon-option';
+    el.innerHTML = `
       <span class="addon-name">${addon.name}</span>
       <span class="addon-price">+$${addon.price}</span>
     `;
 
-    div.onclick = () => {
+    el.onclick = () => {
       document.querySelectorAll('.addon-option')
-        .forEach(el => el.classList.remove('active'));
-
-      div.classList.add('active');
-
+        .forEach(a => a.classList.remove('active'));
+      el.classList.add('active');
       selectedAddon = addon;
     };
 
     /* DEFAULT SELECT FIRST ADD-ON */
     if(index === 0){
-      div.classList.add('active');
+      el.classList.add('active');
       selectedAddon = addon;
     }
 
-    addonWrap.appendChild(div);
+    addonWrap.appendChild(el);
   });
 } else {
   addonWrap.style.display = 'none';
