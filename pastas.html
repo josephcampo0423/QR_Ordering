@@ -1226,6 +1226,7 @@ textarea{width:100%;height:84px;border-radius:12px;border:1px solid rgba(255,255
 
 <script>
 /* GLOBAL CART */
+let currentPastaType = 'Spaghetti';
 let selectedAddons = [];
 let cart = JSON.parse(localStorage.getItem('cart') || '[]');
 
@@ -1248,6 +1249,8 @@ updateCartBadge();
 
 /* TAB SWITCH */
 function openTab(tabName){
+  currentPastaType = tabName.charAt(0).toUpperCase() + tabName.slice(1);
+  
   document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
   document.querySelector(`.tab[data-tab="${tabName}"]`).classList.add('active');
 
@@ -1260,6 +1263,7 @@ let currentItem = null;
 
 function openItem(item){
   currentItem = item;
+  selectedAddons = [];
 
   document.getElementById('modalNamePrice').textContent = item.name;
   document.getElementById('modalDesc').textContent = item.desc;
@@ -1339,18 +1343,37 @@ if(item.addons && item.addons.length){
     `;
 
     el.onclick = () => {
-      const index = selectedAddons.findIndex(a => a.name === addon.name);
 
-      /* REMOVE if already selected */
+      /* If Plain is selected */
+      if(addon.name === 'Plain'){
+        selectedAddons = [];
+        document.querySelectorAll('.addon-option')
+          .forEach(o => o.classList.remove('active'));
+    
+        selectedAddons.push(addon);
+        el.classList.add('active');
+        return;
+      }
+    
+      /* If selecting non-plain, remove Plain */
+      selectedAddons = selectedAddons.filter(a => a.name !== 'Plain');
+      document.querySelectorAll('.addon-option')
+        .forEach(o => {
+          if(o.querySelector('.addon-name')?.textContent === 'Plain'){
+            o.classList.remove('active');
+          }
+        });
+    
+      const index = selectedAddons.findIndex(a => a.name === addon.name);
+    
       if(index > -1){
         selectedAddons.splice(index,1);
         el.classList.remove('active');
         return;
       }
-
-      /* LIMIT TO 2 */
+    
       if(selectedAddons.length >= 2) return;
-
+    
       selectedAddons.push(addon);
       el.classList.add('active');
     };
@@ -1428,7 +1451,7 @@ document.getElementById('modalAddBtn').onclick = function(e){
   });
 
   let finalPrice = basePrice + addonTotal;
-  let finalName = currentItem.name;
+  let finalName = `${currentPastaType} - ${currentItem.name}`;
 
   if(sizeLabel) finalName += ` (${sizeLabel})`;
   if(addons.length) finalName += ` + ${addons.join(', ')}`;
