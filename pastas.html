@@ -1450,22 +1450,27 @@ document.getElementById('modalAddBtn').onclick = function(e){
     addonTotal += Number(a.price);
   });
 
-  let finalPrice = basePrice + addonTotal;
-  let finalName = `${currentPastaType} - ${currentItem.name}`;
-
-  if(sizeLabel) finalName += ` (${sizeLabel})`;
-  if(addons.length) finalName += ` + ${addons.join(', ')}`;
-
-  cart.push({
-  id: currentItem.id,
-  name: finalName,
-  price: finalPrice,
-  qty: qty,
-  request: request
-});
+  const cartItem = {
+    id: currentItem.id,
+    pastaType: currentPastaType,
+    name: currentItem.name,
+    size: sizeInput ? {
+      key: sizeInput.value,
+      label: sizeInput.value.toUpperCase(),
+      price: basePrice
+    } : null,
+    addons: selectedAddons.map(a => ({
+      name: a.name,
+      price: Number(a.price)
+    })),
+    request: request,
+    qty: qty,
+    unitPrice: basePrice + addonTotal
+  };
   
+  cart.push(cartItem);
   saveCart();
-
+  
   /* visual feedback */
   this.classList.add('btn-animate');
   bubbleToCart();
