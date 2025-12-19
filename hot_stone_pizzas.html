@@ -616,50 +616,48 @@ function pushToCart(itemObj){
   saveCart();
 }
 
-/* assign add button click */
+/* modalAddBtn CLICK HANDLER */
 document.getElementById('modalAddBtn').onclick = function(e){
   e.preventDefault();
 
-  let qty = Number(document.getElementById('qtyValue').textContent);
-  let request = document.getElementById('specialRequestInput').value.trim();
+  const qty = Number(document.getElementById('qtyValue').textContent);
+  const request = document.getElementById('specialRequestInput').value.trim();
 
-  /* ---------- HALF & HALF PRICE LOGIC ---------- */
+  /* BASE PRICE = CURRENT PIZZA */
+  let basePrice = Number(currentItem.price);
+
+  /* ---------- HALF & HALF ---------- */
   const halfInput = document.querySelector('input[name="half"]:checked');
-  
+
   let halfName = '';
   let halfExtra = 0;
-  
-  if(halfInput && halfInput.value){
+
+  if (halfInput && halfInput.value) {
     const halfPrice = Number(halfInput.dataset.price);
-    const higher = Math.max(basePrice, halfPrice);
-  
+
+    /* higher-priced pizza rule */
+    basePrice = Math.max(basePrice, halfPrice);
+
+    /* +$5 surcharge */
     halfExtra = 5;
-    basePrice = higher;
-  
+
     halfName = ` / ${halfInput.dataset.name}`;
-  }});
+  }
 
   const cartItem = {
     id: currentItem.id,
     pastaType: currentPastaType,
     name: currentItem.name + halfName,
-    size: sizeInput ? {
-      key: sizeInput.value,
-      label: sizeInput.value.toUpperCase(),
-      price: basePrice
-    } : null,
-    addons: selectedAddons.map(a => ({
-      name: a.name,
-      price: Number(a.price)
-    })),
+    size: null,
+    addons: [],
     request: request,
     qty: qty,
-    unitPrice: basePrice + addonTotal + halfExtra
+    unitPrice: basePrice + halfExtra
   };
-  
+
   cart.push(cartItem);
   saveCart();
-  
+
   /* visual feedback */
   this.classList.add('btn-animate');
   bubbleToCart();
