@@ -323,7 +323,7 @@ function renderCart(){
   let subtotal = 0;
 
   cart.forEach((it, idx)=>{
-    subtotal += it.unitPrice * it.qty;
+    subtotal += (it.unitPrice ?? it.price) * it.qty;
 
     const row = document.createElement("div");
     row.className = "cart-item";
@@ -362,7 +362,7 @@ function renderCart(){
 
     const itemPrice = document.createElement("div");
     itemPrice.className = "item-price";
-    itemPrice.textContent = "$" + (it.unitPrice * it.qty).toFixed(2);
+    itemPrice.textContent = "$" + ((it.unitPrice ?? it.price) * it.qty).toFixed(2);
 
     const qty = document.createElement("div");
     qty.className = "qty-row";
@@ -450,7 +450,7 @@ function placeOrder(){
   // compute subtotal
   let subtotal = 0;
   cart.forEach(it=>{
-    subtotal += (Number(it.unitPrice) || 0) * (Number(it.qty) || 1);
+    subtotal += (Number(it.unitPrice ?? it.price) || 0) * (Number(it.qty) || 1);
   });
 
   const service = subtotal * 0.10;                 // 10%
@@ -463,7 +463,7 @@ function placeOrder(){
     div.className="success-item";
     div.innerHTML = `
       <div>x ${it.qty} ${it.name}</div>
-      <div>$${(it.unitPrice * it.qty).toFixed(2)}</div>
+      <div>$${((it.unitPrice ?? it.price) * it.qty).toFixed(2)}</div>
     `;
     list.appendChild(div);
 
