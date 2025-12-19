@@ -1458,12 +1458,15 @@ document.getElementById('modalAddBtn').onclick = function(e){
 
   cart.push({
     id: currentItem.id,
-    name: finalName,
+    pastaType: currentPastaType,        // Spaghetti / Rigatoni / Mafaldine
+    itemName: currentItem.name,          // AGLIO OLIO
+    size: sizeLabel || null,             // Regular / Tasting
+    addons: selectedAddons.map(a => a.name), // ["Chicken", "Seafood"]
     price: finalPrice,
     qty: qty,
     request: request
   });
-
+  
   saveCart();
 
   /* visual feedback */
