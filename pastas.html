@@ -154,50 +154,59 @@ a{color:inherit;text-decoration:none}
   gap:10px;
 }
 
-#addonOptions .option-card{
-  padding:10px 12px;
-  border-radius:14px;
-  background:linear-gradient(180deg,#121212,#0c0c0c);
-  border:1px solid rgba(255,255,255,0.06);
-  box-shadow:0 4px 14px rgba(0,0,0,0.55);
-  transition:all .18s ease;
+/* ADD-ONS WRAPPER */
+.addons {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
 }
 
-#addonOptions .option-card:hover{
-  border-color:rgba(212,175,55,0.35);
-  transform:translateY(-1px);
+/* ADD-ON BUTTON */
+.addon-option {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  cursor: pointer;
+  width: 100%;
+  background: #fff;
+  transition: all 0.2s ease;
+  box-sizing: border-box;
 }
 
-#addonOptions input{
-  display:none;
+/* CIRCLE INDICATOR */
+.addon-option::before {
+  content: '';
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 2px solid #999;
+  flex-shrink: 0;
 }
 
-/* Selected state */
-#addonOptions input:checked + .label-text{
-  color:var(--gold);
+/* ACTIVE STATE */
+.addon-option.active {
+  border-color: #000;
+  background: #f7f7f7;
 }
 
-#addonOptions input:checked ~ .price-addon{
-  color:var(--gold);
+.addon-option.active::before {
+  background: #000;
+  border-color: #000;
 }
 
-#addonOptions input:checked ~ *{
-  font-weight:800;
+/* TEXT */
+.addon-name {
+  flex: 1;
+  font-size: 14px;
 }
 
-#addonOptions .label-text{
-  max-width:140px;
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
-  font-size:13px;
-}
-
-#addonOptions .price-addon{
-  margin-left:auto;
-  font-size:13px;
-  font-weight:800;
-  color:#aaa;
+.addon-price {
+  font-size: 14px;
+  font-weight: 600;
 }
 
 /* textarea (special request) */
