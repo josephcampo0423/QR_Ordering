@@ -480,6 +480,8 @@ textarea{width:100%;height:84px;border-radius:12px;border:1px solid rgba(255,255
 
 <script>
 /* GLOBAL CART */
+let currentPastaType = 'Spaghetti';
+let selectedAddons = [];
 let cart = JSON.parse(localStorage.getItem('cart') || '[]');
 
 function saveCart(){
@@ -501,6 +503,8 @@ updateCartBadge();
 
 /* TAB SWITCH */
 function openTab(tabName){
+  currentPastaType = tabName.charAt(0).toUpperCase() + tabName.slice(1);
+  
   document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
   document.querySelector(`.tab[data-tab="${tabName}"]`).classList.add('active');
 
@@ -513,34 +517,138 @@ let currentItem = null;
 
 function openItem(item){
   currentItem = item;
-  window._currentItem = item;
+  selectedAddons = [];
+
   document.getElementById('modalNamePrice').textContent = item.name;
-  document.getElementById('modalPrice').textContent = "$" + item.price;
   document.getElementById('modalDesc').textContent = item.desc;
 
-  /* Show/hide options */
-  document.getElementById('prosciuttoOption').style.display = item.prosciutto ? 'block' : 'none';
-  document.getElementById('friesSelector').style.display = (item.type === 'fries') ? 'block' : 'none';
-  document.getElementById('spiceOption').style.display = item.hasSpiceOption ? 'block' : 'none';
+  // RESET
+  document.getElementById('qtyValue').textContent = 1;
+  document.getElementById('specialRequestInput').value = "";
 
-  /* Reset option selections */
-  document.querySelectorAll('#prosciuttoOption input, #friesSelector input, #spiceOption input')
-    .forEach(el => el.checked = false);
+  /* ---------- SIZE OPTIONS ---------- */
+  const sizeWrap = document.getElementById('sizeOption');
+  const sizeBox = document.getElementById('sizeOptions');
+  sizeBox.innerHTML = "";
 
-  /* preselect spicy for mussels */
-  if(item.hasSpiceOption){
-    document.querySelector('input[name="spice_choice"][value="spicy"]').checked = true;
+   if(item.basePrices && item.basePrices.regular != null){
+    sizeWrap.style.display = "block";
+  
+    const sizeOrder = ['regular', 'tasting'];
+  
+    sizeOrder.forEach((key, i) => {
+      const price = item.basePrices[key];
+      if(price == null) return;
+  
+      sizeBox.innerHTML += `
+        <label class="option-card">
+          <input type="radio"
+                 name="size"
+                 value="${key}"
+                 data-price="${price}"
+                 ${key === 'regular' ? 'checked' : ''}>
+          <span class="label-text">${key.toUpperCase()}</span>
+          <span class="price-addon">$${price}</span>
+        </label>
+      `;
+    });
+  
+    const prices = sizeOrder
+      .map(k => item.basePrices[k])
+      .filter(p => typeof p === 'number');
+  
+    document.getElementById('modalPrice').textContent =
+      prices.length > 1 ? `$${prices.join(' / $')}` : `$${prices[0]}`;
+    } else {
+    sizeWrap.style.display = "none";
+    const modalPrice = document.getElementById('modalPrice');
+
+    if(item.id === 'bisque' || item.id === 'chickenbroth'){
+      modalPrice.textContent = '';
+      modalPrice.style.display = 'none';
+    } else {
+      modalPrice.style.display = 'block';
+      
+      const prices = Object.values(item.basePrices || {}).filter(p => typeof p === 'number');
+
+      if(prices.length){
+        modalPrice.textContent = "$" + prices[0];
+      } else {
+        modalPrice.style.display = 'none';
+      }
+    }
   }
 
-  document.getElementById('specialRequestInput').value = "";
-  document.getElementById('qtyValue').textContent = 1;
+  /* ---------- ADDONS ---------- */
+const addonOption = document.getElementById('addonOption');
+const addonWrap = document.getElementById('addonWrap');
 
-  /* Show modal */
-  const bg = document.getElementById('modalBg');
-  bg.style.display = "flex";
-  setTimeout(()=> bg.classList.add('show'), 10);
+addonWrap.innerHTML = '';
+addonOption.style.display = 'block';
+
+
+if(item.addons && item.addons.length){
+  item.addons.forEach(addon => {
+    const el = document.createElement('div');
+    el.className = 'addon-option';
+    el.innerHTML = `
+      <span class="addon-name">${addon.name}</span>
+      <span class="addon-price">+$${addon.price}</span>
+    `;
+
+    el.onclick = () => {
+
+      /* If Plain is selected */
+      if(addon.name === 'Plain'){
+        selectedAddons = [];
+        document.querySelectorAll('.addon-option')
+          .forEach(o => o.classList.remove('active'));
+    
+        selectedAddons.push(addon);
+        el.classList.add('active');
+        return;
+      }
+    
+      /* If selecting non-plain, remove Plain */
+      selectedAddons = selectedAddons.filter(a => a.name !== 'Plain');
+      document.querySelectorAll('.addon-option')
+        .forEach(o => {
+          if(o.querySelector('.addon-name')?.textContent === 'Plain'){
+            o.classList.remove('active');
+          }
+        });
+    
+      const index = selectedAddons.findIndex(a => a.name === addon.name);
+    
+      if(index > -1){
+        selectedAddons.splice(index,1);
+        el.classList.remove('active');
+        return;
+      }
+    
+      if(selectedAddons.length >= 2) return;
+    
+      selectedAddons.push(addon);
+      el.classList.add('active');
+    };
+
+    addonWrap.appendChild(el);
+  });
+} else {
+  addonOption.style.display = 'none';
 }
 
+  /* Default select Plain if exists */
+  const plain = [...document.querySelectorAll('.option-card input')]
+    .find(i => i.dataset.name === 'Plain');
+  if(plain) plain.checked = true;
+  
+    /* Show modal */
+    const bg = document.getElementById('modalBg');
+    bg.style.display = "flex";
+    setTimeout(()=> bg.classList.add('show'), 10);
+  }
+  
 function closeModalAnimated(){
   const bg = document.getElementById('modalBg');
   bg.classList.remove('show');
@@ -578,69 +686,45 @@ function pushToCart(itemObj){
 }
 
 /* assign add button click */
-document.getElementById('modalAddBtn').onclick = function (e) {
+document.getElementById('modalAddBtn').onclick = function(e){
   e.preventDefault();
-  e.stopPropagation();
 
-  if (!currentItem) return;
+  let qty = Number(document.getElementById('qtyValue').textContent);
+  let request = document.getElementById('specialRequestInput').value.trim();
 
-  let finalName = currentItem.name;
-  let finalPrice = Number(currentItem.price);
-  let option = "";
-  let fries = "";
-  let spicy = "";
-  let request = document.getElementById("specialRequestInput").value.trim();
-  let qty = Number(document.getElementById("qtyValue").textContent);
+  let sizeInput = document.querySelector('input[name="size"]:checked');
+  let basePrice = sizeInput ? Number(sizeInput.dataset.price) : 0;
+  let sizeLabel = sizeInput ? sizeInput.value.toUpperCase() : "";
 
-  /* Truffle Brie option */
-  if (currentItem.prosciutto) {
-    const opt = document.querySelector('input[name="truf_opt"]:checked');
-    if (!opt) {
-      alert("Please select an option");
-      return;
-    }
-    if (opt.value === "with") {
-      option = "With Aged Prosciutto";
-      finalPrice += 7;
-      finalName += " (With Aged Prosciutto)";
-    } else {
-      option = "Regular";
-      finalName += " (Regular)";
-    }
-  }
+  let addons = [];
+  let addonTotal = 0;
 
-  /* Fries */
-  if (currentItem.type === "fries") {
-    const f = document.querySelector('input[name="fries_choice"]:checked');
-    if (!f) {
-      alert("Please choose fries type");
-      return;
-    }
-    fries = f.value;
-    finalName += " — " + fries;
-  }
-
-  /* Spice */
-  if (currentItem.hasSpiceOption) {
-    const s = document.querySelector('input[name="spice_choice"]:checked');
-    spicy = s ? s.value : "spicy";
-    finalName += spicy === "non-spicy" ? " (Non-Spicy)" : " (Spicy)";
-  }
-
-  /* SAVE CART */
-  cart.push({
-    id: currentItem.id,
-    name: finalName,
-    price: finalPrice,
-    qty: qty,
-    option: option,
-    fries: fries,
-    spicy: spicy,
-    request: request
+  selectedAddons.forEach(a => {
+    addons.push(a.name);
+    addonTotal += Number(a.price);
   });
 
+  const cartItem = {
+    id: currentItem.id,
+    pastaType: currentPastaType,
+    name: currentItem.name,
+    size: sizeInput ? {
+      key: sizeInput.value,
+      label: sizeInput.value.toUpperCase(),
+      price: basePrice
+    } : null,
+    addons: selectedAddons.map(a => ({
+      name: a.name,
+      price: Number(a.price)
+    })),
+    request: request,
+    qty: qty,
+    unitPrice: basePrice + addonTotal
+  };
+  
+  cart.push(cartItem);
   saveCart();
-
+  
   /* visual feedback */
   this.classList.add('btn-animate');
   bubbleToCart();
