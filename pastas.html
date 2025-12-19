@@ -800,6 +800,7 @@ textarea{width:100%;height:84px;border-radius:12px;border:1px solid rgba(255,255
 
 <script>
 /* GLOBAL CART */
+let selectedAddons = [];
 let cart = JSON.parse(localStorage.getItem('cart') || '[]');
 
 function saveCart(){
@@ -901,7 +902,6 @@ const addonWrap = document.getElementById('addonWrap');
 addonWrap.innerHTML = '';
 addonOption.style.display = 'block';
 
-let selectedAddons = [];
 
 if(item.addons && item.addons.length){
   item.addons.forEach(addon => {
@@ -995,12 +995,12 @@ document.getElementById('modalAddBtn').onclick = function(e){
 
   let addons = [];
   let addonTotal = 0;
-  
-  if(selectedAddons.forEach)(a=>{
+
+  selectedAddons.forEach(a => {
     addons.push(a.name);
     addonTotal += Number(a.price);
-  });}
-  
+  });
+
   let finalPrice = basePrice + addonTotal;
   let finalName = currentItem.name;
 
