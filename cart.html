@@ -323,7 +323,7 @@ function renderCart(){
   let subtotal = 0;
 
   cart.forEach((it, idx)=>{
-    subtotal += it.price * it.qty;
+    subtotal += it.unitPrice * it.qty;
 
     const row = document.createElement("div");
     row.className = "cart-item";
@@ -343,6 +343,13 @@ function renderCart(){
     if(it.fries) lines.push("Fries: " + it.fries);
     if(it.spicy) lines.push("Spice: " + (it.spicy === "non-spicy" ? "Non-Spicy" : "Spicy"));
     if(it.doneness) lines.push("Doneness: " + it.doneness);
+    if(it.pastaType) lines.push(it.pastaType);
+    if(it.size) lines.push(it.size.label);
+    if(it.addons && it.addons.length){
+      it.addons.forEach(a => lines.push("+ " + a.name));
+    }
+
+    
     if(it.request) lines.push("Special: " + it.request);
 
     meta.textContent = lines.join("\n");
@@ -355,7 +362,7 @@ function renderCart(){
 
     const itemPrice = document.createElement("div");
     itemPrice.className = "item-price";
-    itemPrice.textContent = "$" + it.price.toFixed(2);
+    itemPrice.textContent = "$" + (it.unitPrice * it.qty).toFixed(2);
 
     const qty = document.createElement("div");
     qty.className = "qty-row";
@@ -443,7 +450,7 @@ function placeOrder(){
   // compute subtotal
   let subtotal = 0;
   cart.forEach(it=>{
-    subtotal += (Number(it.price) || 0) * (Number(it.qty) || 1);
+    subtotal += (Number(it.unitPrice) || 0) * (Number(it.qty) || 1);
   });
 
   const service = subtotal * 0.10;                 // 10%
@@ -454,11 +461,14 @@ function placeOrder(){
   cart.forEach(it=>{
     const div = document.createElement("div");
     div.className="success-item";
-    div.innerHTML = `<div>x ${it.qty} ${it.name}</div><div>$${((it.qty*it.price)||0).toFixed(2)}</div>`;
+    div.innerHTML = `
+      <div>x ${it.qty} ${it.name}</div>
+      <div>$${(it.unitPrice * it.qty).toFixed(2)}</div>
+    `;
     list.appendChild(div);
 
     // details (show prosciutto/fries/spicy/request)
-     if(it.prosciutto || it.fries || it.spicy || it.doneness || it.request){
+     if(it.prosciutto || it.fries || it.spicy || it.doneness || it.size || (it.addons && it.addons.length) || it.request){
     const meta = document.createElement("div");
     meta.className = "success-meta";
     const parts=[];
@@ -466,6 +476,10 @@ function placeOrder(){
     if(it.fries) parts.push("Fries: "+it.fries);
     if(it.spicy) parts.push("Spice: "+(it.spicy==="non-spicy"?"Non-Spicy":"Spicy"));
     if(it.doneness) parts.push("Doneness: "+it.doneness);
+    if(it.size) parts.push(it.size.label);
+    if(it.addons && it.addons.length){
+      it.addons.forEach(a => parts.push("+ " + a.name));
+    }
     if(it.request) parts.push("Special: "+it.request);
     meta.textContent = parts.join(" • ");
     list.appendChild(meta);
