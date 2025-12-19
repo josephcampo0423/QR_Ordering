@@ -600,118 +600,537 @@ textarea{width:100%;height:84px;border-radius:12px;border:1px solid rgba(255,255
       </div>
     </div>
 
-  <!-- SASHIMI & CRUDO TAB -->
-  <div class="tab-panel" data-panel="sashimi" style="display:none">
-    <div class="section-title">Sashimi & Crudo</div>
-    <div class="grid">
+  <!-- RIGATONI TAB -->
+<div class="tab-panel" data-panel="rigatoni" style="display:block">
+  <div class="section-title">Rigatoni</div>
+  <div class="grid">
 
-      <div class="item-card" onclick="openItem({id:'scallop',name:'HOKKAIDO SCALLOPS CRUDO',price:19,desc:'6 slices hokkaido scallops, yuzu & citrus vinaigrette, peruvian teardrop peppers, pickled onions'})">
-        <div class="item-row">
-          <div class="item-left">
-            <div class="item-title">HOKKAIDO SCALLOPS CRUDO</div>
-            <div class="item-desc">6 slices hokkaido scallops, yuzu & citrus vinaigrette, peruvian teardrop peppers, pickled onions</div>
+    <!-- AGLIO OLIO -->
+    <div class="item-card" onclick="openItem({
+      id:'aglio',
+      name:'AGLIO OLIO',
+      basePrices:{tasting:11,regular:16},
+      desc:'Extra virgin olive oil, white wine, garlic, dried chilli pepper, taggiasche olives, italian parsley',
+      addons:[
+        {name:'Plain',price:0},
+        {name:'Chicken',price:5},
+        {name:'Bacon & Mushrooms',price:8},
+        {name:'Truffle & Mushrooms',price:9},
+        {name:'2 Jumbo Prawns',price:10},
+        {name:'Smoked Salmon',price:10},
+        {name:'3 Hokkaido Scallops',price:16}
+      ]
+    })">
+      <div class="item-row">
+        <div class="item-left">
+          <div class="item-title">AGLIO OLIO</div>
+          <div class="item-desc">
+            Extra virgin olive oil, white wine, garlic, dried chilli pepper,
+            taggiasche olives, italian parsley
           </div>
-          <div class="price">$19</div>
         </div>
+        <div class="price">$11 / $16</div>
       </div>
-
-      <div class="item-card" onclick="openItem({id:'salmon',name:'SALMON SASHIMI',price:15,desc:'5 pieces salmon sashimi, house made nam jim chilli, wasabi, shiso leaf, Japanese cucumbers'})">
-        <div class="item-row">
-          <div class="item-left">
-            <div class="item-title">SALMON SASHIMI</div>
-            <div class="item-desc">5 pieces salmon sashimi, house made nam jim chilli, wasabi, shiso leaf, Japanese cucumbers</div>
-          </div>
-          <div class="price">$15</div>
-        </div>
-      </div>
-
-      <div class="item-card" onclick="openItem({id:'octopus',name:'OCTOPUS SASHIMI',price:13,desc:'5 pieces octopus sashimi, house made nam jim chilli, wasabi, shiso leaf, Japanese cucumbers'})">
-        <div class="item-row">
-          <div class="item-left">
-            <div class="item-title">OCTOPUS SASHIMI</div>
-            <div class="item-desc">5 pieces octopus sashimi, house made nam jim chilli, wasabi, shiso leaf, Japanese cucumbers</div>
-          </div>
-          <div class="price">$13</div>
-        </div>
-      </div>
-
-      <div class="item-card" onclick="openItem({id:'tartare',name:'SPICY SALMON TARTARE WITH CRISPY POPPADUMS',price:18,desc:'Salmon sashimi tartare, spicy aji verde, mexican hot sauce, mango, fresh onions, crispy poppadums, shiso leaf'})">
-        <div class="item-row">
-          <div class="item-left">
-            <div class="item-title">SPICY SALMON TARTARE WITH CRISPY POPPADUMS</div>
-            <div class="item-desc">Salmon sashimi tartare, spicy aji verde, mexican hot sauce, mango, fresh onions, crispy poppadums, shiso leaf</div>
-          </div>
-          <div class="price">$18</div>
-        </div>
-      </div>
-
-      <div class="item-card" onclick="openItem({id:'oysters',name:'JAPANESE HYOGO PREFECTURE OYSTERS — 1/2 DOZEN',price:28,desc:'6 pieces Japanese hyogo prefecture oysters, house made nam jim chilli'})">
-        <div class="item-row">
-          <div class="item-left">
-            <div class="item-title">JAPANESE HYOGO PREFECTURE OYSTERS — 1/2 DOZEN</div>
-            <div class="item-desc">6 pieces Japanese hyogo prefecture oysters, house made nam jim chilli</div>
-          </div>
-          <div class="price">$28</div>
-        </div>
-      </div>
-
     </div>
-  </div>
 
-  <!-- FRIES TAB -->
-  <div class="tab-panel" data-panel="fries" style="display:none">
-    <div class="section-title">Skin-on & Twister Fries</div>
-    <div class="grid">
-
-      <div class="item-card" onclick="openItem({id:'salted',name:'SALTED FRIES',price:8,desc:'Served with homemade curry ketchup',type:'fries'})">
-        <div class="item-row">
-          <div class="item-left">
-            <div class="item-title">SALTED FRIES</div>
-            <div class="item-desc">Served with homemade curry ketchup</div>
+    <!-- DRY LAKSA -->
+    <div class="item-card" onclick="openItem({
+      id:'drylaksa',
+      name:'DRY LAKSA',
+      basePrices:{tasting:11,regular:16},
+      desc:'Homemade rempah, coconut cream, cherry tomatoes, arugula, chilli oil',
+      addons:[
+        {name:'Plain',price:0},
+        {name:'Chicken',price:5},
+        {name:'2 Tiger Prawns',price:10},
+        {name:'Seafood',price:14}
+      ]
+    })">
+      <div class="item-row">
+        <div class="item-left">
+          <div class="item-title">DRY LAKSA</div>
+          <div class="item-desc">
+            Homemade rempah, coconut cream, cherry tomatoes, arugula, chilli oil
           </div>
-          <div class="price">$8</div>
         </div>
+        <div class="price">$11 / $16</div>
       </div>
+    </div>
 
-      <div class="item-card" onclick="openItem({id:'truffleFries',name:'TRUFFLE & GRANA PADANO FRIES',price:15,desc:'White truffle oil, grana padano cheese',type:'fries'})">
-        <div class="item-row">
-          <div class="item-left">
-            <div class="item-title">TRUFFLE & GRANA PADANO FRIES</div>
-            <div class="item-desc">White truffle oil, grana padano cheese</div>
+    <!-- PRAWN BISQUE -->
+    <div class="item-card" onclick="openItem({
+      id:'bisque',
+      name:'PRAWN BISQUE',
+      basePrices:{regular:null},
+      desc:'Prawn collagen, mascarpone, tomato sauce, gojiberries, tobiko roe, cherry tomatoes, butter, shrimp oil',
+      addons:[
+        {name:'Smoked Salmon',price:30},
+        {name:'2 Tiger Prawns',price:32},
+        {name:'3 Hokkaido Scallops',price:38}
+      ]
+    })">
+      <div class="item-row">
+        <div class="item-left">
+          <div class="item-title">PRAWN BISQUE</div>
+          <div class="item-desc">
+            Prawn collagen, mascarpone, tomato sauce, gojiberries,
+            tobiko roe, cherry tomatoes, butter, shrimp oil
           </div>
-          <div class="price">$15</div>
         </div>
+        <div class="price">$30+</div>
       </div>
+    </div>
+    
+    <!-- CHICKEN COLLAGEN BROTH WITH WINE & DANG GUI -->
+    <div class="item-card" onclick="openItem({
+      id:'chickenbroth',
+      name:'CHICKEN COLLAGEN BROTH WITH WINE & DANG GUI',
+      basePrices:{regular:null},
+      desc:'White wine, chinese wine, chicken collagen broth, chinese dang gui, gojiberries, garlic, cherry tomatoes',
+      addons:[
+        {name:'Clams & Mussels',price:28},
+        {name:'2 Tiger Prawns',price:30},
+        {name:'Seafood',price:32}
+      ]
+    })">
+      <div class="item-row">
+        <div class="item-left">
+          <div class="item-title">CHICKEN COLLAGEN BROTH WITH WINE & DANG GUI</div>
+          <div class="item-desc">
+            White wine, chinese wine, chicken collagen broth,
+            chinese dang gui, gojiberries, garlic, cherry tomatoes
+          </div>
+        </div>
+        <div class="price">$28+</div>
+      </div>
+    </div>
 
-      <div class="item-card" onclick="openItem({id:'noriFries',name:'NORI FRIES WITH WASABI AIOLI',price:13,desc:'Japanese nori, wasabi aioli',type:'fries'})">
-        <div class="item-row">
-          <div class="item-left">
-            <div class="item-title">NORI FRIES WITH WASABI AIOLI</div>
-            <div class="item-desc">Japanese nori, wasabi aioli</div>
+    <!-- SPICY ARRABBIATA -->
+    <div class="item-card" onclick="openItem({
+      id:'arrabbiata',
+      name:'SPICY ARRABBIATA',
+      basePrices:{tasting:11,regular:16},
+      desc:'Spicy garlic tomato sauce, house made chilli oil, dried chilli peppers, fresh basil, cherry tomatoes',
+      addons:[
+        {name:'Plain',price:0},
+        {name:'Chicken',price:5},
+        {name:'Pork Nduja',price:8},
+        {name:'2 Tiger Prawns',price:10},
+        {name:'Smoked Salmon',price:10},
+        {name:'3 Hokkaido Scallops',price:16}
+      ]
+    })">
+      <div class="item-row">
+        <div class="item-left">
+          <div class="item-title">SPICY ARRABBIATA</div>
+          <div class="item-desc">
+            Spicy garlic tomato sauce, house made chilli oil,
+            dried chilli peppers, fresh basil, cherry tomatoes
           </div>
-          <div class="price">$13</div>
         </div>
+        <div class="price">$11 / $16</div>
       </div>
+    </div>
+    
+    <!-- WHITE PUTTANESCA GUANCIALE -->
+    <div class="item-card" onclick="openItem({
+      id:'puttanesca',
+      name:'WHITE PUTTANESCA GUANCIALE',
+      basePrices:{tasting:19,regular:26},
+      desc:'Cured italian pork cheek, taggiasche olives, anchovies, capers, cherry tomatoes, garlic, lemon juice, basil, extra virgin olive oil'
+    })">
+      <div class="item-row">
+        <div class="item-left">
+          <div class="item-title">WHITE PUTTANESCA GUANCIALE</div>
+          <div class="item-desc">
+            Cured italian pork cheek, taggiasche olives, anchovies,
+            capers, cherry tomatoes, garlic, lemon juice, basil,
+            extra virgin olive oil
+          </div>
+        </div>
+        <div class="price">$19 / $26</div>
+      </div>
+    </div>
 
-      <div class="item-card" onclick="openItem({id:'malaFries',name:'MALA GARLIC FRIES',price:13,desc:'Homemade Szechuan spice mix, fresh garlic, dried chillies',type:'fries'})">
-        <div class="item-row">
-          <div class="item-left">
-            <div class="item-title">MALA GARLIC FRIES</div>
-            <div class="item-desc">Homemade Szechuan spice mix, fresh garlic, dried chillies</div>
+    <!-- CARBONARA -->
+    <div class="item-card" onclick="openItem({
+      id:'carbonara',
+      name:'CARBONARA GUANCIALE',
+      basePrices:{tasting:19,regular:26},
+      desc:'Cured italian pork cheek, black pepper, pecorino romano DOP, egg yolk'
+    })">
+      <div class="item-row">
+        <div class="item-left">
+          <div class="item-title">CARBONARA GUANCIALE</div>
+          <div class="item-desc">
+            Cured italian pork cheek, black pepper,
+            pecorino romano DOP, egg yolk
           </div>
-          <div class="price">$13</div>
         </div>
+        <div class="price">$19 / $26</div>
       </div>
+    </div>
+    
+    <!-- ALL AMATRICIANA GUANCIALE -->
+    <div class="item-card" onclick="openItem({
+      id:'amatriciana',
+      name:'ALL AMATRICIANA GUANCIALE',
+      basePrices:{tasting:19,regular:26},
+      desc:'Cured italian pork cheek, onions, tomato sauce, pecorino romano DOP, fresh basil'
+    })">
+      <div class="item-row">
+        <div class="item-left">
+          <div class="item-title">ALL AMATRICIANA GUANCIALE</div>
+          <div class="item-desc">
+            Cured italian pork cheek, onions,
+            tomato sauce, pecorino romano DOP, fresh basil
+          </div>
+        </div>
+        <div class="price">$19 / $26</div>
+      </div>
+    </div>
 
-      <div class="item-card" onclick="openItem({id:'nachoFries',name:'NACHO CHEESE & ASSAM AIOLI FRIES',price:14,desc:'Nacho cheese sauce, assam aioli, sweet relish, pickled jalapeno, red onions',type:'fries'})">
-        <div class="item-row">
-          <div class="item-left">
-            <div class="item-title">NACHO CHEESE & ASSAM AIOLI FRIES</div>
-            <div class="item-desc">Nacho cheese sauce, assam aioli, sweet relish, pickled jalapeno, red onions</div>
+    <!-- TRUFFLE & MUSHROOMS -->
+    <div class="item-card" onclick="openItem({
+      id:'trufflemush',
+      name:'TRUFFLE & MUSHROOMS',
+      basePrices:{tasting:19,regular:26},
+      desc:'Mushroom medley, black truffle cream, parmigiano reggiano, white truffle oil, butter'
+    })">
+      <div class="item-row">
+        <div class="item-left">
+          <div class="item-title">TRUFFLE & MUSHROOMS</div>
+          <div class="item-desc">
+            Mushroom medley, black truffle cream,
+            parmigiano reggiano, white truffle oil, butter
           </div>
-          <div class="price">$14</div>
         </div>
+        <div class="price">$19 / $26</div>
       </div>
+    </div>
+    
+    <!-- BEEF BOLOGNESE & SMOKED PROVOLA -->
+    <div class="item-card" onclick="openItem({
+      id:'bolognese',
+      name:'BEEF BOLOGNESE & SMOKED PROVOLA CHEESE',
+      basePrices:{tasting:18,regular:25},
+      desc:'Homemade beef ragù, red wine, cherry tomatoes, burnt smoked provola'
+    })">
+      <div class="item-row">
+        <div class="item-left">
+          <div class="item-title">BEEF BOLOGNESE & SMOKED PROVOLA CHEESE</div>
+          <div class="item-desc">
+            Homemade beef ragù, red wine,
+            cherry tomatoes, burnt smoked provola
+          </div>
+        </div>
+        <div class="price">$18 / $25</div>
+      </div>
+    </div>
+    
+    <!-- MALA DUCK RAGÙ -->
+    <div class="item-card" onclick="openItem({
+      id:'duckragu',
+      name:'MALA DUCK RAGÙ',
+      basePrices:{tasting:21,regular:28},
+      desc:'Duck ragù, szechuan spices, tomato sauce, enoki mushrooms, cherry tomatoes'
+    })">
+      <div class="item-row">
+        <div class="item-left">
+          <div class="item-title">MALA DUCK RAGÙ</div>
+          <div class="item-desc">
+            Duck ragù, szechuan spices,
+            tomato sauce, enoki mushrooms, cherry tomatoes
+          </div>
+        </div>
+        <div class="price">$21 / $28</div>
+      </div>
+    </div>
+    
+    <!-- PORK SAUSAGE RAGÙ -->
+    <div class="item-card" onclick="openItem({
+      id:'porkragu',
+      name:'PORK SAUSAGE RAGÙ',
+      basePrices:{tasting:19,regular:26},
+      desc:'Fennel pork sausage, mushroom medley, parmigiano reggiano infused cream sauce, butter'
+    })">
+      <div class="item-row">
+        <div class="item-left">
+          <div class="item-title">PORK SAUSAGE RAGÙ</div>
+          <div class="item-desc">
+            Fennel pork sausage, mushroom medley,
+            parmigiano reggiano infused cream sauce, butter
+          </div>
+        </div>
+        <div class="price">$19 / $26</div>
+      </div>
+    </div>
+
+  <!-- MAFALDINE TAB -->
+<div class="tab-panel" data-panel="spaghetti" style="display:block">
+  <div class="section-title">Spaghetti</div>
+  <div class="grid">
+
+    <!-- AGLIO OLIO -->
+    <div class="item-card" onclick="openItem({
+      id:'aglio',
+      name:'AGLIO OLIO',
+      basePrices:{tasting:11,regular:16},
+      desc:'Extra virgin olive oil, white wine, garlic, dried chilli pepper, taggiasche olives, italian parsley',
+      addons:[
+        {name:'Plain',price:0},
+        {name:'Chicken',price:5},
+        {name:'Bacon & Mushrooms',price:8},
+        {name:'Truffle & Mushrooms',price:9},
+        {name:'2 Jumbo Prawns',price:10},
+        {name:'Smoked Salmon',price:10},
+        {name:'3 Hokkaido Scallops',price:16}
+      ]
+    })">
+      <div class="item-row">
+        <div class="item-left">
+          <div class="item-title">AGLIO OLIO</div>
+          <div class="item-desc">
+            Extra virgin olive oil, white wine, garlic, dried chilli pepper,
+            taggiasche olives, italian parsley
+          </div>
+        </div>
+        <div class="price">$11 / $16</div>
+      </div>
+    </div>
+
+    <!-- DRY LAKSA -->
+    <div class="item-card" onclick="openItem({
+      id:'drylaksa',
+      name:'DRY LAKSA',
+      basePrices:{tasting:11,regular:16},
+      desc:'Homemade rempah, coconut cream, cherry tomatoes, arugula, chilli oil',
+      addons:[
+        {name:'Plain',price:0},
+        {name:'Chicken',price:5},
+        {name:'2 Tiger Prawns',price:10},
+        {name:'Seafood',price:14}
+      ]
+    })">
+      <div class="item-row">
+        <div class="item-left">
+          <div class="item-title">DRY LAKSA</div>
+          <div class="item-desc">
+            Homemade rempah, coconut cream, cherry tomatoes, arugula, chilli oil
+          </div>
+        </div>
+        <div class="price">$11 / $16</div>
+      </div>
+    </div>
+
+    <!-- PRAWN BISQUE -->
+    <div class="item-card" onclick="openItem({
+      id:'bisque',
+      name:'PRAWN BISQUE',
+      basePrices:{regular:null},
+      desc:'Prawn collagen, mascarpone, tomato sauce, gojiberries, tobiko roe, cherry tomatoes, butter, shrimp oil',
+      addons:[
+        {name:'Smoked Salmon',price:30},
+        {name:'2 Tiger Prawns',price:32},
+        {name:'3 Hokkaido Scallops',price:38}
+      ]
+    })">
+      <div class="item-row">
+        <div class="item-left">
+          <div class="item-title">PRAWN BISQUE</div>
+          <div class="item-desc">
+            Prawn collagen, mascarpone, tomato sauce, gojiberries,
+            tobiko roe, cherry tomatoes, butter, shrimp oil
+          </div>
+        </div>
+        <div class="price">$30+</div>
+      </div>
+    </div>
+    
+    <!-- CHICKEN COLLAGEN BROTH WITH WINE & DANG GUI -->
+    <div class="item-card" onclick="openItem({
+      id:'chickenbroth',
+      name:'CHICKEN COLLAGEN BROTH WITH WINE & DANG GUI',
+      basePrices:{regular:null},
+      desc:'White wine, chinese wine, chicken collagen broth, chinese dang gui, gojiberries, garlic, cherry tomatoes',
+      addons:[
+        {name:'Clams & Mussels',price:28},
+        {name:'2 Tiger Prawns',price:30},
+        {name:'Seafood',price:32}
+      ]
+    })">
+      <div class="item-row">
+        <div class="item-left">
+          <div class="item-title">CHICKEN COLLAGEN BROTH WITH WINE & DANG GUI</div>
+          <div class="item-desc">
+            White wine, chinese wine, chicken collagen broth,
+            chinese dang gui, gojiberries, garlic, cherry tomatoes
+          </div>
+        </div>
+        <div class="price">$28+</div>
+      </div>
+    </div>
+
+    <!-- SPICY ARRABBIATA -->
+    <div class="item-card" onclick="openItem({
+      id:'arrabbiata',
+      name:'SPICY ARRABBIATA',
+      basePrices:{tasting:11,regular:16},
+      desc:'Spicy garlic tomato sauce, house made chilli oil, dried chilli peppers, fresh basil, cherry tomatoes',
+      addons:[
+        {name:'Plain',price:0},
+        {name:'Chicken',price:5},
+        {name:'Pork Nduja',price:8},
+        {name:'2 Tiger Prawns',price:10},
+        {name:'Smoked Salmon',price:10},
+        {name:'3 Hokkaido Scallops',price:16}
+      ]
+    })">
+      <div class="item-row">
+        <div class="item-left">
+          <div class="item-title">SPICY ARRABBIATA</div>
+          <div class="item-desc">
+            Spicy garlic tomato sauce, house made chilli oil,
+            dried chilli peppers, fresh basil, cherry tomatoes
+          </div>
+        </div>
+        <div class="price">$11 / $16</div>
+      </div>
+    </div>
+    
+    <!-- WHITE PUTTANESCA GUANCIALE -->
+    <div class="item-card" onclick="openItem({
+      id:'puttanesca',
+      name:'WHITE PUTTANESCA GUANCIALE',
+      basePrices:{tasting:19,regular:26},
+      desc:'Cured italian pork cheek, taggiasche olives, anchovies, capers, cherry tomatoes, garlic, lemon juice, basil, extra virgin olive oil'
+    })">
+      <div class="item-row">
+        <div class="item-left">
+          <div class="item-title">WHITE PUTTANESCA GUANCIALE</div>
+          <div class="item-desc">
+            Cured italian pork cheek, taggiasche olives, anchovies,
+            capers, cherry tomatoes, garlic, lemon juice, basil,
+            extra virgin olive oil
+          </div>
+        </div>
+        <div class="price">$19 / $26</div>
+      </div>
+    </div>
+
+    <!-- CARBONARA -->
+    <div class="item-card" onclick="openItem({
+      id:'carbonara',
+      name:'CARBONARA GUANCIALE',
+      basePrices:{tasting:19,regular:26},
+      desc:'Cured italian pork cheek, black pepper, pecorino romano DOP, egg yolk'
+    })">
+      <div class="item-row">
+        <div class="item-left">
+          <div class="item-title">CARBONARA GUANCIALE</div>
+          <div class="item-desc">
+            Cured italian pork cheek, black pepper,
+            pecorino romano DOP, egg yolk
+          </div>
+        </div>
+        <div class="price">$19 / $26</div>
+      </div>
+    </div>
+    
+    <!-- ALL AMATRICIANA GUANCIALE -->
+    <div class="item-card" onclick="openItem({
+      id:'amatriciana',
+      name:'ALL AMATRICIANA GUANCIALE',
+      basePrices:{tasting:19,regular:26},
+      desc:'Cured italian pork cheek, onions, tomato sauce, pecorino romano DOP, fresh basil'
+    })">
+      <div class="item-row">
+        <div class="item-left">
+          <div class="item-title">ALL AMATRICIANA GUANCIALE</div>
+          <div class="item-desc">
+            Cured italian pork cheek, onions,
+            tomato sauce, pecorino romano DOP, fresh basil
+          </div>
+        </div>
+        <div class="price">$19 / $26</div>
+      </div>
+    </div>
+
+    <!-- TRUFFLE & MUSHROOMS -->
+    <div class="item-card" onclick="openItem({
+      id:'trufflemush',
+      name:'TRUFFLE & MUSHROOMS',
+      basePrices:{tasting:19,regular:26},
+      desc:'Mushroom medley, black truffle cream, parmigiano reggiano, white truffle oil, butter'
+    })">
+      <div class="item-row">
+        <div class="item-left">
+          <div class="item-title">TRUFFLE & MUSHROOMS</div>
+          <div class="item-desc">
+            Mushroom medley, black truffle cream,
+            parmigiano reggiano, white truffle oil, butter
+          </div>
+        </div>
+        <div class="price">$19 / $26</div>
+      </div>
+    </div>
+    
+    <!-- BEEF BOLOGNESE & SMOKED PROVOLA -->
+    <div class="item-card" onclick="openItem({
+      id:'bolognese',
+      name:'BEEF BOLOGNESE & SMOKED PROVOLA CHEESE',
+      basePrices:{tasting:18,regular:25},
+      desc:'Homemade beef ragù, red wine, cherry tomatoes, burnt smoked provola'
+    })">
+      <div class="item-row">
+        <div class="item-left">
+          <div class="item-title">BEEF BOLOGNESE & SMOKED PROVOLA CHEESE</div>
+          <div class="item-desc">
+            Homemade beef ragù, red wine,
+            cherry tomatoes, burnt smoked provola
+          </div>
+        </div>
+        <div class="price">$18 / $25</div>
+      </div>
+    </div>
+    
+    <!-- MALA DUCK RAGÙ -->
+    <div class="item-card" onclick="openItem({
+      id:'duckragu',
+      name:'MALA DUCK RAGÙ',
+      basePrices:{tasting:21,regular:28},
+      desc:'Duck ragù, szechuan spices, tomato sauce, enoki mushrooms, cherry tomatoes'
+    })">
+      <div class="item-row">
+        <div class="item-left">
+          <div class="item-title">MALA DUCK RAGÙ</div>
+          <div class="item-desc">
+            Duck ragù, szechuan spices,
+            tomato sauce, enoki mushrooms, cherry tomatoes
+          </div>
+        </div>
+        <div class="price">$21 / $28</div>
+      </div>
+    </div>
+    
+    <!-- PORK SAUSAGE RAGÙ -->
+    <div class="item-card" onclick="openItem({
+      id:'porkragu',
+      name:'PORK SAUSAGE RAGÙ',
+      basePrices:{tasting:19,regular:26},
+      desc:'Fennel pork sausage, mushroom medley, parmigiano reggiano infused cream sauce, butter'
+    })">
+      <div class="item-row">
+        <div class="item-left">
+          <div class="item-title">PORK SAUSAGE RAGÙ</div>
+          <div class="item-desc">
+            Fennel pork sausage, mushroom medley,
+            parmigiano reggiano infused cream sauce, butter
+          </div>
+        </div>
+        <div class="price">$19 / $26</div>
+      </div>
+    </div>
 
     </div>
   </div>
