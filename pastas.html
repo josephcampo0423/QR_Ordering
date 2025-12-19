@@ -996,7 +996,7 @@ document.getElementById('modalAddBtn').onclick = function(e){
   let addons = [];
   let addonTotal = 0;
   
-  selectedAddons.forEach(a=>{
+  if(selectedAddons.forEach)(a=>{
     addons.push(a.name);
     addonTotal += Number(a.price);
   });}
