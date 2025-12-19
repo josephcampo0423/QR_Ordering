@@ -890,33 +890,44 @@ function openItem(item){
   }
 
   /* ---------- ADDONS ---------- */
-  const addonWrap = document.getElementById('addonOption');
-  const addonBox = document.getElementById('addonOptions');
-  addonBox.innerHTML = "";
+  const addonWrap = document.getElementById('addonWrap');
+addonWrap.innerHTML = '';
 
-  if(item.addons && item.addons.length){
-    addonWrap.style.display = "block";
+if(item.addons && item.addons.length){
+  item.addons.forEach((addon, index) => {
+    const div = document.createElement('div');
+    div.className = 'addon-option';
+    div.innerHTML = `
+      <span class="addon-name">${addon.name}</span>
+      <span class="addon-price">+$${addon.price}</span>
+    `;
 
-    item.addons.forEach((add, i)=>{
-      addonBox.innerHTML += `
-        <label class="option-card">
-          <input type="checkbox"
-                 data-name="${add.name}"
-                 data-price="${add.price}"
-                 ${i === 0 && (item.id === 'bisque' || item.id === 'chickenbroth') ? 'checked' : ''}>
-          <span class="label-text">${add.name}</span>
-          <span class="price-addon">${add.price ? '+$'+add.price : ''}</span>
-        </label>
-      `;
-    });
-  } else {
-    addonWrap.style.display = "none";
-  }
+    div.onclick = () => {
+      document.querySelectorAll('.addon-option')
+        .forEach(el => el.classList.remove('active'));
+
+      div.classList.add('active');
+
+      selectedAddon = addon;
+    };
+
+    /* DEFAULT SELECT FIRST ADD-ON */
+    if(index === 0){
+      div.classList.add('active');
+      selectedAddon = addon;
+    }
+
+    addonWrap.appendChild(div);
+  });
+} else {
+  addonWrap.style.display = 'none';
+}
 
   /* Default select Plain if exists */
   const plain = [...document.querySelectorAll('.option-card input')]
     .find(i => i.dataset.name === 'Plain');
   if(plain) plain.checked = true;
+  
     /* Show modal */
     const bg = document.getElementById('modalBg');
     bg.style.display = "flex";
