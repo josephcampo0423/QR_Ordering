@@ -410,17 +410,34 @@ textarea{width:100%;height:84px;border-radius:12px;border:1px solid rgba(255,255
 
     <div id="modalDesc" class="modal-desc">Description ...</div>
 
-    <!-- HALF & HALF OPTION -->
+    <!-- HALF & HALF PIZZA OPTION -->
     <div id="halfOption" class="option-block" style="display:none">
-      <div style="font-weight:700;color:#ddd;margin-bottom:8px">
-        Half & Half Pizza
-      </div>
-      <div class="option-cards" id="halfOptions"></div>
-      <div style="color:#bfbfbf;font-size:12px;margin-top:6px">
-        +$5, price based on higher-priced pizza
-      </div>
-    </div>
 
+    <!-- Half & Half Pizza Title -->
+    <div style="font-weight:700;color:#ddd;margin-bottom:4px">
+      Half & Half Pizza
+    </div>
+  
+    <!-- Subtitle ) -->
+    <div style="font-weight:700;color:#ddd;font-size:13px;margin-bottom:10px;opacity:0.85">
+      +$5, price based on higher-priced pizza
+    </div>
+  
+    <!-- Tomato and White Base Pizzas Tabs -->
+    <div class="tab-row" style="padding:0;margin-bottom:10px">
+      <button class="tab active" data-half-tab="tomato" onclick="openHalfTab('tomato')">
+        Tomato Base
+      </button>
+      <button class="tab" data-half-tab="white" onclick="openHalfTab('white')">
+        White Base
+      </button>
+    </div>
+  
+    <!-- Pizza options -->
+    <div class="option-cards" id="halfOptions"></div>
+  
+  </div>
+  
     <!-- special request -->
     <div class="option-block">
       <div style="font-weight:700;color:#ddd;margin-bottom:8px">Special Request (Optional)</div>
@@ -515,21 +532,24 @@ let currentItem = null;
 
 /* ALL PIZZAS (USED FOR HALF & HALF) */
 const allPizzas = [
-  { id:'margherita', name:'MARGHERITA', price:21 },
-  { id:'malaDuck', name:'MALA DUCK CONFIT', price:28 },
-  { id:'fiveCheese', name:'5 CHEESE & HONEY WITH TOASTED ALMONDS', price:28 },
-  { id:'iberico', name:'IBERICO CHORIZO DAVIOLA', price:28 },
-  { id:'salami', name:'SPICY PORK SALAMI', price:24 },
-  { id:'sloppy', name:'SLOPPY JOE', price:26 },
-  { id:'baconJam', name:'BACON & JAM', price:26 },
-  { id:'justMeat', name:'JUST MEAT', price:28 },
-  { id:'nduja', name:'SPICY PORK NDUJA WITH HOT HONEY', price:28 },
-  { id:'salmon', name:'ASSAM SMOKED SALMON', price:28 },
-  { id:'maple', name:'MAPLE GLAZE BACON', price:26 },
-  { id:'prosciuttoBlue', name:'PROSCIUTTO & BLUE CHEESE', price:30 },
-  { id:'truffleMush', name:'TRUFFLE & MUSHROOMS', price:26 },
-  { id:'mortadella', name:'MORTADELLA & STRACCIATELLA', price:28 },
-  { id:'salsiccia', name:'SALSICCIA GORGONZOLA', price:28 }
+  /* TOMATO BASE */
+  { id:'margherita', name:'MARGHERITA', price:21, base:'tomato' },
+  { id:'malaDuck', name:'MALA DUCK CONFIT', price:28, base:'tomato' },
+  { id:'fiveCheese', name:'5 CHEESE & HONEY WITH TOASTED ALMONDS', price:28, base:'tomato' },
+  { id:'iberico', name:'IBERICO CHORIZO DAVIOLA', price:28, base:'tomato' },
+  { id:'salami', name:'SPICY PORK SALAMI', price:24, base:'tomato' },
+  { id:'sloppy', name:'SLOPPY JOE', price:26, base:'tomato' },
+  { id:'baconJam', name:'BACON & JAM', price:26, base:'tomato' },
+  { id:'justMeat', name:'JUST MEAT', price:28, base:'tomato' },
+
+  /* WHITE BASE */
+  { id:'nduja', name:'SPICY PORK NDUJA WITH HOT HONEY', price:28, base:'white' },
+  { id:'salmon', name:'ASSAM SMOKED SALMON', price:28, base:'white' },
+  { id:'maple', name:'MAPLE GLAZE BACON', price:26, base:'white' },
+  { id:'prosciuttoBlue', name:'PROSCIUTTO & BLUE CHEESE', price:30, base:'white' },
+  { id:'truffleMush', name:'TRUFFLE & MUSHROOMS', price:26, base:'white' },
+  { id:'mortadella', name:'MORTADELLA & STRACCIATELLA', price:28, base:'white' },
+  { id:'salsiccia', name:'SALSICCIA GORGONZOLA', price:28, base:'white' }
 ];
 
 function openItem(item){
@@ -547,32 +567,50 @@ function openItem(item){
 const halfWrap = document.getElementById('halfOption');
 const halfBox  = document.getElementById('halfOptions');
 
-halfBox.innerHTML = '';
 halfWrap.style.display = 'block';
+openHalfTab('tomato');
 
-/* NONE option (default) */
-halfBox.innerHTML += `
+/* DEFAULT NONE OPTION */
+document.getElementById('halfOptions').innerHTML = `
   <label class="option-card">
     <input type="radio" name="half" value="" checked>
     <span class="label-text">None</span>
   </label>
 `;
 
-/* Other pizzas only */
-allPizzas
-  .filter(p => p.id !== item.id)
-  .forEach(p => {
-    halfBox.innerHTML += `
-      <label class="option-card">
-        <input type="radio"
-               name="half"
-               value="${p.id}"
-               data-name="${p.name}"
-               data-price="${p.price}">
-        <span class="label-text">${p.name}</span>
-      </label>
-    `;
-  });
+    function openHalfTab(base){
+      const halfBox = document.getElementById('halfOptions');
+    
+      /* Update tab active state */
+      document.querySelectorAll('[data-half-tab]').forEach(t=>{
+        t.classList.remove('active');
+      });
+      document.querySelector(`[data-half-tab="${base}"]`).classList.add('active');
+    
+      /* DEFAULT NONE OPTION */
+      halfBox.innerHTML = `
+        <label class="option-card">
+          <input type="radio" name="half" value="" checked>
+          <span class="label-text">None</span>
+        </label>
+      `;
+    
+      /* Filter pizzas */
+      allPizzas
+        .filter(p => p.base === base && p.id !== currentItem.id)
+        .forEach(p => {
+          halfBox.innerHTML += `
+            <label class="option-card">
+              <input type="radio"
+                     name="half"
+                     value="${p.id}"
+                     data-name="${p.name}"
+                     data-price="${p.price}">
+              <span class="label-text">${p.name}</span>
+            </label>
+          `;
+        });
+    }
   
     /* Show modal */
     const bg = document.getElementById('modalBg');
