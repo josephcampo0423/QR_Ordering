@@ -845,7 +845,7 @@ function openItem(item){
   const sizeBox = document.getElementById('sizeOptions');
   sizeBox.innerHTML = "";
 
-  if(item.basePrices && item.basePrices.regular){
+  if(item.basePrices && item.basePrices.tasting){
     sizeWrap.style.display = "block";
 
     Object.entries(item.basePrices).forEach(([key,price],i)=>{
