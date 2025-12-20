@@ -698,10 +698,8 @@ document.getElementById('modalAddBtn').onclick = function(e){
 
   const cartItem = {
     id: currentItem.id,
-    pastaType: currentPastaType,
+    category: "pizza",         
     name: currentItem.name + halfName,
-    size: null,
-    addons: [],
     request: request,
     qty: qty,
     unitPrice: basePrice + halfExtra
