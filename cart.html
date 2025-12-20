@@ -357,11 +357,22 @@ function renderCart(){
     }
     
     /* OTHER OPTIONS (NON-PASTA) */
-    if(it.prosciutto) lines.push("Option: " + it.prosciutto);
-    if(it.fries) lines.push("Fries: " + it.fries);
-    if(it.spicy) lines.push("Spice: " + (it.spicy === "non-spicy" ? "Non-Spicy" : "Spicy"));
-    if(it.doneness) lines.push("Doneness: " + it.doneness);
+    if (it.prosciutto) {
+      lines.push(it.prosciutto);
+    }
     
+    if (it.fries) {
+      lines.push("Fries: " + it.fries);
+    }
+    
+    if (it.spicy) {
+      lines.push("Spice: " + (it.spicy === "non-spicy" ? "Non-Spicy" : "Spicy"));
+    }
+    
+    if (it.doneness) {
+      lines.push("Doneness: " + it.doneness);
+    }
+
     /* SPECIAL REQUEST */
     if(it.request) lines.push("Special: " + it.request);
     
