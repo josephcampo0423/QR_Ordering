@@ -1395,6 +1395,34 @@ if(item.addons && item.addons.length){
     setTimeout(()=> bg.classList.add('show'), 10);
   }
   
+function toggleAddon(el, addon){
+  const isSingleSelect =
+    currentItem.id === 'bisque' ||
+    currentItem.id === 'chickenbroth';
+
+  if(isSingleSelect){
+    // clear all
+    document.querySelectorAll('.addon-option').forEach(opt=>{
+      opt.classList.remove('active');
+    });
+    selectedAddons = [];
+
+    // activate clicked
+    el.classList.add('active');
+    selectedAddons.push(addon);
+  } else {
+    // multi-select behavior (existing)
+    if(el.classList.contains('active')){
+      el.classList.remove('active');
+      selectedAddons = selectedAddons.filter(a => a.name !== addon.name);
+    } else {
+      el.classList.add('active');
+      selectedAddons.push(addon);
+    }
+  }
+}
+
+
 function closeModalAnimated(){
   const bg = document.getElementById('modalBg');
   bg.classList.remove('show');
