@@ -212,28 +212,13 @@ textarea{width:100%;height:84px;border-radius:12px;border:1px solid rgba(255,255
 .half-wrap {margin-top: 16px;}
 .half-subtitle {color:#bfbfbf;font-size:12px;margin:4px 0 12px 0;}
 .half-tabs {margin-bottom: 10px;padding: 0;}
-.half-options {max-height: 260px;overflow-y: auto;display: flex;flex-direction: column; gap: 8px;}
-.half-options .option-card {width: 100%;padding: 10px 12px;}
-.half-options .label-text {font-size: 14px;font-weight: 500;text-transform: none;line-height: 1.3;}
+.half-options {max-height: 260px;overflow-y: auto;display: flex;flex-direction: column;gap: 8px;}
+.half-item {width: 100%;display: flex;align-items: center;justify-content: space-between;padding: 10px 12px;}
+.half-item .label-text {font-size: 14px;font-weight: 500;text-transform: none;}
+.half-price {font-size: 14px;color: #bfbfbf;}
 .modal-card .tab-row {margin-top: 8px;}
 
-/* HALF & HALF PRICE */
-.half-item {
-  display: flex;
-  align-items: flex-start;
-}
 
-.half-text {
-  display: flex;
-  flex-direction: column;
-  margin-left: 6px;
-}
-
-.half-price {
-  font-size: 13px;
-  color: #bfbfbf;
-  margin-top: 2px;
-}
 
 
 
@@ -607,10 +592,8 @@ function openHalfTab(base){
                  value="${p.id}"
                  data-name="${p.name}"
                  data-price="${p.price}">
-          <div class="half-text">
-            <span class="label-text">${toTitleCase(p.name)}</span>
-            <span class="half-price">$${p.price}</span>
-          </div>
+          <span class="label-text">${toTitleCase(p.name)}</span>
+          <span class="half-price">$${p.price}</span>
         </label>
       `);
     });
@@ -621,6 +604,12 @@ function openItem(item){
   selectedAddons = [];
 
   document.getElementById('modalNamePrice').textContent = item.name;
+  const modalPrice = document.getElementById('modalPrice');
+  if(item.price != null){
+    modalPrice.style.display = 'block';
+    modalPrice.textContent = `$${item.price}`;
+  }
+  
   document.getElementById('modalDesc').textContent = item.desc;
 
   document.getElementById('qtyValue').textContent = 1;
