@@ -348,6 +348,10 @@ function renderCart(){
     if(it.addons && it.addons.length){
       it.addons.forEach(a => lines.push("+ " + a.name));
     }
+    
+    if(it.pastaType && it.category !== "pizza") {
+      lines.push(it.pastaType);
+    }
 
     
     if(it.request) lines.push("Special: " + it.request);
@@ -479,6 +483,9 @@ function placeOrder(){
     if(it.size) parts.push(it.size.label);
     if(it.addons && it.addons.length){
       it.addons.forEach(a => parts.push("+ " + a.name));
+    }
+    if(it.pastaType && it.category !== "pizza") {
+      parts.push(it.pastaType);
     }
     if(it.request) parts.push("Special: "+it.request);
     meta.textContent = parts.join(" • ");
