@@ -333,7 +333,9 @@ function renderCart(){
 
     const name = document.createElement("div");
     name.className = "item-name";
-    name.textContent = it.name.replace(/\s*\(.*?\)\s*/g, "");
+    name.textContent = it.name
+    .replace(/\s*\(.*?\)\s*/g, "")      // remove (Medium Rare), (Spicy), etc
+    .replace(/\s*—\s*.*$/g, "");        // remove — Twister Fries / — Skin-on Fries
     
     const meta = document.createElement("div");
     meta.className = "item-meta";
