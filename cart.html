@@ -343,7 +343,6 @@ function renderCart(){
     if(it.fries) lines.push("Fries: " + it.fries);
     if(it.spicy) lines.push("Spice: " + (it.spicy === "non-spicy" ? "Non-Spicy" : "Spicy"));
     if(it.doneness) lines.push("Doneness: " + it.doneness);
-    if(it.pastaType) lines.push(it.pastaType);
     if(it.size) lines.push(it.size.label);
     if(it.addons && it.addons.length){
       it.addons.forEach(a => lines.push("+ " + a.name));
