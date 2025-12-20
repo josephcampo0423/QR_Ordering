@@ -339,22 +339,32 @@ function renderCart(){
     meta.className = "item-meta";
 
     const lines = [];
+
+    /* PASTA FORMAT */
+    if(it.category !== "pizza"){
+      // Pasta choice + size on one line
+      if(it.pastaType || it.size){
+        const pastaLine = [
+          it.pastaType || "",
+          it.size ? it.size.label : ""
+        ].filter(Boolean).join(" - ");
+        if(pastaLine) lines.push(pastaLine);
+      }
+    
+      // Add-ons (each on its own line)
+      if(it.addons && it.addons.length){
+        it.addons.forEach(a => lines.push("+ " + a.name));
+      }
+    }
+
+    /* OTHER OPTIONS */
     if(it.prosciutto) lines.push("Option: " + it.prosciutto);
     if(it.fries) lines.push("Fries: " + it.fries);
     if(it.spicy) lines.push("Spice: " + (it.spicy === "non-spicy" ? "Non-Spicy" : "Spicy"));
     if(it.doneness) lines.push("Doneness: " + it.doneness);
-    if(it.size) lines.push(it.size.label);
-    if(it.addons && it.addons.length){
-      it.addons.forEach(a => lines.push("+ " + a.name));
-    }
-    
-    if(it.pastaType && it.category !== "pizza") {
-      lines.push(it.pastaType);
-    }
-
     
     if(it.request) lines.push("Special: " + it.request);
-
+    
     meta.textContent = lines.join("\n");
 
     left.appendChild(name);
