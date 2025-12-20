@@ -340,9 +340,13 @@ function renderCart(){
 
     const lines = [];
 
-    /* PASTA FORMAT (SPECIFIC ORDER) */
-    if(it.pastaType && it.size){
-      lines.push(`${it.pastaType} - ${it.size.label}`);
+    /* PASTA FORMAT */
+    if(it.pastaType){
+      if(it.size && it.size.label){
+        lines.push(`${it.pastaType} - ${it.size.label}`);
+      } else {
+        lines.push(it.pastaType);
+      }
     }
     
     /* ADD ONS */
