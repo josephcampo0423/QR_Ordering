@@ -333,8 +333,8 @@ function renderCart(){
 
     const name = document.createElement("div");
     name.className = "item-name";
-    name.textContent = it.name;
-
+    name.textContent = it.name.replace(/\s*\(.*?\)\s*/g, "");
+    
     const meta = document.createElement("div");
     meta.className = "item-meta";
 
