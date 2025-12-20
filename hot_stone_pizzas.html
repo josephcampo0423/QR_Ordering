@@ -212,7 +212,9 @@ textarea{width:100%;height:84px;border-radius:12px;border:1px solid rgba(255,255
 .half-wrap {margin-top: 16px;}
 .half-subtitle {color:#bfbfbf;font-size:12px;margin:4px 0 12px 0;}
 .half-tabs {margin-bottom: 10px;padding: 0;}
-.half-options {max-height: 260px;overflow-y: auto;display: flex;gap: 10px;flex-wrap: wrap;}
+.half-options {max-height: 260px;overflow-y: auto;display: flex;flex-direction: column; gap: 8px;}
+.half-options .option-card {width: 100%;padding: 10px 12px;}
+.half-options .label-text {font-size: 14px;font-weight: 500;text-transform: none;line-height: 1.3;}
 .modal-card .tab-row {margin-top: 8px;}
 
 </style>
@@ -585,7 +587,7 @@ function openHalfTab(base){
                  value="${p.id}"
                  data-name="${p.name}"
                  data-price="${p.price}">
-          <span class="label-text">${p.name}</span>
+          <span class="label-text">${toTitleCase(p.name)}</span>
         </label>
       `);
     });
@@ -611,7 +613,13 @@ function openItem(item){
   bg.style.display = "flex";
   setTimeout(()=> bg.classList.add('show'), 10);
   }
-  
+
+
+function toTitleCase(str){
+  return str.toLowerCase().replace(/\b\w/g, c => c.toUpperCase());
+}
+
+
 function closeModalAnimated(){
   const bg = document.getElementById('modalBg');
   bg.classList.remove('show');
