@@ -557,6 +557,40 @@ const allPizzas = [
   { id:'salsiccia', name:'SALSICCIA GORGONZOLA', price:28, base:'white' }
 ];
 
+function openHalfTab(base){
+  const halfBox = document.getElementById('halfOptions');
+
+  /* Activate tab */
+  document.querySelectorAll('[data-half-tab]').forEach(tab=>{
+    tab.classList.remove('active');
+  });
+  document.querySelector(`[data-half-tab="${base}"]`).classList.add('active');
+
+  /* Reset options */
+  halfBox.innerHTML = `
+    <label class="option-card">
+      <input type="radio" name="half" value="" checked>
+      <span class="label-text">None</span>
+    </label>
+  `;
+
+  /* Load pizzas */
+  allPizzas
+    .filter(p => p.base === base && p.id !== currentItem.id)
+    .forEach(p => {
+      halfBox.insertAdjacentHTML('beforeend', `
+        <label class="option-card">
+          <input type="radio"
+                 name="half"
+                 value="${p.id}"
+                 data-name="${p.name}"
+                 data-price="${p.price}">
+          <span class="label-text">${p.name}</span>
+        </label>
+      `);
+    });
+}
+
 function openItem(item){
   currentItem = item;
   selectedAddons = [];
@@ -564,61 +598,18 @@ function openItem(item){
   document.getElementById('modalNamePrice').textContent = item.name;
   document.getElementById('modalDesc').textContent = item.desc;
 
-  // RESET
   document.getElementById('qtyValue').textContent = 1;
   document.getElementById('specialRequestInput').value = "";
 
-/* ---------- HALF & HALF ---------- */
-const halfWrap = document.getElementById('halfOption');
-halfWrap.style.display = 'block';
-openHalfTab('tomato');
-
-/* DEFAULT NONE OPTION */
-document.getElementById('halfOptions').innerHTML = `
-  <label class="option-card">
-    <input type="radio" name="half" value="" checked>
-    <span class="label-text">None</span>
-  </label>
-`;
-
-    function openHalfTab(base){
-      const halfBox = document.getElementById('halfOptions');
-    
-      /* Activate tab */
-      document.querySelectorAll('[data-half-tab]').forEach(t=>{
-        t.classList.remove('active');
-      });
-      document.querySelector(`[data-half-tab="${base}"]`).classList.add('active');
-    
-      /* Default NONE */
-      halfBox.innerHTML = `
-        <label class="option-card">
-          <input type="radio" name="half" value="" checked>
-          <span class="label-text">None</span>
-        </label>
-      `;
-    
-      /* Pizza options */
-      allPizzas
-        .filter(p => p.base === base && p.id !== currentItem.id)
-        .forEach(p => {
-          halfBox.innerHTML += `
-            <label class="option-card">
-              <input type="radio"
-                     name="half"
-                     value="${p.id}"
-                     data-name="${p.name}"
-                     data-price="${p.price}">
-              <span class="label-text">${p.name}</span>
-            </label>
-          `;
-        });
-    }
+  const halfWrap = document.getElementById('halfOption');
+  halfWrap.style.display = 'block';
   
+  openHalfTab('tomato');// default tab
+
     /* Show modal */
-    const bg = document.getElementById('modalBg');
-    bg.style.display = "flex";
-    setTimeout(()=> bg.classList.add('show'), 10);
+  const bg = document.getElementById('modalBg');
+  bg.style.display = "flex";
+  setTimeout(()=> bg.classList.add('show'), 10);
   }
   
 function closeModalAnimated(){
