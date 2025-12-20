@@ -1343,9 +1343,32 @@ if(item.addons && item.addons.length){
     `;
 
     el.onclick = () => {
-
-      /* If Plain is selected */
-      if(addon.name === 'Plain'){
+    
+      const isSingleSelect =
+        currentItem.id === 'bisque' ||
+        currentItem.id === 'chickenbroth';
+    
+      /* Clear Plain if choosing premium */
+      if(addon.name !== 'Plain'){
+        selectedAddons = selectedAddons.filter(a => a.name !== 'Plain');
+        document.querySelectorAll('.addon-option').forEach(o=>{
+          if(o.querySelector('.addon-name')?.textContent === 'Plain'){
+            o.classList.remove('active');
+          }
+        });
+      }
+    
+      const index = selectedAddons.findIndex(a => a.name === addon.name);
+    
+      /* Toggle OFF */
+      if(index > -1){
+        selectedAddons.splice(index,1);
+        el.classList.remove('active');
+        return;
+      }
+    
+      /* SINGLE SELECT ITEMS (BISQUE & CHICKEN BROTH) */
+      if(isSingleSelect){
         selectedAddons = [];
         document.querySelectorAll('.addon-option')
           .forEach(o => o.classList.remove('active'));
@@ -1355,23 +1378,7 @@ if(item.addons && item.addons.length){
         return;
       }
     
-      /* If selecting non-plain, remove Plain */
-      selectedAddons = selectedAddons.filter(a => a.name !== 'Plain');
-      document.querySelectorAll('.addon-option')
-        .forEach(o => {
-          if(o.querySelector('.addon-name')?.textContent === 'Plain'){
-            o.classList.remove('active');
-          }
-        });
-    
-      const index = selectedAddons.findIndex(a => a.name === addon.name);
-    
-      if(index > -1){
-        selectedAddons.splice(index,1);
-        el.classList.remove('active');
-        return;
-      }
-    
+      /* MULTI SELECT ITEMS (MAX 2) */
       if(selectedAddons.length >= 2) return;
     
       selectedAddons.push(addon);
@@ -1394,33 +1401,6 @@ if(item.addons && item.addons.length){
     bg.style.display = "flex";
     setTimeout(()=> bg.classList.add('show'), 10);
   }
-  
-function toggleAddon(el, addon){
-  const isSingleSelect =
-    currentItem.id === 'bisque' ||
-    currentItem.id === 'chickenbroth';
-
-  if(isSingleSelect){
-    // clear all
-    document.querySelectorAll('.addon-option').forEach(opt=>{
-      opt.classList.remove('active');
-    });
-    selectedAddons = [];
-
-    // activate clicked
-    el.classList.add('active');
-    selectedAddons.push(addon);
-  } else {
-    // multi-select behavior (existing)
-    if(el.classList.contains('active')){
-      el.classList.remove('active');
-      selectedAddons = selectedAddons.filter(a => a.name !== addon.name);
-    } else {
-      el.classList.add('active');
-      selectedAddons.push(addon);
-    }
-  }
-}
 
 
 function closeModalAnimated(){
