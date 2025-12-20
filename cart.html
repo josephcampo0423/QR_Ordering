@@ -355,21 +355,25 @@ function renderCart(){
     if(it.addons && it.addons.length){
       it.addons.forEach(a => lines.push(`+${a.name}`));
     }
-    
-    /* OTHER OPTIONS (NON-PASTA) */
-    if (it.prosciutto) {
+  
+    /* OPTIONS DISPLAY (CHECKOUT ONLY) */
+    // BAKED TRUFFLE BRIE CHEESE (Regular / With Aged Prosciutto)
+    if (typeof it.prosciutto === "string" && it.prosciutto.trim() !== "") {
       lines.push(it.prosciutto);
     }
     
-    if (it.fries) {
+    // FRIES
+    if (typeof it.fries === "string" && it.fries.trim() !== "") {
       lines.push("Fries: " + it.fries);
     }
     
-    if (it.spicy) {
+    // SPICE
+    if (typeof it.spicy === "string" && it.spicy.trim() !== "") {
       lines.push("Spice: " + (it.spicy === "non-spicy" ? "Non-Spicy" : "Spicy"));
     }
     
-    if (it.doneness) {
+    // DONENESS
+    if (typeof it.doneness === "string" && it.doneness.trim() !== "") {
       lines.push("Doneness: " + it.doneness);
     }
 
