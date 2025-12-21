@@ -357,17 +357,26 @@ function renderCart(){
     }
   
     /* OPTIONS DISPLAY (CHECKOUT ONLY) */
+
     // BAKED TRUFFLE BRIE CHEESE (Regular / With Aged Prosciutto)
-    if(it.prosciutto) lines.push(it.prosciutto);
+    if (typeof it.prosciutto === "string" && it.prosciutto.trim() !== "") {
+      lines.push(it.prosciutto);
+    }
     
-    // Fries
-    if(it.fries) lines.push(it.fries);
+    // FRIES
+    if (typeof it.fries === "string" && it.fries.trim() !== "") {
+      lines.push("Fries: " + it.fries);
+    }
     
-    // Spice
-    if(it.spicy) lines.push(it.spicy === "non-spicy" ? "Non-Spicy" : "Spicy");
+    // SPICE
+    if (typeof it.spicy === "string" && it.spicy.trim() !== "") {
+      lines.push("Spice: " + (it.spicy === "non-spicy" ? "Non-Spicy" : "Spicy"));
+    }
     
-    // Doneness
-    if(it.doneness) lines.push(it.doneness);
+    // DONENESS
+    if (typeof it.doneness === "string" && it.doneness.trim() !== "") {
+      lines.push("Doneness: " + it.doneness);
+    }
 
 
     /* SPECIAL REQUEST */
