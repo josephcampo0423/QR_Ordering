@@ -475,48 +475,32 @@ textarea{width:100%;height:84px;border-radius:12px;border:1px solid rgba(255,255
 
     <div id="modalDesc" class="modal-desc">Description ...</div>
 
-    <!-- SIZE OPTION -->
-    <div id="sizeOptions" class="modal-section" style="display:none">
-      <div class="modal-section-title">Select Size</div>
-      <label class="option">
-        <input type="radio" name="size" value="3 pcs" data-price="0">
-        3 pcs
-      </label>
-      <label class="option">
-        <input type="radio" name="size" value="5 pcs" data-price="0">
-        5 pcs
-      </label>
+    <!-- OPTIONS -->
+    <div id="optionBlock" class="option-block" style="display:none">
+      <div class="option-cards" id="optionCards"></div>
     </div>
-
-    <!-- GELATO OPTION -->
-    <div id="gelatoOptions" class="modal-section" style="display:none">
-      <div class="modal-section-title">Select Gelato</div>
-      <label class="option">
-        <input type="radio" name="gelato" value="Vanilla Gelato" checked>
-        Vanilla Gelato
-      </label>
-      <label class="option">
-        <input type="radio" name="gelato" value="Chocolate Gelato">
-        Chocolate Gelato
-      </label>
-    </div>
-
-    <!-- COFFEE ADD ONS -->
-    <div id="coffeeAddons" class="modal-section" style="display:none">
-      <div class="modal-section-title">Add-ons</div>
-      <label class="option">
-        <input type="checkbox" value="Oat Milk" data-price="1.5">
-        Oat Milk +$1.50
-      </label>
-      <label class="option">
-        <input type="checkbox" value="Extra Shot" data-price="1">
-        Extra Shot +$1.00
-      </label>
-      <label class="option">
-        <input type="checkbox" value="Iced" data-price="1">
-        Iced +$1.00
-      </label>
-    </div>
+    
+    <!-- ADD-ONS (COFFEE ONLY) -->
+    <div id="addonBlock" class="option-block" style="display:none">
+      <div class="option-cards">
+        <label class="option-card">
+          <input type="checkbox" value="Oat Milk" data-price="1.5">
+          <span class="label-text">Oat Milk</span>
+          <span class="price-addon">+$1.50</span>
+        </label>
+    
+        <label class="option-card">
+          <input type="checkbox" value="Extra Shot" data-price="1">
+          <span class="label-text">Extra Shot</span>
+          <span class="price-addon">+$1.00</span>
+        </label>
+    
+        <label class="option-card">
+          <input type="checkbox" value="Iced" data-price="1">
+          <span class="label-text">Iced</span>
+          <span class="price-addon">+$1.00</span>
+        </label>
+      </div>
 
     <div class="modal-footer">
       <div class="modal-price">
@@ -618,27 +602,62 @@ let currentItem = null;
 
 function openItem(item){
   currentItem = item;
-  window._currentItem = item;
   document.getElementById('modalNamePrice').textContent = item.name;
-  document.getElementById('modalPrice').textContent = "$" + item.price;
-  document.getElementById('modalDesc').textContent = item.desc;
+  document.getElementById('modalDesc').textContent = item.desc || '';
+  document.getElementById('qtyValue').textContent = 1;
+  document.getElementById('specialRequestInput').value = "";
 
-  /* Show/hide options */
-  document.getElementById('prosciuttoOption').style.display = item.prosciutto ? 'block' : 'none';
-  document.getElementById('friesSelector').style.display = (item.type === 'fries') ? 'block' : 'none';
-  document.getElementById('spiceOption').style.display = item.hasSpiceOption ? 'block' : 'none';
+  let basePrice = item.price;
+  let totalPrice = basePrice;
 
-  /* Reset option selections */
-  document.querySelectorAll('#prosciuttoOption input, #friesSelector input, #spiceOption input')
-    .forEach(el => el.checked = false);
+  /* RESET */
+  document.getElementById('optionBlock').style.display = 'none';
+  document.getElementById('addonBlock').style.display = 'none';
+  document.getElementById('optionCards').innerHTML = '';
+  document.querySelectorAll('#addonBlock input').forEach(i => i.checked = false);
 
-  /* preselect spicy for mussels */
-  if(item.hasSpiceOption){
-    document.querySelector('input[name="spice_choice"][value="spicy"]').checked = true;
+  /* OPTIONS (Desserts) */
+  if(item.options && item.options.length){
+    document.getElementById('optionBlock').style.display = 'block';
+
+    item.options.forEach((opt, idx) => {
+      const label = document.createElement('label');
+      label.className = 'option-card';
+
+      label.innerHTML = `
+        <input type="radio" name="item_option" value="${opt.label}" data-price="${opt.price}" ${idx===0?'checked':''}>
+        <span class="label-text">${opt.label}</span>
+        ${opt.price ? `<span class="price-addon">$${opt.price}</span>` : ``}
+      `;
+
+      document.getElementById('optionCards').appendChild(label);
+    });
+
+    basePrice = item.options[0].price;
   }
 
-  document.getElementById('specialRequestInput').value = "";
-  document.getElementById('qtyValue').textContent = 1;
+  /* COFFEE ADDONS */
+  if(item.hasCoffeeAddon){
+    document.getElementById('addonBlock').style.display = 'block';
+  }
+
+  /* PRICE UPDATE */
+  function updatePrice(){
+    totalPrice = basePrice;
+
+    const opt = document.querySelector('input[name="item_option"]:checked');
+    if(opt) totalPrice = Number(opt.dataset.price);
+
+    document.querySelectorAll('#addonBlock input:checked').forEach(a=>{
+      totalPrice += Number(a.dataset.price);
+    });
+
+    document.getElementById('modalPrice').textContent = "$" + totalPrice.toFixed(2);
+    currentItem._finalPrice = totalPrice;
+  }
+
+  document.addEventListener('change', updatePrice);
+  updatePrice();
 
   /* Show modal */
   const bg = document.getElementById('modalBg');
@@ -682,71 +701,47 @@ function pushToCart(itemObj){
   saveCart();
 }
 
-/* assign add button click */
+/* modalAddBtn.onclick LOGIC */
 document.getElementById('modalAddBtn').onclick = function (e) {
   e.preventDefault();
   e.stopPropagation();
 
   if (!currentItem) return;
 
-  let finalName = currentItem.name;
-  let finalPrice = Number(currentItem.price);
-  let option = "";
-  let fries = "";
-  let spicy = "";
-  let request = document.getElementById("specialRequestInput").value.trim();
   let qty = Number(document.getElementById("qtyValue").textContent);
+  let request = document.getElementById("specialRequestInput").value.trim();
+  let finalName = currentItem.name;
+  let finalPrice = currentItem._finalPrice || currentItem.price;
 
-  /* Truffle Brie option */
-  if (currentItem.prosciutto) {
-    const opt = document.querySelector('input[name="truf_opt"]:checked');
-    if (!opt) {
-      alert("Please select an option");
-      return;
-    }
-    if (opt.value === "with") {
-      option = "With Aged Prosciutto";
-      finalPrice += 7;
-      finalName += " (With Aged Prosciutto)";
-    } else {
-      option = "Regular";
-      finalName += " (Regular)";
-    }
+  /* OPTION NAME */
+  const opt = document.querySelector('input[name="item_option"]:checked');
+  if(opt){
+    finalName += ` (${opt.value})`;
   }
 
-  /* Fries */
-  if (currentItem.type === "fries") {
-    const f = document.querySelector('input[name="fries_choice"]:checked');
-    if (!f) {
-      alert("Please choose fries type");
-      return;
-    }
-    fries = f.value;
-    finalName += " — " + fries;
+  /* ADDONS */
+  let addons = [];
+  document.querySelectorAll('#addonBlock input:checked').forEach(a=>{
+    addons.push(a.value);
+  });
+
+  if(addons.length){
+    finalName += ` (${addons.join(', ')})`;
   }
 
-  /* Spice */
-  if (currentItem.hasSpiceOption) {
-    const s = document.querySelector('input[name="spice_choice"]:checked');
-    spicy = s ? s.value : "spicy";
-    finalName += spicy === "non-spicy" ? " (Non-Spicy)" : " (Spicy)";
-  }
-
-  /* SAVE CART */
   cart.push({
     id: currentItem.id,
     name: finalName,
     price: finalPrice,
     qty: qty,
-    option: option,
-    fries: fries,
-    spicy: spicy,
+    option: opt ? opt.value : "",
+    fries: "",
+    spicy: "",
     request: request
   });
 
   saveCart();
 
-  /* visual feedback */
   this.classList.add('btn-animate');
   bubbleToCart();
   document.getElementById('cartBtn').classList.add('cart-animate');
