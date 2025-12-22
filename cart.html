@@ -333,9 +333,16 @@ function renderCart(){
 
     const name = document.createElement("div");
     name.className = "item-name";
-    name.textContent = it.name
-    .replace(/\s*\(.*?\)\s*/g, "")      // remove (Medium Rare), (Spicy), etc
-    .replace(/\s*—\s*.*$/g, "");        // remove — Twister Fries / — Skin-on Fries
+    const cleanName = it.name
+      .replace(/\s*\(.*?\)\s*/g, "")
+      .replace(/\s*—\s*.*$/g, "");
+    
+    const pizzaParts = (it.category === "pizza" && cleanName.includes("/"))
+      ? cleanName.split("/").map(p => p.trim())
+      : null;
+    
+    name.textContent = pizzaParts ? pizzaParts[0] : cleanName;
+    
     
     const meta = document.createElement("div");
     meta.className = "item-meta";
@@ -357,10 +364,8 @@ function renderCart(){
     }
     
     /* HOT STONE PIZZA (FULL / HALF & HALF) */
-    if (it.category === "pizza") {
-      if (typeof it.half === "string" && it.half.trim() !== "") {
-        lines.push("Half: " + it.half);
-      }
+    if (it.category === "pizza" && pizzaParts && pizzaParts[1]) {
+      lines.push("Half: " + pizzaParts[1]);
     }
   
   
