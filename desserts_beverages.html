@@ -475,54 +475,58 @@ textarea{width:100%;height:84px;border-radius:12px;border:1px solid rgba(255,255
 
     <div id="modalDesc" class="modal-desc">Description ...</div>
 
-    <!-- prosciutto option (premium cards) -->
-    <div id="prosciuttoOption" class="option-block" style="display:none">
-      <div style="font-weight:700;color:#ddd;margin-bottom:8px">Choose Option</div>
-      <div class="option-cards">
-        <label class="option-card">
-          <input type="radio" name="truf_opt" value="regular">
-          <span class="label-text">Regular</span>
-        </label>
-
-        <label class="option-card">
-          <input type="radio" name="truf_opt" value="with">
-          <span class="label-text">With Aged Prosciutto</span>
-          <span class="price-addon">+$7</span>
-        </label>
-      </div>
+    <!-- SIZE OPTION -->
+    <div id="sizeOptions" class="modal-section" style="display:none">
+      <div class="modal-section-title">Select Size</div>
+      <label class="option">
+        <input type="radio" name="size" value="3 pcs" data-price="0">
+        3 pcs
+      </label>
+      <label class="option">
+        <input type="radio" name="size" value="5 pcs" data-price="0">
+        5 pcs
+      </label>
     </div>
 
-    <!-- fries selectors -->
-    <div id="friesSelector" class="option-block" style="display:none">
-      <div style="font-weight:700;color:#ddd;margin-bottom:8px">Choose Fries Type</div>
-      <div class="option-cards">
-        <label class="option-card">
-          <input type="radio" name="fries_choice" value="Skin-on Fries">
-          <span class="label-text">Skin-on Fries</span>
-        </label>
-
-        <label class="option-card">
-          <input type="radio" name="fries_choice" value="Twister Fries">
-          <span class="label-text">Twister Fries</span>
-        </label>
-      </div>
+    <!-- GELATO OPTION -->
+    <div id="gelatoOptions" class="modal-section" style="display:none">
+      <div class="modal-section-title">Select Gelato</div>
+      <label class="option">
+        <input type="radio" name="gelato" value="Vanilla Gelato" checked>
+        Vanilla Gelato
+      </label>
+      <label class="option">
+        <input type="radio" name="gelato" value="Chocolate Gelato">
+        Chocolate Gelato
+      </label>
     </div>
 
-    <!-- spicy option for mussels -->
-    <div id="spiceOption" class="option-block" style="display:none">
-      <div style="font-weight:700;color:#ddd;margin-bottom:8px">Spice Level</div>
-      <div class="option-cards">
-        <label class="option-card">
-          <input type="radio" name="spice_choice" value="spicy" checked>
-          <span class="label-text">Spicy</span>
-        </label>
-
-        <label class="option-card">
-          <input type="radio" name="spice_choice" value="non-spicy">
-          <span class="label-text">Non-Spicy</span>
-        </label>
-      </div>
+    <!-- COFFEE ADD ONS -->
+    <div id="coffeeAddons" class="modal-section" style="display:none">
+      <div class="modal-section-title">Add-ons</div>
+      <label class="option">
+        <input type="checkbox" value="Oat Milk" data-price="1.5">
+        Oat Milk +$1.50
+      </label>
+      <label class="option">
+        <input type="checkbox" value="Extra Shot" data-price="1">
+        Extra Shot +$1.00
+      </label>
+      <label class="option">
+        <input type="checkbox" value="Iced" data-price="1">
+        Iced +$1.00
+      </label>
     </div>
+
+    <div class="modal-footer">
+      <div class="modal-price">
+        $<span id="modalTotal">0.00</span>
+      </div>
+      <button class="add-btn" onclick="addToCart()">Add to Cart</button>
+    </div>
+
+  </div>
+</div>
 
     <!-- special request -->
     <div class="option-block">
