@@ -355,6 +355,14 @@ function renderCart(){
     if(it.addons && it.addons.length){
       it.addons.forEach(a => lines.push(`+${a.name}`));
     }
+    
+    /* HOT STONE PIZZA (FULL / HALF & HALF) */
+    if (it.category === "pizza") {
+      if (typeof it.half === "string" && it.half.trim() !== "") {
+        lines.push("Half: " + it.half);
+      }
+    }
+  
   
     /* OPTIONS DISPLAY (CHECKOUT ONLY) */
 
