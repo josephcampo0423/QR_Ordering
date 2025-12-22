@@ -347,67 +347,116 @@ textarea{width:100%;height:84px;border-radius:12px;border:1px solid rgba(255,255
   </div>
 </div>
 
-<!-- ================= COFFEE TAB ================= -->
-<div class="tab-panel" data-panel="coffee" style="display:none">
-<div class="section-title">Freshly Brewed Coffee</div>
-<div class="grid">
+<!-- ================= BEVERAGES TAB ================= -->
+  <div class="tab-panel" data-panel="beverages" style="display:none">
 
-<script>
-const coffees=[
-['ESPRESSO',5],['AMERICANO',5.5],['LATTE',6.5],['CAPPUCCINO',6.5],
-['BUTTERSCOTCH LATTE',7],['CARAMEL LATTE',7],['MOCHA LATTE',7],
-['HAZELNUT LATTE',7],['DIRTY MATCHA LATTE',8],['MATCHA LATTE',7.5],
-['CHAI LATTE',7],['PREMIUM CHOCOLATE',7],['VANILLA AFFOGATO',10]
-];
-</script>
+    <!-- FRESHLY BREWED COFFEE -->
+    <div class="section-title">F R E S H L Y &nbsp; B R E W E D &nbsp; C O F F E E</div>
+    <div class="grid">
 
-</div>
-</div>
+      <div class="item-card" onclick="openItem({id:'espresso',name:'ESPRESSO',price:5,desc:'Single shot of freshly extracted espresso'})">
+        <div class="item-row"><div class="item-title">ESPRESSO</div><div class="price">$5</div></div>
+      </div>
 
-<!-- ================= TEA TAB ================= -->
-<div class="tab-panel" data-panel="tea" style="display:none">
-<div class="section-title">Infused Ice Brewed Teas</div>
-<div class="grid">
+      <div class="item-card" onclick="openItem({id:'americano',name:'AMERICANO',price:5.5,desc:'Espresso diluted with hot water',hasCoffeeAddon:true})">
+        <div class="item-row"><div class="item-title">AMERICANO</div><div class="price">$5.5</div></div>
+      </div>
 
-<script>
-const teas=[
-['ICE BLACK TEA',5],['ICE LYCHEE TEA',6],['ICE STRAWBERRY TEA',6],
-['ICE BLUEBERRY TEA',6],['ICE MANGO TEA',6],['ICE LEMON TEA',6],
-['ICE PASSIONFRUIT TEA',6],['ICE PEACH TEA',6],['ICE APPLE CINNAMON SPICE TEA',7]
-];
-</script>
+      <div class="item-card" onclick="openItem({id:'latte',name:'LATTE',price:6.5,desc:'Espresso with steamed milk',hasCoffeeAddon:true})">
+        <div class="item-row"><div class="item-title">LATTE</div><div class="price">$6.5</div></div>
+      </div>
 
-</div>
-</div>
+      <div class="item-card" onclick="openItem({id:'cappuccino',name:'CAPPUCCINO',price:6.5,desc:'Espresso with steamed milk and foam',hasCoffeeAddon:true})">
+        <div class="item-row"><div class="item-title">CAPPUCCINO</div><div class="price">$6.5</div></div>
+      </div>
 
-<!-- ================= JUICES TAB ================= -->
-<div class="tab-panel" data-panel="juice" style="display:none">
-<div class="section-title">Juices</div>
-<div class="grid">
-<script>
-['APPLE JUICE','LIME JUICE','PINEAPPLE JUICE','MANGO JUICE','ORANGE JUICE']
-.forEach(j=>document.write(
-`<div class="item-card" onclick="openItem({id:'${j}',name:'${j}',price:7,desc:'Fresh juice'})">
-<div class="item-row"><div class="item-title">${j}</div><div class="price">$7</div></div></div>`
-));
-</script>
-</div>
-</div>
+      <div class="item-card" onclick="openItem({id:'butterscotch',name:'BUTTERSCOTCH LATTE',price:7,desc:'Latte infused with butterscotch syrup',hasCoffeeAddon:true})">
+        <div class="item-row"><div class="item-title">BUTTERSCOTCH LATTE</div><div class="price">$7</div></div>
+      </div>
 
-<!-- ================= SOFTDRINKS TAB ================= -->
-<div class="tab-panel" data-panel="soft" style="display:none">
-<div class="section-title">Softdrinks & Water</div>
-<div class="grid">
-<script>
-[['COKE',6],['COKE ZERO',6],['SPRITE',6],['TONIC WATER',6],['SODA WATER',6],
-['ACQUA SAN FELICE MINERAL WATER',5],['ACQUA SAN FELICE SPARKLING WATER',5]]
-.forEach(s=>document.write(
-`<div class="item-card" onclick="openItem({id:'${s[0]}',name:'${s[0]}',price:${s[1]},desc:'Chilled beverage'})">
-<div class="item-row"><div class="item-title">${s[0]}</div><div class="price">$${s[1]}</div></div></div>`
-));
-</script>
-</div>
-</div>
+      <div class="item-card" onclick="openItem({id:'caramel',name:'CARAMEL LATTE',price:7,desc:'Latte infused with caramel syrup',hasCoffeeAddon:true})">
+        <div class="item-row"><div class="item-title">CARAMEL LATTE</div><div class="price">$7</div></div>
+      </div>
+
+      <div class="item-card" onclick="openItem({id:'mocha',name:'MOCHA LATTE',price:7,desc:'Latte with rich chocolate flavour',hasCoffeeAddon:true})">
+        <div class="item-row"><div class="item-title">MOCHA LATTE</div><div class="price">$7</div></div>
+      </div>
+
+      <div class="item-card" onclick="openItem({id:'hazelnut',name:'HAZELNUT LATTE',price:7,desc:'Latte infused with hazelnut syrup',hasCoffeeAddon:true})">
+        <div class="item-row"><div class="item-title">HAZELNUT LATTE</div><div class="price">$7</div></div>
+      </div>
+
+      <div class="item-card" onclick="openItem({id:'dirty_matcha',name:'DIRTY MATCHA LATTE',price:8,desc:'Matcha latte with an added shot of espresso',hasCoffeeAddon:true})">
+        <div class="item-row"><div class="item-title">DIRTY MATCHA LATTE</div><div class="price">$8</div></div>
+      </div>
+
+      <div class="item-card" onclick="openItem({id:'matcha',name:'MATCHA LATTE',price:7.5,desc:'Premium matcha with steamed milk',hasCoffeeAddon:true})">
+        <div class="item-row"><div class="item-title">MATCHA LATTE</div><div class="price">$7.5</div></div>
+      </div>
+
+      <div class="item-card" onclick="openItem({id:'chai',name:'CHAI LATTE',price:7,desc:'Spiced chai with steamed milk',hasCoffeeAddon:true})">
+        <div class="item-row"><div class="item-title">CHAI LATTE</div><div class="price">$7</div></div>
+      </div>
+
+      <div class="item-card" onclick="openItem({id:'premium_chocolate',name:'PREMIUM CHOCOLATE',price:7,desc:'Rich premium hot chocolate',hasCoffeeAddon:true})">
+        <div class="item-row"><div class="item-title">PREMIUM CHOCOLATE</div><div class="price">$7</div></div>
+      </div>
+
+      <div class="item-card" onclick="openItem({id:'affogato',name:'VANILLA AFFOGATO',price:10,desc:'Vanilla gelato topped with hot espresso'})">
+        <div class="item-row"><div class="item-title">VANILLA AFFOGATO</div><div class="price">$10</div></div>
+      </div>
+
+    </div>
+
+    <!-- INFUSED TEAS -->
+    <div class="section-title">I N F U S E D &nbsp; I C E &nbsp; B R E W E D &nbsp; T E A S</div>
+    <div class="grid">
+
+      <div class="item-card" onclick="openItem({id:'black_tea',name:'ICE BLACK TEA',price:5,desc:'Classic brewed black tea served iced'})">
+        <div class="item-row"><div class="item-title">ICE BLACK TEA</div><div class="price">$5</div></div>
+      </div>
+
+      <div class="item-card" onclick="openItem({id:'lychee_tea',name:'ICE LYCHEE TEA',price:6,desc:'Iced black tea infused with lychee'})">
+        <div class="item-row"><div class="item-title">ICE LYCHEE TEA</div><div class="price">$6</div></div>
+      </div>
+
+      <div class="item-card" onclick="openItem({id:'strawberry_tea',name:'ICE STRAWBERRY TEA',price:6,desc:'Iced tea infused with strawberry'})">
+        <div class="item-row"><div class="item-title">ICE STRAWBERRY TEA</div><div class="price">$6</div></div>
+      </div>
+
+      <div class="item-card" onclick="openItem({id:'blueberry_tea',name:'ICE BLUEBERRY TEA',price:6,desc:'Iced tea infused with blueberry'})">
+        <div class="item-row"><div class="item-title">ICE BLUEBERRY TEA</div><div class="price">$6</div></div>
+      </div>
+
+      <div class="item-card" onclick="openItem({id:'apple_cinnamon',name:'ICE APPLE CINNAMON SPICE TEA',price:7,desc:'Apple infused iced tea with cinnamon spice'})">
+        <div class="item-row"><div class="item-title">ICE APPLE CINNAMON SPICE TEA</div><div class="price">$7</div></div>
+      </div>
+
+    </div>
+
+    <!-- JUICES -->
+    <div class="section-title">J U I C E S</div>
+    <div class="grid">
+      <div class="item-card"><div class="item-row"><div class="item-title">APPLE JUICE</div><div class="price">$7</div></div></div>
+      <div class="item-card"><div class="item-row"><div class="item-title">LIME JUICE</div><div class="price">$7</div></div></div>
+      <div class="item-card"><div class="item-row"><div class="item-title">PINEAPPLE JUICE</div><div class="price">$7</div></div></div>
+      <div class="item-card"><div class="item-row"><div class="item-title">MANGO JUICE</div><div class="price">$7</div></div></div>
+      <div class="item-card"><div class="item-row"><div class="item-title">ORANGE JUICE</div><div class="price">$7</div></div></div>
+    </div>
+
+    <!-- SOFTDRINKS & WATER -->
+    <div class="section-title">S O F T &nbsp; D R I N K S &nbsp; &amp; &nbsp; W A T E R</div>
+    <div class="grid">
+      <div class="item-card"><div class="item-row"><div class="item-title">COKE</div><div class="price">$6</div></div></div>
+      <div class="item-card"><div class="item-row"><div class="item-title">COKE ZERO</div><div class="price">$6</div></div></div>
+      <div class="item-card"><div class="item-row"><div class="item-title">SPRITE</div><div class="price">$6</div></div></div>
+      <div class="item-card"><div class="item-row"><div class="item-title">TONIC WATER</div><div class="price">$6</div></div></div>
+      <div class="item-card"><div class="item-row"><div class="item-title">SODA WATER</div><div class="price">$6</div></div></div>
+      <div class="item-card"><div class="item-row"><div class="item-title">ACQUA SAN FELICE MINERAL WATER</div><div class="price">$5</div></div></div>
+      <div class="item-card"><div class="item-row"><div class="item-title">ACQUA SAN FELICE SPARKLING WATER</div><div class="price">$5</div></div></div>
+    </div>
+
+  </div>
 
 </div>
 
