@@ -224,50 +224,127 @@ textarea{width:100%;height:84px;border-radius:12px;border:1px solid rgba(255,255
   <!-- Tabs -->
   <div class="tab-row">
   <button class="tab active" onclick="openTab('desserts')">Desserts</button>
-  <button class="tab" onclick="openTab('coffee')">Freshly Brewed Coffee</button>
-  <button class="tab" onclick="openTab('tea')">Infused Ice Brewed Teas</button>
-  <button class="tab" onclick="openTab('juice')">Juices</button>
-  <button class="tab" onclick="openTab('soft')">Softdrinks & Water</button>
-</div>
+  <button class="tab" onclick="openTab('beverages')">Beverages</button>
+  </div>
 
 <!-- ================= DESSERTS TAB ================= -->
 <div class="tab-panel" data-panel="desserts" style="display:block">
-<div class="section-title">Desserts</div>
-<div class="grid">
 
-<div class="item-card" onclick="openItem({id:'tkpt3',name:'TIRAMISU KUEH PIE TEE (3 PCS)',price:9,desc:'Signature tiramisu mousse, toasted pistachios, espresso soaked savoiardi'})">
-<div class="item-row"><div><div class="item-title">TIRAMISU KUEH PIE TEE (3 PCS)</div><div class="item-desc">Signature tiramisu mousse, pistachios, espresso savoiardi</div></div><div class="price">$9</div></div>
-</div>
+  <div class="section-title">Desserts</div>
+  <div class="grid">
 
-<div class="item-card" onclick="openItem({id:'tkpt5',name:'TIRAMISU KUEH PIE TEE (5 PCS)',price:15,desc:'Signature tiramisu mousse, toasted pistachios, espresso soaked savoiardi'})">
-<div class="item-row"><div><div class="item-title">TIRAMISU KUEH PIE TEE (5 PCS)</div></div><div class="price">$15</div></div>
-</div>
+    <!-- 1. TIRAMISU KUEH PIE TEE -->
+    <div class="item-card"
+      onclick="openItem({
+        id:'tiramisu_kpt',
+        name:'TIRAMISU KUEH PIE TEE',
+        price:9,
+        desc:'Signature tiramisu mousse, toasted pistachios and espresso soaked savoiardi fingers in a crispy kueh pie tee shell.',
+        options:[
+          {label:'3 pcs', price:9},
+          {label:'5 pcs', price:15}
+        ]
+      })">
+      <div class="item-row">
+        <div class="item-left">
+          <div class="item-title">TIRAMISU KUEH PIE TEE</div>
+          <div class="item-desc">
+            Signature tiramisu mousse, toasted pistachios and espresso soaked savoiardi fingers in crispy kueh pie tee shell
+          </div>
+        </div>
+        <div class="price">$9 / $15</div>
+      </div>
+    </div>
 
-<div class="item-card" onclick="openItem({id:'tykpt3',name:'TIRAMISU YUZU KUEH PIE TEE (3 PCS)',price:10,desc:'Tiramisu mousse, yuzu marmalade, espresso savoiardi'})">
-<div class="item-row"><div><div class="item-title">TIRAMISU YUZU KUEH PIE TEE (3 PCS)</div></div><div class="price">$10</div></div>
-</div>
+    <!-- 2. TIRAMISU YUZU KUEH PIE TEE -->
+    <div class="item-card"
+      onclick="openItem({
+        id:'tiramisu_yuzu_kpt',
+        name:'TIRAMISU YUZU KUEH PIE TEE',
+        price:10,
+        desc:'Signature tiramisu mousse, yuzu marmalade and espresso soaked savoiardi fingers in a crispy kueh pie tee shell.',
+        options:[
+          {label:'3 pcs', price:10},
+          {label:'5 pcs', price:16}
+        ]
+      })">
+      <div class="item-row">
+        <div class="item-left">
+          <div class="item-title">TIRAMISU YUZU KUEH PIE TEE</div>
+          <div class="item-desc">
+            Signature tiramisu mousse, yuzu marmalade and espresso soaked savoiardi fingers in crispy kueh pie tee shell
+          </div>
+        </div>
+        <div class="price">$10 / $16</div>
+      </div>
+    </div>
 
-<div class="item-card" onclick="openItem({id:'tykpt5',name:'TIRAMISU YUZU KUEH PIE TEE (5 PCS)',price:16,desc:'Tiramisu mousse, yuzu marmalade, espresso savoiardi'})">
-<div class="item-row"><div><div class="item-title">TIRAMISU YUZU KUEH PIE TEE (5 PCS)</div></div><div class="price">$16</div></div>
-</div>
+    <!-- 3. MOLTEN CHOCOLATE LAVA CAKE -->
+    <div class="item-card"
+      onclick="openItem({
+        id:'lava_cake',
+        name:'MOLTEN CHOCOLATE LAVA CAKE',
+        price:15,
+        desc:'Warm molten chocolate lava cake with a soft flowing center, served with your choice of gelato.',
+        options:[
+          {label:'Vanilla Gelato', price:0},
+          {label:'Chocolate Gelato', price:0}
+        ]
+      })">
+      <div class="item-row">
+        <div class="item-left">
+          <div class="item-title">MOLTEN CHOCOLATE LAVA CAKE</div>
+          <div class="item-desc">
+            Served with choice of vanilla or chocolate gelato
+          </div>
+        </div>
+        <div class="price">$15</div>
+      </div>
+    </div>
 
-<div class="item-card" onclick="openItem({id:'lava',name:'MOLTEN CHOCOLATE LAVA CAKE',price:15,desc:'Served with vanilla or chocolate gelato'})">
-<div class="item-row"><div><div class="item-title">MOLTEN CHOCOLATE LAVA CAKE</div></div><div class="price">$15</div></div>
-</div>
+    <!-- 4. CHEESECAKE WITH ROCK MELON GRANITA -->
+    <div class="item-card"
+      onclick="openItem({
+        id:'cheesecake',
+        name:'CHEESECAKE WITH ROCK MELON GRANITA',
+        price:15,
+        desc:'Creamy cheesecake on a graham cracker crust, topped with refreshing rock melon granita and seasonal berries.'
+      })">
+      <div class="item-row">
+        <div class="item-left">
+          <div class="item-title">CHEESECAKE WITH ROCK MELON GRANITA</div>
+          <div class="item-desc">
+            Graham cracker crust, melon granita, berries
+          </div>
+        </div>
+        <div class="price">$15</div>
+      </div>
+    </div>
 
-<div class="item-card" onclick="openItem({id:'cheesecake',name:'CHEESECAKE WITH ROCK MELON GRANITA',price:15,desc:'Graham cracker crust, melon granita, berries'})">
-<div class="item-row"><div><div class="item-title">CHEESECAKE WITH ROCK MELON GRANITA</div></div><div class="price">$15</div></div>
-</div>
+    <!-- 5. GELATO -->
+    <div class="item-card"
+      onclick="openItem({
+        id:'gelato',
+        name:'GELATO',
+        price:5,
+        desc:'House gelato made fresh daily with rich and creamy texture.',
+        options:[
+          {label:'Vanilla Gelato', price:0},
+          {label:'Chocolate Gelato', price:0}
+        ]
+      })">
+      <div class="item-row">
+        <div class="item-left">
+          <div class="item-title">GELATO</div>
+          <div class="item-desc">
+            Choice of vanilla or chocolate gelato
+          </div>
+        </div>
+        <div class="price">$5</div>
+      </div>
+    </div>
 
-<div class="item-card" onclick="openItem({id:'vg',name:'VANILLA GELATO',price:5,desc:'Classic vanilla gelato'})">
-<div class="item-row"><div class="item-title">VANILLA GELATO</div><div class="price">$5</div></div>
-</div>
-
-<div class="item-card" onclick="openItem({id:'cg',name:'CHOCOLATE GELATO',price:5,desc:'Classic chocolate gelato'})">
-<div class="item-row"><div class="item-title">CHOCOLATE GELATO</div><div class="price">$5</div></div>
-</div>
-
-</div>
+  </div>
 </div>
 
 <!-- ================= COFFEE TAB ================= -->
