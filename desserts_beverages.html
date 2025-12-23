@@ -464,27 +464,57 @@ textarea{width:100%;height:84px;border-radius:12px;border:1px solid rgba(255,255
 </body>
 
 <script>
-/* GLOBAL CART */
-let currentPastaType = 'Spaghetti';
-let selectedAddons = [];
-let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+function addToCartFromModal(item) {
+  const cart = JSON.parse(localStorage.getItem("cart") || "[]");
 
-function saveCart(){
-  localStorage.setItem('cart', JSON.stringify(cart));
-  updateCartBadge();
-}
+  let finalPrice = item.basePrice;
+  let addons = [];
+  let optionText = "";
 
-function updateCartBadge(){
-  const badge = document.getElementById('cartBadge');
-  let totalQty = cart.reduce((sum,item)=>sum+item.qty,0);
-  if(totalQty > 0){
-    badge.style.display = 'block';
-    badge.textContent = totalQty;
-  } else {
-    badge.style.display = 'none';
+  /* ===== SIZE (3 pcs / 5 pcs) ===== */
+  const sizeEl = document.querySelector('input[name="size"]:checked');
+  if (sizeEl) {
+    optionText = sizeEl.dataset.label;
+    finalPrice = Number(sizeEl.dataset.price);
+
+    item.size = {
+      label: sizeEl.dataset.label,
+      price: Number(sizeEl.dataset.price)
+    };
   }
+
+  /* ===== HOT / ICE ===== */
+  const tempEl = document.querySelector('input[name="temp"]:checked');
+  if (tempEl) {
+    optionText = optionText
+      ? optionText + " • " + tempEl.value
+      : tempEl.value;
+
+    if (tempEl.dataset.price) {
+      finalPrice += Number(tempEl.dataset.price);
+    }
+  }
+
+  /* ===== ADDONS ===== */
+  document.querySelectorAll('input[name="addon"]:checked').forEach(a => {
+    addons.push({
+      name: a.value,
+      price: Number(a.dataset.price || 0)
+    });
+    finalPrice += Number(a.dataset.price || 0);
+  });
+
+  cart.push({
+    name: item.name,
+    qty: 1,
+    unitPrice: finalPrice,
+    option: optionText,
+    size: item.size || null,
+    addons: addons
+  });
+
+  localStorage.setItem("cart", JSON.stringify(cart));
 }
-updateCartBadge();
 
 /* TAB SWITCH */
 function openTab(tabName){
