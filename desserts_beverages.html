@@ -543,35 +543,6 @@ document.getElementById('modalAddBtn').onclick = function(e){
   const qty = Number(document.getElementById('qtyValue').textContent);
   const request = document.getElementById('specialRequestInput').value.trim();
 
-  /* BASE PRICE = CURRENT PIZZA */
-  let basePrice = Number(currentItem.price);
-
-  /* ---------- HALF & HALF ---------- */
-  const halfInput = document.querySelector('input[name="half"]:checked');
-
-  let halfName = '';
-  let halfExtra = 0;
-
-  if (halfInput && halfInput.value) {
-    const halfPrice = Number(halfInput.dataset.price);
-
-    /* higher-priced pizza rule */
-    basePrice = Math.max(basePrice, halfPrice);
-
-    /* +$5 surcharge */
-    halfExtra = 5;
-
-    halfName = ` / ${halfInput.dataset.name}`;
-  }
-
-  const cartItem = {
-    id: currentItem.id,
-    category: "pizza",         
-    name: currentItem.name + halfName,
-    request: request,
-    qty: qty,
-    unitPrice: basePrice + halfExtra
-  };
 
   cart.push(cartItem);
   saveCart();
