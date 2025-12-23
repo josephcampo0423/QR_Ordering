@@ -352,40 +352,39 @@ textarea{width:100%;height:84px;border-radius:12px;border:1px solid rgba(255,255
 
 <!-- Modal -->
 <div id="modalBg" class="modal-bg" aria-hidden="true" onclick="closeModalAnimated()">
-  <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modalNamePrice" onclick="event.stopPropagation()">
+  <div class="modal-card" role="dialog" aria-modal="true" onclick="event.stopPropagation()">
+
     <div class="modal-title">
       <div>
-        <div id="modalNamePrice" class="modal-name">Item name</div>
-        <div id="modalPrice" class="modal-price">$0</div>
+        <div id="modalNamePrice" class="modal-name"></div>
+        <div id="modalPrice" class="modal-price"></div>
       </div>
-      <button class="modal-close-btn" onclick="closeModalAnimated()" aria-label="Close">✕</button>
+      <button class="modal-close-btn" onclick="closeModalAnimated()">✕</button>
     </div>
 
-    <div id="modalDesc" class="modal-desc">Description ...</div>
+    <div id="modalDesc" class="modal-desc"></div>
 
-    
-      <!-- Options -->
-      <div id="modalOptions" class="modal-options" style="display:none;"></div>
-    
-    </div>
-  
+    <!-- OPTIONS -->
+    <div id="modalOptions" class="modal-options" style="display:none;"></div>
+
     <!-- special request -->
     <div class="option-block">
       <div style="font-weight:700;color:#ddd;margin-bottom:8px">Special Request (Optional)</div>
-      <textarea id="specialRequestInput" placeholder="e.g., less oil, no onion, sauce on the side"></textarea>
+      <textarea id="specialRequestInput"></textarea>
     </div>
 
     <!-- quantity -->
-    <div class="qty-row" aria-label="Quantity selector">
-      <button class="qty-btn" onclick="qtyChange(-1)" aria-label="Decrease quantity">−</button>
+    <div class="qty-row">
+      <button class="qty-btn" onclick="qtyChange(-1)">−</button>
       <div class="qty-val" id="qtyValue">1</div>
-      <button class="qty-btn" onclick="qtyChange(1)" aria-label="Increase quantity">+</button>
+      <button class="qty-btn" onclick="qtyChange(1)">+</button>
     </div>
 
     <div class="add-row">
-      <button id="modalAddBtn" class="btn-pill" aria-label="Add to cart">Add to Cart</button>
+      <button id="modalAddBtn" class="btn-pill">Add to Cart</button>
       <button class="cancel-btn" onclick="closeModalAnimated()">Cancel</button>
     </div>
+
   </div>
 </div>
 
@@ -474,6 +473,8 @@ function openItem(item){
       ? item.price
       : Number(String(item.price).split('/')[0].replace('$','').trim()),
     desc: item.desc || ''
+    
+    renderOptions(item.name);
   };
 
   document.getElementById('modalNamePrice').textContent = item.name;
@@ -494,7 +495,6 @@ function openItem(item){
 
 let selectedOptions = {};
 
-renderOptions(item.name);
 
 function renderOptions(itemName){
   const wrap = document.getElementById('modalOptions');
@@ -565,78 +565,6 @@ function renderOptions(itemName){
   }
 }
 
-
-
-let selectedOptions = {};
-
-function renderOptions(itemName){
-  const wrap = document.getElementById('modalOptions');
-  wrap.innerHTML = '';
-  selectedOptions = {};
-
-  const config = itemOptions[itemName];
-  if(!config){
-    wrap.style.display = 'none';
-    return;
-  }
-
-  wrap.style.display = 'block';
-
-  /* SIZE OPTIONS */
-  if(config.size){
-    createOptionGroup("Size", config.size, "size");
-  }
-
-  /* ADDON OPTIONS */
-  if(config.addon){
-    createOptionGroup("Addon", config.addon, "addon");
-  }
-
-  /* COFFEE OPTIONS */
-  if(config === "coffee"){
-    createOptionGroup("Temperature", [
-      {label:"Hot", price:0},
-      {label:"Ice +$1", price:1}
-    ], "temp");
-
-    createOptionGroup("Extras", [
-      {label:"None", price:0},
-      {label:"Extra Shot +$1", price:1},
-      {label:"Oat Milk +$1.50", price:1.5}
-    ], "extra");
-  }
-
-  function createOptionGroup(title, options, key){
-    const g = document.createElement('div');
-    g.className = 'option-group';
-
-    g.innerHTML = `<div class="option-title">${title}</div>`;
-    const row = document.createElement('div');
-    row.className = 'option-row';
-
-    options.forEach((opt, i)=>{
-      const b = document.createElement('button');
-      b.className = 'option-btn';
-      b.textContent = opt.label;
-
-      if(i === 0){
-        b.classList.add('active');
-        selectedOptions[key] = opt;
-      }
-
-      b.onclick = ()=>{
-        row.querySelectorAll('.option-btn').forEach(x=>x.classList.remove('active'));
-        b.classList.add('active');
-        selectedOptions[key] = opt;
-      };
-
-      row.appendChild(b);
-    });
-
-    g.appendChild(row);
-    wrap.appendChild(g);
-  }
-}
 
 const itemOptions = {
   "TIRAMISU KUEH PIE TEE": {
@@ -728,7 +656,10 @@ document.getElementById('modalAddBtn').onclick = function(e){
     qty: qty,
     options: optionText,
     request: request
-  };
+    
+  const qty = Number(document.getElementById('qtyValue').textContent);
+  const request = document.getElementById('specialRequestInput').value.trim();
+};
 
   cart.push(cartItem);
   saveCart();
