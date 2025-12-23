@@ -504,6 +504,14 @@ function openItem(item){
   setTimeout(() => bg.classList.add('show'), 10);
 }
 
+function closeModalAnimated(){
+  const bg = document.getElementById('modalBg');
+  bg.classList.remove('show');
+  setTimeout(() => {
+    bg.style.display = 'none';
+  }, 180);
+}
+
 /* Qty */
 function qtyChange(dir){
   let q = Number(document.getElementById('qtyValue').textContent);
@@ -578,6 +586,12 @@ document.getElementById('modalAddBtn').onclick = function(e){
     document.getElementById('cartBtn').classList.remove('cart-animate');
     closeModalInstant();
   }, 220);
+};
+
+document.getElementById('modalBg').onclick = function(e){
+  if(e.target.id === 'modalBg'){
+    closeModalAnimated();
+  }
 };
   
 function bubbleToCart(){
