@@ -221,125 +221,67 @@ textarea{width:100%;height:84px;border-radius:12px;border:1px solid rgba(255,255
 <!-- Main content -->
 <div class="container">
 
-  <!-- Tabs -->
-  <div class="tab-row">
-  <button class="tab active" onclick="openTab('desserts')">Desserts</button>
-  <button class="tab" onclick="openTab('beverages')">Beverages</button>
-  </div>
+<!-- TABS -->
+<div class="tab-row">
+  <button class="tab active" data-tab="desserts" onclick="openTab('desserts')">Desserts</button>
+  <button class="tab" data-tab="beverages" onclick="openTab('beverages')">Beverages</button>
+</div>
 
-<!-- ================= DESSERTS TAB ================= -->
+<!-- DESSERTS -->
 <div class="tab-panel" data-panel="desserts" style="display:block">
-
   <div class="section-title">Desserts</div>
   <div class="grid">
 
-    <!-- 1. TIRAMISU KUEH PIE TEE -->
-    <div class="item-card"
-      onclick="openItem({
-        id:'tiramisu_kpt',
-        name:'TIRAMISU KUEH PIE TEE',
-        price:9,
-        desc:'Signature tiramisu mousse, toasted pistachios and espresso soaked savoiardi fingers in a crispy kueh pie tee shell.',
-        options:[
-          {label:'3 pcs', price:9},
-          {label:'5 pcs', price:15}
-        ]
-      })">
+    <div class="item-card" onclick="openItem({name:'TIRAMISU KUEH PIE TEE',price:'$9 / $15',desc:'Signature tiramisu mousse, toasted pistachios and espresso soaked savoiardi fingers in crispy kueh pie tee shell'})">
       <div class="item-row">
-        <div class="item-left">
+        <div>
           <div class="item-title">TIRAMISU KUEH PIE TEE</div>
-          <div class="item-desc">
-            Signature tiramisu mousse, toasted pistachios and espresso soaked savoiardi fingers in crispy kueh pie tee shell
-          </div>
+          <div class="item-desc">Signature tiramisu mousse, toasted pistachios and espresso soaked savoiardi fingers in crispy kueh pie tee shell</div>
         </div>
         <div class="price">$9 / $15</div>
       </div>
     </div>
 
-    <!-- 2. TIRAMISU YUZU KUEH PIE TEE -->
-    <div class="item-card"
-      onclick="openItem({
-        id:'tiramisu_yuzu_kpt',
-        name:'TIRAMISU YUZU KUEH PIE TEE',
-        price:10,
-        desc:'Signature tiramisu mousse, yuzu marmalade and espresso soaked savoiardi fingers in a crispy kueh pie tee shell.',
-        options:[
-          {label:'3 pcs', price:10},
-          {label:'5 pcs', price:16}
-        ]
-      })">
+    <div class="item-card" onclick="openItem({name:'TIRAMISU YUZU KUEH PIE TEE',price:'$10 / $16',desc:'Signature tiramisu mousse, yuzu marmalade and espresso soaked savoiardi fingers in crispy kueh pie tee shell'})">
       <div class="item-row">
-        <div class="item-left">
+        <div>
           <div class="item-title">TIRAMISU YUZU KUEH PIE TEE</div>
-          <div class="item-desc">
-            Signature tiramisu mousse, yuzu marmalade and espresso soaked savoiardi fingers in crispy kueh pie tee shell
-          </div>
+          <div class="item-desc">Signature tiramisu mousse, yuzu marmalade and espresso soaked savoiardi fingers in crispy kueh pie tee shell</div>
         </div>
         <div class="price">$10 / $16</div>
       </div>
     </div>
 
-    <!-- 3. MOLTEN CHOCOLATE LAVA CAKE -->
-    <div class="item-card"
-      onclick="openItem({
-        id:'lava_cake',
-        name:'MOLTEN CHOCOLATE LAVA CAKE',
-        price:15,
-        desc:'Warm molten chocolate lava cake with a soft flowing center, served with your choice of gelato.',
-        options:[
-          {label:'Vanilla Gelato', price:0},
-          {label:'Chocolate Gelato', price:0}
-        ]
-      })">
+    <div class="item-card" onclick="openItem({name:'MOLTEN CHOCOLATE LAVA CAKE',price:15,desc:'Served with choice of vanilla or chocolate gelato'})">
       <div class="item-row">
-        <div class="item-left">
+        <div>
           <div class="item-title">MOLTEN CHOCOLATE LAVA CAKE</div>
-          <div class="item-desc">
-            Served with choice of vanilla or chocolate gelato
-          </div>
+          <div class="item-desc">Served with choice of vanilla or chocolate gelato</div>
         </div>
         <div class="price">$15</div>
       </div>
     </div>
 
-    <!-- 4. CHEESECAKE WITH ROCK MELON GRANITA -->
-    <div class="item-card"
-      onclick="openItem({
-        id:'cheesecake',
-        name:'CHEESECAKE WITH ROCK MELON GRANITA',
-        price:15,
-        desc:'Creamy cheesecake on a graham cracker crust, topped with refreshing rock melon granita and seasonal berries.'
-      })">
+    <div class="item-card" onclick="openItem({name:'CHEESECAKE WITH ROCK MELON GRANITA',price:15,desc:'Graham cracker crust, melon granita, berries'})">
       <div class="item-row">
-        <div class="item-left">
+        <div>
           <div class="item-title">CHEESECAKE WITH ROCK MELON GRANITA</div>
-          <div class="item-desc">
-            Graham cracker crust, melon granita, berries
-          </div>
+          <div class="item-desc">Graham cracker crust, melon granita, berries</div>
         </div>
         <div class="price">$15</div>
       </div>
     </div>
 
-    <!-- 5. GELATO -->
-    <div class="item-card"
-      onclick="openItem({
-        id:'gelato',
-        name:'GELATO',
-        price:5,
-        desc:'House gelato made fresh daily with rich and creamy texture.',
-        options:[
-          {label:'Vanilla Gelato', price:0},
-          {label:'Chocolate Gelato', price:0}
-        ]
-      })">
+    <div class="item-card" onclick="openItem({name:'VANILLA GELATO',price:5,desc:''})">
       <div class="item-row">
-        <div class="item-left">
-          <div class="item-title">GELATO</div>
-          <div class="item-desc">
-            Choice of vanilla or chocolate gelato
-          </div>
-        </div>
+        <div class="item-title">VANILLA GELATO</div>
+        <div class="price">$5</div>
+      </div>
+    </div>
+
+    <div class="item-card" onclick="openItem({name:'CHOCOLATE GELATO',price:5,desc:''})">
+      <div class="item-row">
+        <div class="item-title">CHOCOLATE GELATO</div>
         <div class="price">$5</div>
       </div>
     </div>
@@ -347,116 +289,27 @@ textarea{width:100%;height:84px;border-radius:12px;border:1px solid rgba(255,255
   </div>
 </div>
 
-<!-- ================= BEVERAGES TAB ================= -->
-  <div class="tab-panel" data-panel="beverages" style="display:none">
+<!-- BEVERAGES -->
+<div class="tab-panel" data-panel="beverages" style="display:none">
+  <div class="section-title">Beverages</div>
+  <div class="grid">
 
-    <!-- FRESHLY BREWED COFFEE -->
-    <div class="section-title">F R E S H L Y &nbsp; B R E W E D &nbsp; C O F F E E</div>
-    <div class="grid">
-
-      <div class="item-card" onclick="openItem({id:'espresso',name:'ESPRESSO',price:5,desc:'Single shot of freshly extracted espresso'})">
-        <div class="item-row"><div class="item-title">ESPRESSO</div><div class="price">$5</div></div>
-      </div>
-
-      <div class="item-card" onclick="openItem({id:'americano',name:'AMERICANO',price:5.5,desc:'Espresso diluted with hot water',hasCoffeeAddon:true})">
-        <div class="item-row"><div class="item-title">AMERICANO</div><div class="price">$5.5</div></div>
-      </div>
-
-      <div class="item-card" onclick="openItem({id:'latte',name:'LATTE',price:6.5,desc:'Espresso with steamed milk',hasCoffeeAddon:true})">
-        <div class="item-row"><div class="item-title">LATTE</div><div class="price">$6.5</div></div>
-      </div>
-
-      <div class="item-card" onclick="openItem({id:'cappuccino',name:'CAPPUCCINO',price:6.5,desc:'Espresso with steamed milk and foam',hasCoffeeAddon:true})">
-        <div class="item-row"><div class="item-title">CAPPUCCINO</div><div class="price">$6.5</div></div>
-      </div>
-
-      <div class="item-card" onclick="openItem({id:'butterscotch',name:'BUTTERSCOTCH LATTE',price:7,desc:'Latte infused with butterscotch syrup',hasCoffeeAddon:true})">
-        <div class="item-row"><div class="item-title">BUTTERSCOTCH LATTE</div><div class="price">$7</div></div>
-      </div>
-
-      <div class="item-card" onclick="openItem({id:'caramel',name:'CARAMEL LATTE',price:7,desc:'Latte infused with caramel syrup',hasCoffeeAddon:true})">
-        <div class="item-row"><div class="item-title">CARAMEL LATTE</div><div class="price">$7</div></div>
-      </div>
-
-      <div class="item-card" onclick="openItem({id:'mocha',name:'MOCHA LATTE',price:7,desc:'Latte with rich chocolate flavour',hasCoffeeAddon:true})">
-        <div class="item-row"><div class="item-title">MOCHA LATTE</div><div class="price">$7</div></div>
-      </div>
-
-      <div class="item-card" onclick="openItem({id:'hazelnut',name:'HAZELNUT LATTE',price:7,desc:'Latte infused with hazelnut syrup',hasCoffeeAddon:true})">
-        <div class="item-row"><div class="item-title">HAZELNUT LATTE</div><div class="price">$7</div></div>
-      </div>
-
-      <div class="item-card" onclick="openItem({id:'dirty_matcha',name:'DIRTY MATCHA LATTE',price:8,desc:'Matcha latte with an added shot of espresso',hasCoffeeAddon:true})">
-        <div class="item-row"><div class="item-title">DIRTY MATCHA LATTE</div><div class="price">$8</div></div>
-      </div>
-
-      <div class="item-card" onclick="openItem({id:'matcha',name:'MATCHA LATTE',price:7.5,desc:'Premium matcha with steamed milk',hasCoffeeAddon:true})">
-        <div class="item-row"><div class="item-title">MATCHA LATTE</div><div class="price">$7.5</div></div>
-      </div>
-
-      <div class="item-card" onclick="openItem({id:'chai',name:'CHAI LATTE',price:7,desc:'Spiced chai with steamed milk',hasCoffeeAddon:true})">
-        <div class="item-row"><div class="item-title">CHAI LATTE</div><div class="price">$7</div></div>
-      </div>
-
-      <div class="item-card" onclick="openItem({id:'premium_chocolate',name:'PREMIUM CHOCOLATE',price:7,desc:'Rich premium hot chocolate',hasCoffeeAddon:true})">
-        <div class="item-row"><div class="item-title">PREMIUM CHOCOLATE</div><div class="price">$7</div></div>
-      </div>
-
-      <div class="item-card" onclick="openItem({id:'affogato',name:'VANILLA AFFOGATO',price:10,desc:'Vanilla gelato topped with hot espresso'})">
-        <div class="item-row"><div class="item-title">VANILLA AFFOGATO</div><div class="price">$10</div></div>
-      </div>
-
-    </div>
-
-    <!-- INFUSED TEAS -->
-    <div class="section-title">I N F U S E D &nbsp; I C E &nbsp; B R E W E D &nbsp; T E A S</div>
-    <div class="grid">
-
-      <div class="item-card" onclick="openItem({id:'black_tea',name:'ICE BLACK TEA',price:5,desc:'Classic brewed black tea served iced'})">
-        <div class="item-row"><div class="item-title">ICE BLACK TEA</div><div class="price">$5</div></div>
-      </div>
-
-      <div class="item-card" onclick="openItem({id:'lychee_tea',name:'ICE LYCHEE TEA',price:6,desc:'Iced black tea infused with lychee'})">
-        <div class="item-row"><div class="item-title">ICE LYCHEE TEA</div><div class="price">$6</div></div>
-      </div>
-
-      <div class="item-card" onclick="openItem({id:'strawberry_tea',name:'ICE STRAWBERRY TEA',price:6,desc:'Iced tea infused with strawberry'})">
-        <div class="item-row"><div class="item-title">ICE STRAWBERRY TEA</div><div class="price">$6</div></div>
-      </div>
-
-      <div class="item-card" onclick="openItem({id:'blueberry_tea',name:'ICE BLUEBERRY TEA',price:6,desc:'Iced tea infused with blueberry'})">
-        <div class="item-row"><div class="item-title">ICE BLUEBERRY TEA</div><div class="price">$6</div></div>
-      </div>
-
-      <div class="item-card" onclick="openItem({id:'apple_cinnamon',name:'ICE APPLE CINNAMON SPICE TEA',price:7,desc:'Apple infused iced tea with cinnamon spice'})">
-        <div class="item-row"><div class="item-title">ICE APPLE CINNAMON SPICE TEA</div><div class="price">$7</div></div>
-      </div>
-
-    </div>
-
-    <!-- JUICES -->
-    <div class="section-title">J U I C E S</div>
-    <div class="grid">
-      <div class="item-card"><div class="item-row"><div class="item-title">APPLE JUICE</div><div class="price">$7</div></div></div>
-      <div class="item-card"><div class="item-row"><div class="item-title">LIME JUICE</div><div class="price">$7</div></div></div>
-      <div class="item-card"><div class="item-row"><div class="item-title">PINEAPPLE JUICE</div><div class="price">$7</div></div></div>
-      <div class="item-card"><div class="item-row"><div class="item-title">MANGO JUICE</div><div class="price">$7</div></div></div>
-      <div class="item-card"><div class="item-row"><div class="item-title">ORANGE JUICE</div><div class="price">$7</div></div></div>
-    </div>
-
-    <!-- SOFTDRINKS & WATER -->
-    <div class="section-title">S O F T &nbsp; D R I N K S &nbsp; &amp; &nbsp; W A T E R</div>
-    <div class="grid">
-      <div class="item-card"><div class="item-row"><div class="item-title">COKE</div><div class="price">$6</div></div></div>
-      <div class="item-card"><div class="item-row"><div class="item-title">COKE ZERO</div><div class="price">$6</div></div></div>
-      <div class="item-card"><div class="item-row"><div class="item-title">SPRITE</div><div class="price">$6</div></div></div>
-      <div class="item-card"><div class="item-row"><div class="item-title">TONIC WATER</div><div class="price">$6</div></div></div>
-      <div class="item-card"><div class="item-row"><div class="item-title">SODA WATER</div><div class="price">$6</div></div></div>
-      <div class="item-card"><div class="item-row"><div class="item-title">ACQUA SAN FELICE MINERAL WATER</div><div class="price">$5</div></div></div>
-      <div class="item-card"><div class="item-row"><div class="item-title">ACQUA SAN FELICE SPARKLING WATER</div><div class="price">$5</div></div></div>
-    </div>
+    <div class="item-card"><div class="item-row"><div class="item-title">ESPRESSO</div><div class="price">$5</div></div></div>
+    <div class="item-card"><div class="item-row"><div class="item-title">AMERICANO</div><div class="price">$5.5</div></div></div>
+    <div class="item-card"><div class="item-row"><div class="item-title">LATTE</div><div class="price">$6.5</div></div></div>
+    <div class="item-card"><div class="item-row"><div class="item-title">CAPPUCCINO</div><div class="price">$6.5</div></div></div>
+    <div class="item-card"><div class="item-row"><div class="item-title">BUTTERSCOTCH LATTE</div><div class="price">$7</div></div></div>
+    <div class="item-card"><div class="item-row"><div class="item-title">CARAMEL LATTE</div><div class="price">$7</div></div></div>
+    <div class="item-card"><div class="item-row"><div class="item-title">MOCHA LATTE</div><div class="price">$7</div></div></div>
+    <div class="item-card"><div class="item-row"><div class="item-title">HAZELNUT LATTE</div><div class="price">$7</div></div></div>
+    <div class="item-card"><div class="item-row"><div class="item-title">DIRTY MATCHA LATTE</div><div class="price">$8</div></div></div>
+    <div class="item-card"><div class="item-row"><div class="item-title">MATCHA LATTE</div><div class="price">$7.5</div></div></div>
+    <div class="item-card"><div class="item-row"><div class="item-title">CHAI LATTE</div><div class="price">$7</div></div></div>
+    <div class="item-card"><div class="item-row"><div class="item-title">PREMIUM CHOCOLATE</div><div class="price">$7</div></div></div>
+    <div class="item-card"><div class="item-row"><div class="item-title">VANILLA AFFOGATO</div><div class="price">$10</div></div></div>
 
   </div>
+</div>
 
 </div>
 
@@ -475,43 +328,32 @@ textarea{width:100%;height:84px;border-radius:12px;border:1px solid rgba(255,255
 
     <div id="modalDesc" class="modal-desc">Description ...</div>
 
-    <!-- OPTIONS -->
-    <div id="optionBlock" class="option-block" style="display:none">
-      <div class="option-cards" id="optionCards"></div>
-    </div>
+    <!-- HALF & HALF PIZZA OPTION -->
+    <div id="halfOption" class="option-block half-wrap" style="display:none">
     
-    <!-- ADD-ONS (COFFEE ONLY) -->
-    <div id="addonBlock" class="option-block" style="display:none">
-      <div class="option-cards">
-        <label class="option-card">
-          <input type="checkbox" value="Oat Milk" data-price="1.5">
-          <span class="label-text">Oat Milk</span>
-          <span class="price-addon">+$1.50</span>
-        </label>
-    
-        <label class="option-card">
-          <input type="checkbox" value="Extra Shot" data-price="1">
-          <span class="label-text">Extra Shot</span>
-          <span class="price-addon">+$1.00</span>
-        </label>
-    
-        <label class="option-card">
-          <input type="checkbox" value="Iced" data-price="1">
-          <span class="label-text">Iced</span>
-          <span class="price-addon">+$1.00</span>
-        </label>
+      <div style="font-weight:700;color:#ddd">
+        Half & Half Pizza
       </div>
-
-    <div class="modal-footer">
-      <div class="modal-price">
-        $<span id="modalTotal">0.00</span>
+    
+      <div class="half-subtitle">
+        +$5, price based on higher-priced pizza
       </div>
-      <button class="add-btn" onclick="addToCart()">Add to Cart</button>
+    
+      <!-- Tomato & White Base Pizza Tabs -->
+      <div class="tab-row half-tabs">
+        <button class="tab active" data-half-tab="tomato" onclick="openHalfTab('tomato')">
+          Tomato Base
+        </button>
+        <button class="tab" data-half-tab="white" onclick="openHalfTab('white')">
+          White Base
+        </button>
+      </div>
+    
+      <!-- Options -->
+      <div id="halfOptions" class="half-options"></div>
+    
     </div>
-
-  </div>
-</div>
-
+  
     <!-- special request -->
     <div class="option-block">
       <div style="font-weight:700;color:#ddd;margin-bottom:8px">Special Request (Optional)</div>
@@ -569,6 +411,8 @@ textarea{width:100%;height:84px;border-radius:12px;border:1px solid rgba(255,255
 
 <script>
 /* GLOBAL CART */
+let currentPastaType = 'Spaghetti';
+let selectedAddons = [];
 let cart = JSON.parse(localStorage.getItem('cart') || '[]');
 
 function saveCart(){
@@ -590,6 +434,8 @@ updateCartBadge();
 
 /* TAB SWITCH */
 function openTab(tabName){
+  currentPastaType = tabName.charAt(0).toUpperCase() + tabName.slice(1);
+  
   document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
   document.querySelector(`.tab[data-tab="${tabName}"]`).classList.add('active');
 
@@ -600,70 +446,18 @@ function openTab(tabName){
 /* MODAL */
 let currentItem = null;
 
-function openItem(item){
-  currentItem = item;
-  document.getElementById('modalNamePrice').textContent = item.name;
-  document.getElementById('modalDesc').textContent = item.desc || '';
-  document.getElementById('qtyValue').textContent = 1;
-  document.getElementById('specialRequestInput').value = "";
 
-  let basePrice = item.price;
-  let totalPrice = basePrice;
-
-  /* RESET */
-  document.getElementById('optionBlock').style.display = 'none';
-  document.getElementById('addonBlock').style.display = 'none';
-  document.getElementById('optionCards').innerHTML = '';
-  document.querySelectorAll('#addonBlock input').forEach(i => i.checked = false);
-
-  /* OPTIONS (Desserts) */
-  if(item.options && item.options.length){
-    document.getElementById('optionBlock').style.display = 'block';
-
-    item.options.forEach((opt, idx) => {
-      const label = document.createElement('label');
-      label.className = 'option-card';
-
-      label.innerHTML = `
-        <input type="radio" name="item_option" value="${opt.label}" data-price="${opt.price}" ${idx===0?'checked':''}>
-        <span class="label-text">${opt.label}</span>
-        ${opt.price ? `<span class="price-addon">$${opt.price}</span>` : ``}
-      `;
-
-      document.getElementById('optionCards').appendChild(label);
-    });
-
-    basePrice = item.options[0].price;
-  }
-
-  /* COFFEE ADDONS */
-  if(item.hasCoffeeAddon){
-    document.getElementById('addonBlock').style.display = 'block';
-  }
-
-  /* PRICE UPDATE */
-  function updatePrice(){
-    totalPrice = basePrice;
-
-    const opt = document.querySelector('input[name="item_option"]:checked');
-    if(opt) totalPrice = Number(opt.dataset.price);
-
-    document.querySelectorAll('#addonBlock input:checked').forEach(a=>{
-      totalPrice += Number(a.dataset.price);
-    });
-
-    document.getElementById('modalPrice').textContent = "$" + totalPrice.toFixed(2);
-    currentItem._finalPrice = totalPrice;
-  }
-
-  document.addEventListener('change', updatePrice);
-  updatePrice();
-
-  /* Show modal */
+    /* Show modal */
   const bg = document.getElementById('modalBg');
   bg.style.display = "flex";
   setTimeout(()=> bg.classList.add('show'), 10);
+  }
+
+
+function toTitleCase(str){
+  return str.toLowerCase().replace(/\b\w/g, c => c.toUpperCase());
 }
+
 
 function closeModalAnimated(){
   const bg = document.getElementById('modalBg');
@@ -701,47 +495,47 @@ function pushToCart(itemObj){
   saveCart();
 }
 
-/* modalAddBtn.onclick LOGIC */
-document.getElementById('modalAddBtn').onclick = function (e) {
+/* modalAddBtn CLICK HANDLER */
+document.getElementById('modalAddBtn').onclick = function(e){
   e.preventDefault();
-  e.stopPropagation();
 
-  if (!currentItem) return;
+  const qty = Number(document.getElementById('qtyValue').textContent);
+  const request = document.getElementById('specialRequestInput').value.trim();
 
-  let qty = Number(document.getElementById("qtyValue").textContent);
-  let request = document.getElementById("specialRequestInput").value.trim();
-  let finalName = currentItem.name;
-  let finalPrice = currentItem._finalPrice || currentItem.price;
+  /* BASE PRICE = CURRENT PIZZA */
+  let basePrice = Number(currentItem.price);
 
-  /* OPTION NAME */
-  const opt = document.querySelector('input[name="item_option"]:checked');
-  if(opt){
-    finalName += ` (${opt.value})`;
+  /* ---------- HALF & HALF ---------- */
+  const halfInput = document.querySelector('input[name="half"]:checked');
+
+  let halfName = '';
+  let halfExtra = 0;
+
+  if (halfInput && halfInput.value) {
+    const halfPrice = Number(halfInput.dataset.price);
+
+    /* higher-priced pizza rule */
+    basePrice = Math.max(basePrice, halfPrice);
+
+    /* +$5 surcharge */
+    halfExtra = 5;
+
+    halfName = ` / ${halfInput.dataset.name}`;
   }
 
-  /* ADDONS */
-  let addons = [];
-  document.querySelectorAll('#addonBlock input:checked').forEach(a=>{
-    addons.push(a.value);
-  });
-
-  if(addons.length){
-    finalName += ` (${addons.join(', ')})`;
-  }
-
-  cart.push({
+  const cartItem = {
     id: currentItem.id,
-    name: finalName,
-    price: finalPrice,
+    category: "pizza",         
+    name: currentItem.name + halfName,
+    request: request,
     qty: qty,
-    option: opt ? opt.value : "",
-    fries: "",
-    spicy: "",
-    request: request
-  });
+    unitPrice: basePrice + halfExtra
+  };
 
+  cart.push(cartItem);
   saveCart();
 
+  /* visual feedback */
   this.classList.add('btn-animate');
   bubbleToCart();
   document.getElementById('cartBtn').classList.add('cart-animate');
