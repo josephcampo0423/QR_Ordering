@@ -68,7 +68,7 @@ a{color:inherit;text-decoration:none}
 .item-left{min-width:0}
 .item-title{font-weight:900;font-size:15px;white-space:normal;line-height:1.05}
 .item-desc{color:var(--muted);font-size:13px;margin-top:6px;white-space:normal}
-.price{color:#ddd;font-weight:800;min-width:54px;text-align:right}
+.price{color:#ddd;font-weight:800;min-width:88px;text-align:right;white-space:nowrap;}
 
 /* Modal backdrop & card */
 .modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.62);backdrop-filter:blur(6px);align-items:center;justify-content:center;z-index:120000;padding:18px}
@@ -289,24 +289,57 @@ textarea{width:100%;height:84px;border-radius:12px;border:1px solid rgba(255,255
   </div>
 </div>
 
-<!-- BEVERAGES -->
-<div class="tab-panel" data-panel="beverages" style="display:none">
-  <div class="section-title">Beverages</div>
-  <div class="grid">
+    <!-- BEVERAGES TAB -->
+    
+<!-- FRESHLY BREWED COFFEE -->
+<div class="section-title">Freshly Brewed Coffee</div>
 
-    <div class="item-card"><div class="item-row"><div class="item-title">ESPRESSO</div><div class="price">$5</div></div></div>
-    <div class="item-card"><div class="item-row"><div class="item-title">AMERICANO</div><div class="price">$5.5</div></div></div>
-    <div class="item-card"><div class="item-row"><div class="item-title">LATTE</div><div class="price">$6.5</div></div></div>
-    <div class="item-card"><div class="item-row"><div class="item-title">CAPPUCCINO</div><div class="price">$6.5</div></div></div>
-    <div class="item-card"><div class="item-row"><div class="item-title">BUTTERSCOTCH LATTE</div><div class="price">$7</div></div></div>
-    <div class="item-card"><div class="item-row"><div class="item-title">CARAMEL LATTE</div><div class="price">$7</div></div></div>
-    <div class="item-card"><div class="item-row"><div class="item-title">MOCHA LATTE</div><div class="price">$7</div></div></div>
-    <div class="item-card"><div class="item-row"><div class="item-title">HAZELNUT LATTE</div><div class="price">$7</div></div></div>
-    <div class="item-card"><div class="item-row"><div class="item-title">DIRTY MATCHA LATTE</div><div class="price">$8</div></div></div>
-    <div class="item-card"><div class="item-row"><div class="item-title">MATCHA LATTE</div><div class="price">$7.5</div></div></div>
-    <div class="item-card"><div class="item-row"><div class="item-title">CHAI LATTE</div><div class="price">$7</div></div></div>
-    <div class="item-card"><div class="item-row"><div class="item-title">PREMIUM CHOCOLATE</div><div class="price">$7</div></div></div>
-    <div class="item-card"><div class="item-row"><div class="item-title">VANILLA AFFOGATO</div><div class="price">$10</div></div></div>
+<div class="item-card" onclick="openItem({name:'ESPRESSO',price:5})"><div class="item-row"><div class="item-title">ESPRESSO</div><div class="price">$5</div></div></div>
+<div class="item-card" onclick="openItem({name:'AMERICANO',price:5.5})"><div class="item-row"><div class="item-title">AMERICANO</div><div class="price">$5.5</div></div></div>
+<div class="item-card" onclick="openItem({name:'LATTE',price:6.5})"><div class="item-row"><div class="item-title">LATTE</div><div class="price">$6.5</div></div></div>
+<div class="item-card" onclick="openItem({name:'CAPPUCCINO',price:6.5})"><div class="item-row"><div class="item-title">CAPPUCCINO</div><div class="price">$6.5</div></div></div>
+<div class="item-card" onclick="openItem({name:'BUTTERSCOTCH LATTE',price:7})"><div class="item-row"><div class="item-title">BUTTERSCOTCH LATTE</div><div class="price">$7</div></div></div>
+<div class="item-card" onclick="openItem({name:'CARAMEL LATTE',price:7})"><div class="item-row"><div class="item-title">CARAMEL LATTE</div><div class="price">$7</div></div></div>
+<div class="item-card" onclick="openItem({name:'MOCHA LATTE',price:7})"><div class="item-row"><div class="item-title">MOCHA LATTE</div><div class="price">$7</div></div></div>
+<div class="item-card" onclick="openItem({name:'HAZELNUT LATTE',price:7})"><div class="item-row"><div class="item-title">HAZELNUT LATTE</div><div class="price">$7</div></div></div>
+<div class="item-card" onclick="openItem({name:'DIRTY MATCHA LATTE',price:8})"><div class="item-row"><div class="item-title">DIRTY MATCHA LATTE</div><div class="price">$8</div></div></div>
+<div class="item-card" onclick="openItem({name:'MATCHA LATTE',price:7.5})"><div class="item-row"><div class="item-title">MATCHA LATTE</div><div class="price">$7.5</div></div></div>
+<div class="item-card" onclick="openItem({name:'CHAI LATTE',price:7})"><div class="item-row"><div class="item-title">CHAI LATTE</div><div class="price">$7</div></div></div>
+<div class="item-card" onclick="openItem({name:'PREMIUM CHOCOLATE',price:7})"><div class="item-row"><div class="item-title">PREMIUM CHOCOLATE</div><div class="price">$7</div></div></div>
+<div class="item-card" onclick="openItem({name:'VANILLA AFFOGATO',price:10})"><div class="item-row"><div class="item-title">VANILLA AFFOGATO</div><div class="price">$10</div></div></div>
+
+<!-- INFUSED ICE BREWED TEAS -->
+<div class="section-title">Infused Ice Brewed Teas</div>
+
+<div class="item-card" onclick="openItem({name:'ICE BLACK TEA',price:5})"><div class="item-row"><div class="item-title">ICE BLACK TEA</div><div class="price">$5</div></div></div>
+<div class="item-card" onclick="openItem({name:'ICE LYCHEE TEA',price:6})"><div class="item-row"><div class="item-title">ICE LYCHEE TEA</div><div class="price">$6</div></div></div>
+<div class="item-card" onclick="openItem({name:'ICE STRAWBERRY TEA',price:6})"><div class="item-row"><div class="item-title">ICE STRAWBERRY TEA</div><div class="price">$6</div></div></div>
+<div class="item-card" onclick="openItem({name:'ICE BLUEBERRY TEA',price:6})"><div class="item-row"><div class="item-title">ICE BLUEBERRY TEA</div><div class="price">$6</div></div></div>
+<div class="item-card" onclick="openItem({name:'ICE MANGO TEA',price:6})"><div class="item-row"><div class="item-title">ICE MANGO TEA</div><div class="price">$6</div></div></div>
+<div class="item-card" onclick="openItem({name:'ICE LEMON TEA',price:6})"><div class="item-row"><div class="item-title">ICE LEMON TEA</div><div class="price">$6</div></div></div>
+<div class="item-card" onclick="openItem({name:'ICE PASSIONFRUIT TEA',price:6})"><div class="item-row"><div class="item-title">ICE PASSIONFRUIT TEA</div><div class="price">$6</div></div></div>
+<div class="item-card" onclick="openItem({name:'ICE PEACH TEA',price:6})"><div class="item-row"><div class="item-title">ICE PEACH TEA</div><div class="price">$6</div></div></div>
+<div class="item-card" onclick="openItem({name:'ICE APPLE CINNAMON SPICE TEA',price:7})"><div class="item-row"><div class="item-title">ICE APPLE CINNAMON SPICE TEA</div><div class="price">$7</div></div></div>
+
+<!-- JUICES -->
+<div class="section-title">Juices</div>
+
+<div class="item-card" onclick="openItem({name:'APPLE JUICE',price:7})"><div class="item-row"><div class="item-title">APPLE JUICE</div><div class="price">$7</div></div></div>
+<div class="item-card" onclick="openItem({name:'LIME JUICE',price:7})"><div class="item-row"><div class="item-title">LIME JUICE</div><div class="price">$7</div></div></div>
+<div class="item-card" onclick="openItem({name:'PINEAPPLE JUICE',price:7})"><div class="item-row"><div class="item-title">PINEAPPLE JUICE</div><div class="price">$7</div></div></div>
+<div class="item-card" onclick="openItem({name:'MANGO JUICE',price:7})"><div class="item-row"><div class="item-title">MANGO JUICE</div><div class="price">$7</div></div></div>
+<div class="item-card" onclick="openItem({name:'ORANGE JUICE',price:7})"><div class="item-row"><div class="item-title">ORANGE JUICE</div><div class="price">$7</div></div></div>
+
+<!-- SOFT DRINKS & WATER -->
+<div class="section-title">Soft Drinks & Water</div>
+
+<div class="item-card" onclick="openItem({name:'COKE',price:6})"><div class="item-row"><div class="item-title">COKE</div><div class="price">$6</div></div></div>
+<div class="item-card" onclick="openItem({name:'COKE ZERO',price:6})"><div class="item-row"><div class="item-title">COKE ZERO</div><div class="price">$6</div></div></div>
+<div class="item-card" onclick="openItem({name:'SPRITE',price:6})"><div class="item-row"><div class="item-title">SPRITE</div><div class="price">$6</div></div></div>
+<div class="item-card" onclick="openItem({name:'TONIC WATER',price:6})"><div class="item-row"><div class="item-title">TONIC WATER</div><div class="price">$6</div></div></div>
+<div class="item-card" onclick="openItem({name:'SODA WATER',price:6})"><div class="item-row"><div class="item-title">SODA WATER</div><div class="price">$6</div></div></div>
+<div class="item-card" onclick="openItem({name:'ACQUA SAN FELICE MINERAL WATER',price:5})"><div class="item-row"><div class="item-title">ACQUA SAN FELICE MINERAL WATER</div><div class="price">$5</div></div></div>
+<div class="item-card" onclick="openItem({name:'ACQUA SAN FELICE SPARKLING WATER',price:5})"><div class="item-row"><div class="item-title">ACQUA SAN FELICE SPARKLING WATER</div><div class="price">$5</div></div></div>
 
   </div>
 </div>
@@ -434,41 +467,42 @@ updateCartBadge();
 
 /* TAB SWITCH */
 function openTab(tabName){
-  currentPastaType = tabName.charAt(0).toUpperCase() + tabName.slice(1);
-  
-  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.tab-row > .tab').forEach(t=>{
+    t.classList.remove('active');
+  });
+
   document.querySelector(`.tab[data-tab="${tabName}"]`).classList.add('active');
 
-  document.querySelectorAll('.tab-panel').forEach(p=>p.style.display='none');
-  document.querySelector(`.tab-panel[data-panel="${tabName}"]`).style.display='block';
+  document.querySelectorAll('.tab-panel').forEach(p=>{
+    p.style.display = 'none';
+  });
+
+  document.querySelector(`.tab-panel[data-panel="${tabName}"]`).style.display = 'block';
 }
 
 /* MODAL */
 let currentItem = null;
 
+function openItem(item){
+  currentItem = item;
 
-    /* Show modal */
+  document.getElementById('modalNamePrice').textContent = item.name;
+
+  const priceEl = document.getElementById('modalPrice');
+  priceEl.textContent = typeof item.price === 'string'
+    ? item.price
+    : `$${item.price}`;
+
+  const descEl = document.getElementById('modalDesc');
+  descEl.textContent = item.desc || '';
+  descEl.style.display = item.desc ? 'block' : 'none';
+
+  document.getElementById('qtyValue').textContent = 1;
+  document.getElementById('specialRequestInput').value = '';
+
   const bg = document.getElementById('modalBg');
-  bg.style.display = "flex";
+  bg.style.display = 'flex';
   setTimeout(()=> bg.classList.add('show'), 10);
-  }
-
-
-function toTitleCase(str){
-  return str.toLowerCase().replace(/\b\w/g, c => c.toUpperCase());
-}
-
-
-function closeModalAnimated(){
-  const bg = document.getElementById('modalBg');
-  bg.classList.remove('show');
-  setTimeout(()=> bg.style.display = "none", 180);
-}
-
-function closeModalInstant(){
-  const bg = document.getElementById('modalBg');
-  bg.classList.remove('show');
-  bg.style.display = "none";
 }
 
 /* Qty */
