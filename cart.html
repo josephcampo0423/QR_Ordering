@@ -333,16 +333,21 @@ function renderCart(){
 
     const name = document.createElement("div");
     name.className = "item-name";
-    const cleanName = it.name
+    let displayName = it.name
       .replace(/\s*\(.*?\)\s*/g, "")
       .replace(/\s*—\s*.*$/g, "");
+    
+    /* PREFIX TEMPERATURE */
+    if(it.option && (it.option.includes("Hot") || it.option.includes("Ice"))){
+      const temp = it.option.includes("Ice") ? "Ice" : "Hot";
+      displayName = temp + " " + displayName;
+    }
     
     const pizzaParts = (it.category === "pizza" && cleanName.includes("/"))
       ? cleanName.split("/").map(p => p.trim())
       : null;
     
-    name.textContent = pizzaParts ? pizzaParts[0] : cleanName;
-    
+    name.textContent = pizzaParts ? pizzaParts[0] : displayName;    
     
     const meta = document.createElement("div");
     meta.className = "item-meta";
@@ -371,8 +376,12 @@ function renderCart(){
   
     /* OPTIONS DISPLAY (CHECKOUT ONLY) */
 
-    // BAKED TRUFFLE BRIE CHEESE (Regular / With Aged Prosciutto)
-    if (typeof it.option === "string" && it.option.trim() !== "") {
+    if (
+      typeof it.option === "string" &&
+      it.option.trim() !== "" &&
+      !it.option.includes("Hot") &&
+      !it.option.includes("Ice")
+    ){
       lines.push(it.option);
     }
     
