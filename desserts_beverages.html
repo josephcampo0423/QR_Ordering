@@ -363,29 +363,9 @@ textarea{width:100%;height:84px;border-radius:12px;border:1px solid rgba(255,255
 
     <div id="modalDesc" class="modal-desc">Description ...</div>
 
-    <!-- HALF & HALF PIZZA OPTION -->
-    <div id="halfOption" class="option-block half-wrap" style="display:none">
-    
-      <div style="font-weight:700;color:#ddd">
-        Half & Half Pizza
-      </div>
-    
-      <div class="half-subtitle">
-        +$5, price based on higher-priced pizza
-      </div>
-    
-      <!-- Tomato & White Base Pizza Tabs -->
-      <div class="tab-row half-tabs">
-        <button class="tab active" data-half-tab="tomato" onclick="openHalfTab('tomato')">
-          Tomato Base
-        </button>
-        <button class="tab" data-half-tab="white" onclick="openHalfTab('white')">
-          White Base
-        </button>
-      </div>
     
       <!-- Options -->
-      <div id="halfOptions" class="half-options"></div>
+      <div id="modalOptions" class="modal-options" style="display:none;"></div>
     
     </div>
   
@@ -512,6 +492,187 @@ function openItem(item){
   setTimeout(() => bg.classList.add('show'), 10);
 }
 
+let selectedOptions = {};
+
+renderOptions(item.name);
+
+function renderOptions(itemName){
+  const wrap = document.getElementById('modalOptions');
+  wrap.innerHTML = '';
+  selectedOptions = {};
+
+  const config = itemOptions[itemName];
+  if(!config){
+    wrap.style.display = 'none';
+    return;
+  }
+
+  wrap.style.display = 'block';
+
+  /* SIZE OPTIONS */
+  if(config.size){
+    createOptionGroup("Size", config.size, "size");
+  }
+
+  /* ADDON OPTIONS */
+  if(config.addon){
+    createOptionGroup("Addon", config.addon, "addon");
+  }
+
+  /* COFFEE OPTIONS */
+  if(config === "coffee"){
+    createOptionGroup("Temperature", [
+      {label:"Hot", price:0},
+      {label:"Ice +$1", price:1}
+    ], "temp");
+
+    createOptionGroup("Extras", [
+      {label:"None", price:0},
+      {label:"Extra Shot +$1", price:1},
+      {label:"Oat Milk +$1.50", price:1.5}
+    ], "extra");
+  }
+
+  function createOptionGroup(title, options, key){
+    const g = document.createElement('div');
+    g.className = 'option-group';
+
+    g.innerHTML = `<div class="option-title">${title}</div>`;
+    const row = document.createElement('div');
+    row.className = 'option-row';
+
+    options.forEach((opt, i)=>{
+      const b = document.createElement('button');
+      b.className = 'option-btn';
+      b.textContent = opt.label;
+
+      if(i === 0){
+        b.classList.add('active');
+        selectedOptions[key] = opt;
+      }
+
+      b.onclick = ()=>{
+        row.querySelectorAll('.option-btn').forEach(x=>x.classList.remove('active'));
+        b.classList.add('active');
+        selectedOptions[key] = opt;
+      };
+
+      row.appendChild(b);
+    });
+
+    g.appendChild(row);
+    wrap.appendChild(g);
+  }
+}
+
+
+
+let selectedOptions = {};
+
+function renderOptions(itemName){
+  const wrap = document.getElementById('modalOptions');
+  wrap.innerHTML = '';
+  selectedOptions = {};
+
+  const config = itemOptions[itemName];
+  if(!config){
+    wrap.style.display = 'none';
+    return;
+  }
+
+  wrap.style.display = 'block';
+
+  /* SIZE OPTIONS */
+  if(config.size){
+    createOptionGroup("Size", config.size, "size");
+  }
+
+  /* ADDON OPTIONS */
+  if(config.addon){
+    createOptionGroup("Addon", config.addon, "addon");
+  }
+
+  /* COFFEE OPTIONS */
+  if(config === "coffee"){
+    createOptionGroup("Temperature", [
+      {label:"Hot", price:0},
+      {label:"Ice +$1", price:1}
+    ], "temp");
+
+    createOptionGroup("Extras", [
+      {label:"None", price:0},
+      {label:"Extra Shot +$1", price:1},
+      {label:"Oat Milk +$1.50", price:1.5}
+    ], "extra");
+  }
+
+  function createOptionGroup(title, options, key){
+    const g = document.createElement('div');
+    g.className = 'option-group';
+
+    g.innerHTML = `<div class="option-title">${title}</div>`;
+    const row = document.createElement('div');
+    row.className = 'option-row';
+
+    options.forEach((opt, i)=>{
+      const b = document.createElement('button');
+      b.className = 'option-btn';
+      b.textContent = opt.label;
+
+      if(i === 0){
+        b.classList.add('active');
+        selectedOptions[key] = opt;
+      }
+
+      b.onclick = ()=>{
+        row.querySelectorAll('.option-btn').forEach(x=>x.classList.remove('active'));
+        b.classList.add('active');
+        selectedOptions[key] = opt;
+      };
+
+      row.appendChild(b);
+    });
+
+    g.appendChild(row);
+    wrap.appendChild(g);
+  }
+}
+
+const itemOptions = {
+  "TIRAMISU KUEH PIE TEE": {
+    size: [
+      { label:"3 pcs", price:9 },
+      { label:"5 pcs", price:15 }
+    ]
+  },
+  "TIRAMISU YUZU KUEH PIE TEE": {
+    size: [
+      { label:"3 pcs", price:9 },
+      { label:"5 pcs", price:15 }
+    ]
+  },
+  "MOLTEN CHOCOLATE LAVA CAKE": {
+    addon: [
+      { label:"With Chocolate Gelato", price:0 },
+      { label:"With Vanilla Gelato", price:0 }
+    ]
+  },
+
+  /* ☕ COFFEE */
+  "ESPRESSO": "coffee",
+  "AMERICANO": "coffee",
+  "LATTE": "coffee",
+  "CAPPUCCINO": "coffee",
+  "BUTTERSCOTCH LATTE": "coffee",
+  "CARAMEL LATTE": "coffee",
+  "MOCHA LATTE": "coffee",
+  "HAZELNUT LATTE": "coffee",
+  "DIRTY MATCHA LATTE": "coffee",
+  "MATCHA LATTE": "coffee",
+  "CHAI LATTE": "coffee",
+  "PREMIUM CHOCOLATE": "coffee"
+};
+
 function closeModalAnimated(){
   const bg = document.getElementById('modalBg');
   if(!bg) return;
@@ -553,14 +714,19 @@ function pushToCart(itemObj){
 document.getElementById('modalAddBtn').onclick = function(e){
   e.preventDefault();
 
-  const qty = Number(document.getElementById('qtyValue').textContent);
-  const request = document.getElementById('specialRequestInput').value.trim();
+  const optionText = Object.values(selectedOptions)
+  .map(o => o.label)
+  .join(" / ");
 
+  const optionPrice = Object.values(selectedOptions)
+    .reduce((s,o)=>s + (o.price||0), 0);
+  
   const cartItem = {
     id: currentItem.id,
     name: currentItem.name,
-    price: currentItem.price,
+    price: currentItem.price + optionPrice,
     qty: qty,
+    options: optionText,
     request: request
   };
 
