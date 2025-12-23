@@ -351,7 +351,7 @@ textarea{width:100%;height:84px;border-radius:12px;border:1px solid rgba(255,255
 </div><!-- /.container -->
 
 <!-- Modal -->
-<div id="modalBg" class="modal-bg" aria-hidden="true">
+<div id="modalBg" class="modal-bg" aria-hidden="true" onclick="closeModalAnimated()">
   <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modalNamePrice" onclick="event.stopPropagation()">
     <div class="modal-title">
       <div>
@@ -504,7 +504,21 @@ function openItem(item){
 
   const bg = document.getElementById('modalBg');
   bg.style.display = 'flex';
+  bg.setAttribute('aria-hidden', 'false');
   setTimeout(() => bg.classList.add('show'), 10);
+}
+
+function closeModalAnimated(){
+  const bg = document.getElementById('modalBg');
+  if(!bg) return;
+
+  bg.classList.remove('show');
+
+  // wait for fade animation before hiding
+  setTimeout(() => {
+    bg.style.display = 'none';
+    bg.setAttribute('aria-hidden', 'true');
+  }, 200);
 }
 
 /* Qty */
