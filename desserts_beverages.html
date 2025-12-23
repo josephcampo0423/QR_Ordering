@@ -703,6 +703,8 @@ document.getElementById('modalAddBtn').onclick = function(e){
   cart.push(cartItem);
   localStorage.setItem("cart", JSON.stringify(cart));
 
+  updateCartBadge();
+
   /* ANIMATION */
   this.classList.add('btn-animate');
   bubbleToCart();
@@ -749,6 +751,16 @@ function bubbleToCart(){
 });
 
   setTimeout(() => bubble.remove(), 700);
+}
+
+function updateCartBadge(){
+  const cart = JSON.parse(localStorage.getItem("cart") || "[]");
+  const count = cart.reduce((sum, it) => sum + (it.qty || 1), 0);
+  const badge = document.getElementById("cartCount");
+  if(badge){
+    badge.textContent = count;
+    badge.style.display = count > 0 ? "flex" : "none";
+  }
 }
 
 /* OPEN CART PAGE */
