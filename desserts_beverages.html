@@ -489,12 +489,15 @@ function openItem(item){
   currentItem = {
     id: Date.now(),
     name: item.name,
-    price: Number(item.price),
+    rawPrice: item.price,
+    price: typeof item.price === 'number'
+      ? item.price
+      : Number(String(item.price).split('/')[0].replace('$','').trim()),
     desc: item.desc || ''
   };
 
   document.getElementById('modalNamePrice').textContent = item.name;
-  document.getElementById('modalPrice').textContent = '$' + item.price;
+  document.getElementById('modalPrice').textContent = item.price;
   document.getElementById('modalDesc').textContent = item.desc || '';
   document.getElementById('qtyValue').textContent = 1;
   document.getElementById('specialRequestInput').value = '';
@@ -502,14 +505,6 @@ function openItem(item){
   const bg = document.getElementById('modalBg');
   bg.style.display = 'flex';
   setTimeout(() => bg.classList.add('show'), 10);
-}
-
-function closeModalAnimated(){
-  const bg = document.getElementById('modalBg');
-  bg.classList.remove('show');
-  setTimeout(() => {
-    bg.style.display = 'none';
-  }, 180);
 }
 
 /* Qty */
@@ -543,6 +538,13 @@ document.getElementById('modalAddBtn').onclick = function(e){
   const qty = Number(document.getElementById('qtyValue').textContent);
   const request = document.getElementById('specialRequestInput').value.trim();
 
+  const cartItem = {
+    id: currentItem.id,
+    name: currentItem.name,
+    price: currentItem.price,
+    qty: qty,
+    request: request
+  };
 
   cart.push(cartItem);
   saveCart();
@@ -555,7 +557,7 @@ document.getElementById('modalAddBtn').onclick = function(e){
   setTimeout(() => {
     this.classList.remove('btn-animate');
     document.getElementById('cartBtn').classList.remove('cart-animate');
-    closeModalInstant();
+    closeModalAnimated();
   }, 220);
 };
 
