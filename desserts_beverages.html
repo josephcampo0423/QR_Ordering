@@ -464,57 +464,6 @@ textarea{width:100%;height:84px;border-radius:12px;border:1px solid rgba(255,255
 </body>
 
 <script>
-function addToCartFromModal(item) {
-  const cart = JSON.parse(localStorage.getItem("cart") || "[]");
-
-  let finalPrice = item.basePrice;
-  let addons = [];
-  let optionText = "";
-
-  /* ===== SIZE (3 pcs / 5 pcs) ===== */
-  const sizeEl = document.querySelector('input[name="size"]:checked');
-  if (sizeEl) {
-    optionText = sizeEl.dataset.label;
-    finalPrice = Number(sizeEl.dataset.price);
-
-    item.size = {
-      label: sizeEl.dataset.label,
-      price: Number(sizeEl.dataset.price)
-    };
-  }
-
-  /* ===== HOT / ICE ===== */
-  const tempEl = document.querySelector('input[name="temp"]:checked');
-  if (tempEl) {
-    optionText = optionText
-      ? optionText + " • " + tempEl.value
-      : tempEl.value;
-
-    if (tempEl.dataset.price) {
-      finalPrice += Number(tempEl.dataset.price);
-    }
-  }
-
-  /* ===== ADDONS ===== */
-  document.querySelectorAll('input[name="addon"]:checked').forEach(a => {
-    addons.push({
-      name: a.value,
-      price: Number(a.dataset.price || 0)
-    });
-    finalPrice += Number(a.dataset.price || 0);
-  });
-
-  cart.push({
-    name: item.name,
-    qty: 1,
-    unitPrice: finalPrice,
-    option: optionText,
-    size: item.size || null,
-    addons: addons
-  });
-
-  localStorage.setItem("cart", JSON.stringify(cart));
-}
 
 /* TAB SWITCH */
 function openTab(tabName){
@@ -576,31 +525,33 @@ function renderOptions(itemName){
 
   wrap.style.display = 'block';
 
+  /* SIZE (Desserts) */
   if(config.size){
     renderRadioGroup("Size", config.size, "size");
   }
 
+  /* ADDONS (Molten Cake) */
   if(config.addon){
     renderRadioGroup("Addon", config.addon, "addon");
   }
 
+  /* COFFEE */
   if(config === "coffee"){
     renderRadioGroup("Temperature", [
       {label:"Hot", price:0},
       {label:"Ice", price:1}
-    ], "temp");
+    ], "option");
 
     renderRadioGroup("Extras", [
       {label:"None", price:0},
       {label:"Extra Shot", price:1},
       {label:"Oat Milk", price:1.5}
-    ], "extra");
+    ], "addon");
   }
 
   function renderRadioGroup(title, options, key){
     const group = document.createElement('div');
     group.className = 'option-group';
-
     group.innerHTML = `<div class="option-title">${title}</div>`;
 
     options.forEach((opt, i)=>{
@@ -614,21 +565,16 @@ function renderOptions(itemName){
 
       selectedOptions[key] = options[0];
 
-      input.onchange = () => {
-        selectedOptions[key] = opt;
-      };
+      input.onchange = () => selectedOptions[key] = opt;
 
       const text = document.createElement('span');
       text.textContent = opt.label;
 
       const price = document.createElement('span');
       price.className = 'addon-price';
-      price.textContent = opt.price > 0 ? `+$${opt.price}` : '';
+      price.textContent = opt.price ? `+$${opt.price}` : '';
 
-      label.appendChild(input);
-      label.appendChild(text);
-      label.appendChild(price);
-
+      label.append(input, text, price);
       group.appendChild(label);
     });
 
@@ -716,26 +662,48 @@ document.getElementById('modalAddBtn').onclick = function(e){
   const qty = Number(document.getElementById('qtyValue').textContent);
   const request = document.getElementById('specialRequestInput').value.trim();
 
-  const optionText = Object.values(selectedOptions)
-    .map(o => o.label)
-    .join(" / ");
+  let basePrice = currentItem.price;
+  let optionText = [];
+  let addons = [];
 
-  const optionPrice = Object.values(selectedOptions)
-    .reduce((s,o)=>s + (o.price||0), 0);
+  /* SIZE */
+  if(selectedOptions.size){
+    basePrice = selectedOptions.size.price;
+    optionText.push(selectedOptions.size.label);
+  }
+
+  /* OPTION (Hot / Ice) */
+  if(selectedOptions.option){
+    optionText.push(selectedOptions.option.label);
+    basePrice += selectedOptions.option.price || 0;
+  }
+
+  /* ADDONS */
+  if(selectedOptions.addon){
+    if(selectedOptions.addon.label !== "None"){
+      addons.push({
+        name: selectedOptions.addon.label,
+        price: selectedOptions.addon.price || 0
+      });
+      basePrice += selectedOptions.addon.price || 0;
+    }
+  }
 
   const cartItem = {
     id: currentItem.id,
     name: currentItem.name,
-    price: currentItem.price + optionPrice,
+    unitPrice: basePrice,
     qty: qty,
-    options: optionText,
+    option: optionText.join(" / "),
+    addons: addons,
     request: request
   };
 
+  const cart = JSON.parse(localStorage.getItem("cart") || "[]");
   cart.push(cartItem);
-  saveCart();
+  localStorage.setItem("cart", JSON.stringify(cart));
 
-  /* visual feedback */
+  /* ANIMATION */
   this.classList.add('btn-animate');
   bubbleToCart();
   document.getElementById('cartBtn').classList.add('cart-animate');
