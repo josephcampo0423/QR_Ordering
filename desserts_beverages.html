@@ -473,15 +473,13 @@ function openItem(item){
       ? item.price
       : Number(String(item.price).split('/')[0].replace('$','').trim()),
     desc: item.desc || ''
-    
-    renderOptions(item.name);
   };
+
+  renderOptions(item.name);
 
   document.getElementById('modalNamePrice').textContent = item.name;
   document.getElementById('modalPrice').textContent =
-    typeof item.price === 'number'
-      ? `$${item.price}`
-      : item.price;
+    typeof item.price === 'number' ? `$${item.price}` : item.price;
 
   document.getElementById('modalDesc').textContent = item.desc || '';
   document.getElementById('qtyValue').textContent = 1;
@@ -642,13 +640,16 @@ function pushToCart(itemObj){
 document.getElementById('modalAddBtn').onclick = function(e){
   e.preventDefault();
 
+  const qty = Number(document.getElementById('qtyValue').textContent);
+  const request = document.getElementById('specialRequestInput').value.trim();
+
   const optionText = Object.values(selectedOptions)
-  .map(o => o.label)
-  .join(" / ");
+    .map(o => o.label)
+    .join(" / ");
 
   const optionPrice = Object.values(selectedOptions)
     .reduce((s,o)=>s + (o.price||0), 0);
-  
+
   const cartItem = {
     id: currentItem.id,
     name: currentItem.name,
@@ -656,10 +657,7 @@ document.getElementById('modalAddBtn').onclick = function(e){
     qty: qty,
     options: optionText,
     request: request
-    
-  const qty = Number(document.getElementById('qtyValue').textContent);
-  const request = document.getElementById('specialRequestInput').value.trim();
-};
+  };
 
   cart.push(cartItem);
   saveCart();
