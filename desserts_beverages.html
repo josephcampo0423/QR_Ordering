@@ -457,28 +457,27 @@ textarea{width:100%;height:84px;border-radius:12px;border:1px solid rgba(255,255
         <circle cx="17" cy="18.2" r="1.6" fill="none" stroke="currentColor" stroke-width="1.4"/>
       </g>
     </svg>
-    <div id="cartBadge"
-     aria-live="polite"
-     style="
-       display:none;
-       position:absolute;
-       top:-6px;
-       right:-6px;
-       min-width:20px;
-       height:20px;
-       padding:0 6px;
-       border-radius:999px;
-       background:var(--gold);
-       color:#000;
-       font-size:12px;
-       font-weight:900;
-       display:flex;
-       align-items:center;
-       justify-content:center;
-     ">
-</div>
+  <div id="cartBadge" aria-live="polite"></div>div>
   </div>
 </div>
+
+#cartBadge{
+  position:absolute;
+  top:-6px;
+  right:-6px;
+  min-width:20px;
+  height:20px;
+  padding:0 6px;
+  border-radius:999px;
+  background:var(--gold);
+  color:#000;
+  font-size:12px;
+  font-weight:900;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  box-shadow:0 6px 14px rgba(0,0,0,0.55);
+}
 
 </body>
 
@@ -773,22 +772,24 @@ function bubbleToCart(){
 }
 
 function updateCartBadge(){
-  const cart = JSON.parse(localStorage.getItem("cart") || "[]");
+  const badge = document.getElementById('cartBadge');
+  if(!badge) return;
 
-  const count = cart.reduce((sum, item) => {
+  const totalQty = cart.reduce((sum, item) => {
     return sum + (item.qty || 1);
   }, 0);
 
-  const badge = document.getElementById("cartBadge");
+  if(totalQty > 0){
+    badge.textContent = totalQty;
+    badge.style.display = 'flex';
 
-  if(!badge) return;
-
-  if(count > 0){
-    badge.textContent = count;
-    badge.style.display = "flex";
+    /* pulse animation */
+    badge.classList.remove('cart-animate');
+    void badge.offsetWidth; // restart animation
+    badge.classList.add('cart-animate');
   } else {
-    badge.textContent = "";
-    badge.style.display = "none";
+    badge.textContent = '';
+    badge.style.display = 'none';
   }
 }
 
