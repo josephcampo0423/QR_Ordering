@@ -221,246 +221,268 @@ textarea{width:100%;height:84px;border-radius:12px;border:1px solid rgba(255,255
 <!-- Main content -->
 <div class="container">
 
-  <!-- Tabs -->
-  <div class="tab-row" role="tablist" aria-label="Menu sections">
-    <button class="tab active" data-tab="sharing" onclick="openTab('sharing')" role="tab" aria-selected="true">Sharing Plates</button>
-    <button class="tab" data-tab="sashimi" onclick="openTab('sashimi')" role="tab" aria-selected="false">Sashimi & Crudo</button>
-    <button class="tab" data-tab="fries" onclick="openTab('fries')" role="tab" aria-selected="false">Skin-on & Twister Fries</button>
-  </div>
+<!-- TABS -->
+<div class="tab-row">
+  <div class="tab active" onclick="openTab('white')">White Wines</div>
+  <div class="tab" onclick="openTab('red')">Red Wines</div>
+  <div class="tab" onclick="openTab('moscato')">Moscato</div>
+  <div class="tab" onclick="openTab('champagne')">Champagne</div>
+</div>
 
-  <!-- SHARING PLATES TAB -->
-  <div class="tab-panel" data-panel="sharing" style="display:block">
-    <div class="section-title">Sharing Plates</div>
-    <div class="grid">
+<!-- WHITE WINES -->
+<div class="tab-panel" id="white" style="display:block">
+<div class="section-title">House Pour White Wines</div>
+<div class="grid">
 
-      <!-- 1 -->
-      <div class="item-card" onclick="openItem({id:'bread',name:'TOASTED GARLIC SOURDOUGH BREAD',price:8,desc:'Toasted sourdough bread with homemade garlic confit butter'})">
-        <div class="item-row">
-          <div class="item-left">
-            <div class="item-title">TOASTED GARLIC SOURDOUGH BREAD</div>
-            <div class="item-desc">Toasted sourdough bread with homemade garlic confit butter</div>
-          </div>
-          <div class="price">$8</div>
-        </div>
-      </div>
+<div class="item-card" onclick="openItem({
+id:'santaWhite',
+name:'SANTA HELENA CHARDONNAY ’23',
+desc:`Tropical aroma of peach and pineapple along with slight hints of banana and vanilla.
+Refreshing and fruity, with balanced acidity with a sensation of sweetness.
 
-      <!-- 2 -->
-      <div class="item-card" onclick="openItem({id:'wings',name:'CRISPY SPICY MIDWINGS',price:14,desc:'5 Pieces deep fried spicy midwings, homemade curry, spice mix, curry ketchup'})">
-        <div class="item-row">
-          <div class="item-left">
-            <div class="item-title">CRISPY SPICY MIDWINGS</div>
-            <div class="item-desc">5 Pieces deep fried spicy midwings, homemade curry, spice mix, curry ketchup</div>
-          </div>
-          <div class="price">$14</div>
-        </div>
-      </div>
+Country: Chile
+Varietal: Chardonnay
+Body: Light`,
+glass:10.9,bottle:60
+})">
+<div class="item-title">SANTA HELENA CHARDONNAY ’23</div>
+<div class="item-desc">Glass $10.90 • Bottle $60</div>
+</div>
 
-      <!-- 3 -->
-      <div class="item-card" onclick="openItem({id:'foie',name:'FOIE GRAS WITH MALIBU COMPRESSED ROCK MELON',price:23,desc:'Pan seared hungarian foie gras, malibu marinated, rock melon, sourdough toast'})">
-        <div class="item-row">
-          <div class="item-left">
-            <div class="item-title">FOIE GRAS WITH MALIBU COMPRESSED ROCK MELON</div>
-            <div class="item-desc">Pan seared hungarian foie gras, malibu marinated, rock melon, sourdough toast</div>
-          </div>
-          <div class="price">$23</div>
-        </div>
-      </div>
+<div class="item-card" onclick="openItem({
+id:'picciniWhite',
+name:'PICCINI PINOT GRIGIO DELLE VENEZIE ’23',
+desc:`Flowery bouquet and fruit, especially apple and peach, holding a firm and fruity palate.
+Its crisp acidity balances well with the soft character.
 
-      <!-- 4 -->
-      <div class="item-card" onclick="openItem({id:'provola',name:'SMOKED PROVOLA CHEESE TEMPURA WITH AGED PROSCIUTTO',price:21,desc:'Smoked provola cheese, aged prosciutto, fresh tomatoes, arugula, balsamic glaze, honey'})">
-        <div class="item-row">
-          <div class="item-left">
-            <div class="item-title">SMOKED PROVOLA CHEESE TEMPURA WITH AGED PROSCIUTTO</div>
-            <div class="item-desc">Smoked provola cheese, aged prosciutto, fresh tomatoes, arugula, balsamic glaze, honey</div>
-          </div>
-          <div class="price">$21</div>
-        </div>
-      </div>
+Country: Italy
+Varietal: Pinot Grigio
+Body: Medium`,
+glass:11.9,bottle:66
+})">
+<div class="item-title">PICCINI PINOT GRIGIO ’23</div>
+<div class="item-desc">Glass $11.90 • Bottle $66</div>
+</div>
 
-      <!-- 5 -->
-      <div class="item-card" onclick="openItem({id:'corn',name:'FRIED CORN RIBS WITH ASSAM AIOLI',price:15,desc:'Sweet corn ribs, assam aioli, homemade curry spice, fried curry leaves'})">
-        <div class="item-row">
-          <div class="item-left">
-            <div class="item-title">FRIED CORN RIBS WITH ASSAM AIOLI</div>
-            <div class="item-desc">Sweet corn ribs, assam aioli, homemade curry spice, fried curry leaves</div>
-          </div>
-          <div class="price">$15</div>
-        </div>
-      </div>
+<div class="item-card" onclick="openItem({
+id:'oysterWhite',
+name:'OYSTER BAY MARLBOROUGH SAUVIGNON BLANC ’22',
+desc:`Pear, citrus and lemon curd flavours that are generous and balanced, with touches of matcha and lime zest on a light, refreshing frame.
 
-      <!-- 6 -->
-      <div class="item-card" onclick="openItem({id:'brusch',name:'SOURDOUGH BRUSCHETTA WITH SMOKED SALMON',price:16,desc:'Toasted sourdough, garlic confit butter, smoked salmon, bonito aioli, fresh Japanese cucumbers, red onions'})">
-        <div class="item-row">
-          <div class="item-left">
-            <div class="item-title">SOURDOUGH BRUSCHETTA WITH SMOKED SALMON</div>
-            <div class="item-desc">Toasted sourdough, garlic confit butter, smoked salmon, bonito aioli, fresh Japanese cucumbers, red onions</div>
-          </div>
-          <div class="price">$16</div>
-        </div>
-      </div>
+Country: New Zealand
+Varietal: Sauvignon Blanc
+Body: Medium`,
+glass:13.9,bottle:78
+})">
+<div class="item-title">OYSTER BAY SAUVIGNON BLANC ’22</div>
+<div class="item-desc">Glass $13.90 • Bottle $78</div>
+</div>
 
-      <!-- 7 -->
-      <div class="item-card" onclick="openItem({id:'truffle',name:'BAKED TRUFFLE BRIE CHEESE',price:21,desc:'Baked brie cheese, truffle paste, white truffle oil, hot honey, toasted sourdough',prosciutto:true})">
-        <div class="item-row">
-          <div class="item-left">
-            <div class="item-title">BAKED TRUFFLE BRIE CHEESE</div>
-            <div class="item-desc">Baked brie cheese, truffle paste, white truffle oil, hot honey, toasted sourdough</div>
-          </div>
-          <div class="price">$21</div>
-        </div>
-      </div>
+</div>
 
-      <!-- 8 -->
-      <div class="item-card" onclick="openItem({id:'squid',name:'SZECHUAN SPICE CRISPY SQUID',price:16,desc:'Crispy fried squid, szechuan spice, garlic sprouts, dried chillies'})">
-        <div class="item-row">
-          <div class="item-left">
-            <div class="item-title">SZECHUAN SPICE CRISPY SQUID</div>
-            <div class="item-desc">Crispy fried squid, szechuan spice, garlic sprouts, dried chillies</div>
-          </div>
-          <div class="price">$16</div>
-        </div>
-      </div>
+<div class="section-title">Premium White Wines</div>
+<div class="grid">
 
-      <!-- 9 -->
-      <div class="item-card" onclick="openItem({id:'mussels',name:'SPICY LIVE MUSSELS & WHITE CLAMS STEW',price:20,desc:'White clams, live greenshell mussels, cherry tomatoes, katsuobushi, stewed in pomodoro & prawn broth',hasSpiceOption:true})">
-        <div class="item-row">
-          <div class="item-left">
-            <div class="item-title">SPICY LIVE MUSSELS & WHITE CLAMS STEW</div>
-            <div class="item-desc">White clams, live greenshell mussels, cherry tomatoes, katsuobushi, stewed in pomodoro & prawn broth</div>
-          </div>
-          <div class="price">$20</div>
-        </div>
-      </div>
+<div class="item-card" onclick="openItem({
+id:'tezWhite',
+name:'CHÂTEAU TEYSSIER PEZAT SAUVIGNON BLANC ’22',
+desc:`Citrus fruit & white peaches with a hint of white flowers.
+Crisp and fruity on the pallet with a refreshing finish.
 
-      <!-- 10 -->
-      <div class="item-card" onclick="openItem({id:'burrata',name:'BURRATA & AGED PROSCIUTTO SALAD',price:25,desc:'Burrata cheese, aged prosciutto, arugula leaves, cherry tomatoes, peach, balsamic vinaigrette'})">
-        <div class="item-row">
-          <div class="item-left">
-            <div class="item-title">BURRATA & AGED PROSCIUTTO SALAD</div>
-            <div class="item-desc">Burrata cheese, aged prosciutto, arugula leaves, cherry tomatoes, peach, balsamic vinaigrette</div>
-          </div>
-          <div class="price">$25</div>
-        </div>
-      </div>
+Country: France
+Varietal: 55% Sauvignon Blanc, 30% Semillon, 15% Muscadelle
+Body: Light`,
+bottle:105
+})">
+<div class="item-title">CHÂTEAU TEYSSIER PEZAT ’22</div>
+<div class="price">$105</div>
+</div>
 
-    </div>
-  </div>
+<div class="item-card" onclick="openItem({
+id:'manChenin',
+name:'MAN FREE-RUN STEEN CHENIN BLANC, COASTAL REGION ’23',
+desc:`A crisp & expressive, light-bodied wine. Light in appearance.
+Vibrant aromas of quince and tropical fruit.
+On the palate, fresh stone fruit and apple flavours.
 
-  <!-- SASHIMI & CRUDO TAB -->
-  <div class="tab-panel" data-panel="sashimi" style="display:none">
-    <div class="section-title">Sashimi & Crudo</div>
-    <div class="grid">
+Country: South Africa
+Varietal: Chenin Blanc
+Body: Medium`,
+bottle:99
+})">
+<div class="item-title">MAN FREE-RUN STEEN CHENIN BLANC ’23</div>
+<div class="price">$99</div>
+</div>
 
-      <div class="item-card" onclick="openItem({id:'scallop',name:'HOKKAIDO SCALLOPS CRUDO',price:19,desc:'6 slices hokkaido scallops, yuzu & citrus vinaigrette, peruvian teardrop peppers, pickled onions'})">
-        <div class="item-row">
-          <div class="item-left">
-            <div class="item-title">HOKKAIDO SCALLOPS CRUDO</div>
-            <div class="item-desc">6 slices hokkaido scallops, yuzu & citrus vinaigrette, peruvian teardrop peppers, pickled onions</div>
-          </div>
-          <div class="price">$19</div>
-        </div>
-      </div>
+<div class="item-card" onclick="openItem({
+id:'lakeWhite',
+name:'LAKE BREEZE BULLANT CHARDONNAY ’22',
+desc:`Minimal oak influence, showing enticing tropical fruit characters
+and citrus elements on the bouquet.
+Fresh and vibrant palate with melon and pineapple flavours
+and a long dry finish.
 
-      <div class="item-card" onclick="openItem({id:'salmon',name:'SALMON SASHIMI',price:15,desc:'5 pieces salmon sashimi, house made nam jim chilli, wasabi, shiso leaf, Japanese cucumbers'})">
-        <div class="item-row">
-          <div class="item-left">
-            <div class="item-title">SALMON SASHIMI</div>
-            <div class="item-desc">5 pieces salmon sashimi, house made nam jim chilli, wasabi, shiso leaf, Japanese cucumbers</div>
-          </div>
-          <div class="price">$15</div>
-        </div>
-      </div>
+Country: Australia
+Varietal: Chardonnay
+Body: Light`,
+bottle:102
+})">
+<div class="item-title">LAKE BREEZE BULLANT CHARDONNAY ’22</div>
+<div class="price">$102</div>
+</div>
 
-      <div class="item-card" onclick="openItem({id:'octopus',name:'OCTOPUS SASHIMI',price:13,desc:'5 pieces octopus sashimi, house made nam jim chilli, wasabi, shiso leaf, Japanese cucumbers'})">
-        <div class="item-row">
-          <div class="item-left">
-            <div class="item-title">OCTOPUS SASHIMI</div>
-            <div class="item-desc">5 pieces octopus sashimi, house made nam jim chilli, wasabi, shiso leaf, Japanese cucumbers</div>
-          </div>
-          <div class="price">$13</div>
-        </div>
-      </div>
+</div>
+</div>
 
-      <div class="item-card" onclick="openItem({id:'tartare',name:'SPICY SALMON TARTARE WITH CRISPY POPPADUMS',price:18,desc:'Salmon sashimi tartare, spicy aji verde, mexican hot sauce, mango, fresh onions, crispy poppadums, shiso leaf'})">
-        <div class="item-row">
-          <div class="item-left">
-            <div class="item-title">SPICY SALMON TARTARE WITH CRISPY POPPADUMS</div>
-            <div class="item-desc">Salmon sashimi tartare, spicy aji verde, mexican hot sauce, mango, fresh onions, crispy poppadums, shiso leaf</div>
-          </div>
-          <div class="price">$18</div>
-        </div>
-      </div>
+<!-- RED WINES -->
+<div class="tab-panel" id="red" style="display:none">
+<div class="section-title">House Pour Red Wines</div>
+<div class="grid">
 
-      <div class="item-card" onclick="openItem({id:'oysters',name:'JAPANESE HYOGO PREFECTURE OYSTERS — 1/2 DOZEN',price:28,desc:'6 pieces Japanese hyogo prefecture oysters, house made nam jim chilli'})">
-        <div class="item-row">
-          <div class="item-left">
-            <div class="item-title">JAPANESE HYOGO PREFECTURE OYSTERS — 1/2 DOZEN</div>
-            <div class="item-desc">6 pieces Japanese hyogo prefecture oysters, house made nam jim chilli</div>
-          </div>
-          <div class="price">$28</div>
-        </div>
-      </div>
+<div class="item-card" onclick="openItem({
+id:'santaRed',
+name:'SANTA HELENA CABERNET SAUVIGNON ’23',
+desc:`Very intense Cabernet, with berries, cherry and black currant notes,
+perfectly blended with soft notes of vanilla and chocolate.
+With good acidity, improving the fruit taste.
 
-    </div>
-  </div>
+Country: Chile
+Varietal: 85% Cabernet Sauvignon, 15% Syrah
+Body: Medium`,
+glass:10.9,bottle:60
+})">
+<div class="item-title">SANTA HELENA CABERNET SAUVIGNON ’23</div>
+<div class="item-desc">Glass $10.90 • Bottle $60</div>
+</div>
 
-  <!-- FRIES TAB -->
-  <div class="tab-panel" data-panel="fries" style="display:none">
-    <div class="section-title">Skin-on & Twister Fries</div>
-    <div class="grid">
+<div class="item-card" onclick="openItem({
+id:'picciniRed',
+name:'PICCINI CHIANTI DOCG ’22',
+desc:`Ruby red with an intense and persistent fragrance
+of mature red fruit.
+Well-structured and smooth on the palate.
 
-      <div class="item-card" onclick="openItem({id:'salted',name:'SALTED FRIES',price:8,desc:'Served with homemade curry ketchup',type:'fries'})">
-        <div class="item-row">
-          <div class="item-left">
-            <div class="item-title">SALTED FRIES</div>
-            <div class="item-desc">Served with homemade curry ketchup</div>
-          </div>
-          <div class="price">$8</div>
-        </div>
-      </div>
+Country: Italy
+Varietal: 95% Sangiovese, 5% Ciliegiolo
+Body: Medium`,
+glass:11.9,bottle:66
+})">
+<div class="item-title">PICCINI CHIANTI DOCG ’22</div>
+<div class="item-desc">Glass $11.90 • Bottle $66</div>
+</div>
 
-      <div class="item-card" onclick="openItem({id:'truffleFries',name:'TRUFFLE & GRANA PADANO FRIES',price:15,desc:'White truffle oil, grana padano cheese',type:'fries'})">
-        <div class="item-row">
-          <div class="item-left">
-            <div class="item-title">TRUFFLE & GRANA PADANO FRIES</div>
-            <div class="item-desc">White truffle oil, grana padano cheese</div>
-          </div>
-          <div class="price">$15</div>
-        </div>
-      </div>
+<div class="item-card" onclick="openItem({
+id:'oysterMerlot',
+name:'OYSTER BAY HAWKES BAY MERLOT ’22',
+desc:`Cherry, plum and black licorice flavours
+with notes of eucalyptus.
+Smooth and appealing with spice and tobacco on the finish.
 
-      <div class="item-card" onclick="openItem({id:'noriFries',name:'NORI FRIES WITH WASABI AIOLI',price:13,desc:'Japanese nori, wasabi aioli',type:'fries'})">
-        <div class="item-row">
-          <div class="item-left">
-            <div class="item-title">NORI FRIES WITH WASABI AIOLI</div>
-            <div class="item-desc">Japanese nori, wasabi aioli</div>
-          </div>
-          <div class="price">$13</div>
-        </div>
-      </div>
+Country: New Zealand
+Varietal: Merlot
+Body: Medium`,
+glass:13.9,bottle:78
+})">
+<div class="item-title">OYSTER BAY MERLOT ’22</div>
+<div class="item-desc">Glass $13.90 • Bottle $78</div>
+</div>
 
-      <div class="item-card" onclick="openItem({id:'malaFries',name:'MALA GARLIC FRIES',price:13,desc:'Homemade Szechuan spice mix, fresh garlic, dried chillies',type:'fries'})">
-        <div class="item-row">
-          <div class="item-left">
-            <div class="item-title">MALA GARLIC FRIES</div>
-            <div class="item-desc">Homemade Szechuan spice mix, fresh garlic, dried chillies</div>
-          </div>
-          <div class="price">$13</div>
-        </div>
-      </div>
+</div>
 
-      <div class="item-card" onclick="openItem({id:'nachoFries',name:'NACHO CHEESE & ASSAM AIOLI FRIES',price:14,desc:'Nacho cheese sauce, assam aioli, sweet relish, pickled jalapeno, red onions',type:'fries'})">
-        <div class="item-row">
-          <div class="item-left">
-            <div class="item-title">NACHO CHEESE & ASSAM AIOLI FRIES</div>
-            <div class="item-desc">Nacho cheese sauce, assam aioli, sweet relish, pickled jalapeno, red onions</div>
-          </div>
-          <div class="price">$14</div>
-        </div>
-      </div>
+<div class="section-title">Premium Red Wines</div>
+<div class="grid">
 
-    </div>
-  </div>
+<div class="item-card" onclick="openItem({
+id:'tezRed',
+name:'CHÂTEAU TEYSSIER PEZAT BORDEAUX SUPÉRIEUR 2020',
+desc:`Baked plums and raspberry preserves with hints
+of menthol, tobacco leaf and powdered cinnamon.
+Full-bodied and jam-packed with juicy red and blackberry flavours.
+
+Country: France
+Varietal: 85% Merlot, 15% Cabernet Franc
+Body: Full`,
+bottle:105
+})">
+<div class="item-title">CHÂTEAU TEYSSIER PEZAT BORDEAUX SUPÉRIEUR 2020</div>
+<div class="price">$105</div>
+</div>
+
+<div class="item-card" onclick="openItem({
+id:'manPinotage',
+name:'MAN BOSSTOK PINOTAGE, COASTAL REGION ’20',
+desc:`Aromas of mocha chocolate and roasted coffee beans.
+Juicy flavours of red berries, nutmeg and vanilla spice.
+
+Country: South Africa
+Varietal: 87% Pinotage, 7% Cinsault, 6% Grenache
+Body: Full`,
+bottle:108
+})">
+<div class="item-title">MAN BOSSTOK PINOTAGE ’20</div>
+<div class="price">$108</div>
+</div>
+
+<div class="item-card" onclick="openItem({
+id:'lakeShiraz',
+name:'LAKE BREEZE BULLANT SHIRAZ ’21',
+desc:`Ripe and full-bodied, matured for 15 months in oak.
+Aromas of plums and chocolate with earthy complexity.
+
+Country: Australia
+Varietal: Shiraz
+Body: Full`,
+bottle:114
+})">
+<div class="item-title">LAKE BREEZE BULLANT SHIRAZ ’21</div>
+<div class="price">$114</div>
+</div>
+
+</div>
+</div>
+
+<!-- MOSCATO -->
+<div class="tab-panel" id="moscato" style="display:none">
+<div class="section-title">Moscato</div>
+<div class="grid">
+
+<div class="item-card" onclick="openItem({
+id:'moscato',
+name:'TENUTA CARRETTA MOSCATO D’ASTI DOCG',
+desc:`Taste: Sweet and aromatic
+Aroma: Delicate and fragrant, typical of the Moscato grape
+
+Country: Italy
+Grape Varietal: 100% Moscato Bianco
+Alcohol Content: 5.5%`,
+bottle:70
+})">
+<div class="item-title">TENUTA CARRETTA MOSCATO D’ASTI</div>
+<div class="price">$70</div>
+</div>
+
+</div>
+</div>
+
+<!-- CHAMPAGNE -->
+<div class="tab-panel" id="champagne" style="display:none">
+<div class="section-title">Champagne</div>
+<div class="grid">
+
+<div class="item-card" onclick="openItem({
+id:'champagne',
+name:'CHAMPAGNE COLLET BRUT NV',
+desc:`Notes of white flowers, citrus stone fruit such as quince, apple, pear and white peach.
+Delicate spices, cumin, anise and herbs, black tea and lime tea.
+Refined, persistent and crunchy like a thin caramel biscuit.`,
+bottle:130
+})">
+<div class="item-title">CHAMPAGNE COLLET BRUT NV</div>
+<div class="price">$130</div>
+</div>
+
+</div>
+</div>
 
 </div><!-- /.container -->
 
@@ -477,53 +499,11 @@ textarea{width:100%;height:84px;border-radius:12px;border:1px solid rgba(255,255
 
     <div id="modalDesc" class="modal-desc">Description ...</div>
 
-    <!-- prosciutto option (premium cards) -->
-    <div id="prosciuttoOption" class="option-block" style="display:none">
-      <div style="font-weight:700;color:#ddd;margin-bottom:8px">Choose Option</div>
-      <div class="option-cards">
-        <label class="option-card">
-          <input type="radio" name="truf_opt" value="regular">
-          <span class="label-text">Regular</span>
-        </label>
-
-        <label class="option-card">
-          <input type="radio" name="truf_opt" value="with">
-          <span class="label-text">With Aged Prosciutto</span>
-          <span class="price-addon">+$7</span>
-        </label>
-      </div>
+    <div id="wineOpt" class="option-block" style="display:none">
+    <div class="option-cards">
+    <label class="option-card"><input type="radio" name="opt" value="glass">Glass <span class="price-addon" id="gPrice"></span></label>
+    <label class="option-card"><input type="radio" name="opt" value="bottle">Bottle <span class="price-addon" id="bPrice"></span></label>
     </div>
-
-    <!-- fries selectors -->
-    <div id="friesSelector" class="option-block" style="display:none">
-      <div style="font-weight:700;color:#ddd;margin-bottom:8px">Choose Fries Type</div>
-      <div class="option-cards">
-        <label class="option-card">
-          <input type="radio" name="fries_choice" value="Skin-on Fries">
-          <span class="label-text">Skin-on Fries</span>
-        </label>
-
-        <label class="option-card">
-          <input type="radio" name="fries_choice" value="Twister Fries">
-          <span class="label-text">Twister Fries</span>
-        </label>
-      </div>
-    </div>
-
-    <!-- spicy option for mussels -->
-    <div id="spiceOption" class="option-block" style="display:none">
-      <div style="font-weight:700;color:#ddd;margin-bottom:8px">Spice Level</div>
-      <div class="option-cards">
-        <label class="option-card">
-          <input type="radio" name="spice_choice" value="spicy" checked>
-          <span class="label-text">Spicy</span>
-        </label>
-
-        <label class="option-card">
-          <input type="radio" name="spice_choice" value="non-spicy">
-          <span class="label-text">Non-Spicy</span>
-        </label>
-      </div>
     </div>
 
     <!-- special request -->
@@ -549,12 +529,12 @@ textarea{width:100%;height:84px;border-radius:12px;border:1px solid rgba(255,255
 
 <!-- pagination -->
 <div class="footer-pages" role="navigation" aria-label="Pages">
-  <a class="page-num current" href="sharing_plates.html">1</a>
+  <a class="page-num" href="sharing_plates.html">1</a>
   <a class="page-num" href="mains_sides.html">2</a>
   <a class="page-num" href="pastas.html">3</a>
   <a class="page-num" href="hot_stone_pizzas.html">4</a>
   <a class="page-num" href="desserts_beverages.html">5</a>
-  <a class="page-num" href="page6.html">6</a>
+  <a class="page-num current" href="alcoholic_beverages.html">6</a>
   <a class="page-num" href="page7.html">7</a>
 </div>
 
