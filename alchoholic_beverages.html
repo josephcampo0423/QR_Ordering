@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Mingle Bistro — Sharing Plates</title>
+<title>Mingle Bistro — Alcoholic Beverages</title>
 
 <style>
 :root{
@@ -500,9 +500,14 @@ bottle:130
     <div id="modalDesc" class="modal-desc">Description ...</div>
 
     <div id="wineOpt" class="option-block" style="display:none">
-    <div class="option-cards">
-    <label class="option-card"><input type="radio" name="opt" value="glass">Glass <span class="price-addon" id="gPrice"></span></label>
-    <label class="option-card"><input type="radio" name="opt" value="bottle">Bottle <span class="price-addon" id="bPrice"></span></label>
+      <label>
+        <input type="radio" name="wine_choice" value="glass">
+        Glass <span id="glassPrice"></span>
+      </label>
+      <label>
+        <input type="radio" name="wine_choice" value="bottle">
+        Bottle <span id="bottlePrice"></span>
+      </label>
     </div>
     </div>
 
@@ -583,12 +588,11 @@ function updateCartBadge(){
 updateCartBadge();
 
 /* TAB SWITCH */
-function openTab(tabName){
-  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
-  document.querySelector(`.tab[data-tab="${tabName}"]`).classList.add('active');
-
-  document.querySelectorAll('.tab-panel').forEach(p=>p.style.display='none');
-  document.querySelector(`.tab-panel[data-panel="${tabName}"]`).style.display='block';
+function openTab(id){
+document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+event.target.classList.add('active');
+document.querySelectorAll('.tab-panel').forEach(p=>p.style.display='none');
+document.getElementById(id).style.display='block';
 }
 
 /* MODAL */
@@ -597,28 +601,31 @@ let currentItem = null;
 function openItem(item){
   currentItem = item;
   window._currentItem = item;
+
   document.getElementById('modalNamePrice').textContent = item.name;
-  document.getElementById('modalPrice').textContent = "$" + item.price;
   document.getElementById('modalDesc').textContent = item.desc;
 
-  /* Show/hide options */
-  document.getElementById('prosciuttoOption').style.display = item.prosciutto ? 'block' : 'none';
-  document.getElementById('friesSelector').style.display = (item.type === 'fries') ? 'block' : 'none';
-  document.getElementById('spiceOption').style.display = item.hasSpiceOption ? 'block' : 'none';
+  const priceEl = document.getElementById('modalPrice');
+  const wineOpt = document.getElementById('wineOpt');
 
-  /* Reset option selections */
-  document.querySelectorAll('#prosciuttoOption input, #friesSelector input, #spiceOption input')
-    .forEach(el => el.checked = false);
+  /* RESET */
+  priceEl.textContent = "";
+  wineOpt.style.display = "none";
+  document.querySelectorAll('input[name="wine_choice"]').forEach(r => r.checked = false);
 
-  /* preselect spicy for mussels */
-  if(item.hasSpiceOption){
-    document.querySelector('input[name="spice_choice"][value="spicy"]').checked = true;
+  /* WINE LOGIC */
+  if(item.glass && item.bottle){
+    wineOpt.style.display = "block";
+    document.getElementById('glassPrice').textContent = "$" + item.glass;
+    document.getElementById('bottlePrice').textContent = "$" + item.bottle;
+    priceEl.textContent = "$" + item.glass; // default display
+  } else {
+    priceEl.textContent = "$" + item.price;
   }
 
   document.getElementById('specialRequestInput').value = "";
   document.getElementById('qtyValue').textContent = 1;
 
-  /* Show modal */
   const bg = document.getElementById('modalBg');
   bg.style.display = "flex";
   setTimeout(()=> bg.classList.add('show'), 10);
@@ -668,47 +675,31 @@ document.getElementById('modalAddBtn').onclick = function (e) {
   if (!currentItem) return;
 
   let finalName = currentItem.name;
-  let finalPrice = Number(currentItem.price);
+  let finalPrice = Number(currentItem.price || 0);
   let option = "";
   let fries = "";
   let spicy = "";
   let request = document.getElementById("specialRequestInput").value.trim();
   let qty = Number(document.getElementById("qtyValue").textContent);
 
-  /* Truffle Brie option */
-  if (currentItem.prosciutto) {
-    const opt = document.querySelector('input[name="truf_opt"]:checked');
-    if (!opt) {
-      alert("Please select an option");
-      return;
-    }
-    if (opt.value === "with") {
-      option = "With Aged Prosciutto";
-      finalPrice += 7;
-      finalName += " (With Aged Prosciutto)";
-    } else {
-      option = "Regular";
-      finalName += " (Regular)";
-    }
+  /* WINE OPTION (GLASS / BOTTLE) */
+if(currentItem.glass && currentItem.bottle){
+  const w = document.querySelector('input[name="wine_choice"]:checked');
+  if(!w){
+    alert("Please select Glass or Bottle");
+    return;
   }
 
-  /* Fries */
-  if (currentItem.type === "fries") {
-    const f = document.querySelector('input[name="fries_choice"]:checked');
-    if (!f) {
-      alert("Please choose fries type");
-      return;
-    }
-    fries = f.value;
-    finalName += " — " + fries;
+  if(w.value === "glass"){
+    option = "Glass";
+    finalPrice = currentItem.glass;
+    finalName += " (Glass)";
+  } else {
+    option = "Bottle";
+    finalPrice = currentItem.bottle;
+    finalName += " (Bottle)";
   }
-
-  /* Spice */
-  if (currentItem.hasSpiceOption) {
-    const s = document.querySelector('input[name="spice_choice"]:checked');
-    spicy = s ? s.value : "spicy";
-    finalName += spicy === "non-spicy" ? " (Non-Spicy)" : " (Spicy)";
-  }
+}
 
   /* SAVE CART */
   cart.push({
