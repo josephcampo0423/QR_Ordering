@@ -1,0 +1,797 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Mingle Bistro — Desserts & Beverages</title>
+
+<style>
+:root{
+  --gold:#D4AF37;
+  --bg:#0f0f0f;
+  --card:#151515;
+  --muted:#bfbfbf;
+  --glass-border: rgba(212,175,55,0.16);
+  --text:#ffffff;
+  --option-bg: rgba(255,255,255,0.02);
+  --option-border: rgba(255,255,255,0.04);
+}
+
+/* Reset / Base */
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+
+/* Top header - centered */
+.top-header{
+  padding:20px 16px 10px 16px;
+  border-bottom:1px solid rgba(255,255,255,0.03);
+  background:linear-gradient(180deg, rgba(0,0,0,0.02), transparent);
+  text-align:center;
+}
+.restaurant-name{
+  font-size:26px;
+  font-weight:900;
+  color:var(--gold);
+  line-height:1;
+  letter-spacing:0.6px;
+}
+
+/* Container */
+.container{padding:12px 12px 140px 12px}
+
+/* Tabs (centered) */
+.tab-row{display:flex;gap:8px;overflow:auto;padding:12px 6px 6px;white-space:nowrap;justify-content:center}
+.tab{padding:10px 14px;border-radius:999px;border:1px solid rgba(255,255,255,0.03);color:var(--gold);background:transparent;cursor:pointer;font-weight:700;flex:0 0 auto}
+.tab.active{background:rgba(212,175,55,0.08)}
+
+/* Section title (inside tab content) */
+.section-title{color:var(--gold);font-weight:800;margin:6px 6px 12px 6px;font-size:16px;border-left:4px solid var(--gold);padding-left:10px}
+
+/* Grid */
+.grid{display:grid;grid-template-columns:1fr;gap:12px}
+@media(min-width:900px){ .grid{grid-template-columns:repeat(2,1fr)} }
+
+/* Item Card */
+.item-card{
+  background:var(--card);
+  padding:14px;
+  border-radius:12px;
+  box-shadow:0 8px 22px rgba(0,0,0,0.6);
+  cursor:pointer;
+  transition:transform .10s ease,box-shadow .12s ease;
+  border:1px solid rgba(255,255,255,0.02);
+}
+.item-card:hover{box-shadow:0 18px 36px rgba(0,0,0,0.55)}
+.item-card:active{transform:scale(.998)}
+.item-row{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.item-left{min-width:0}
+.item-title{font-weight:900;font-size:15px;white-space:normal;line-height:1.05}
+.item-desc{color:var(--muted);font-size:13px;margin-top:6px;white-space:normal}
+.price{color:#cfcfcf;font-weight:700;font-size:13px;line-height:1.2;min-width:70px;text-align:right;white-space:nowrap;}
+
+/* Modal backdrop & card */
+.modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.62);backdrop-filter:blur(6px);align-items:center;justify-content:center;z-index:120000;padding:18px}
+.modal-card{
+  width:clamp(340px,92vw,560px);
+  max-height:86vh;
+  background:linear-gradient(180deg, #0f0f0f, #0c0c0c);
+  border-radius:16px;padding:18px;border:1px solid var(--glass-border);overflow:auto;
+  box-shadow:0 22px 50px rgba(0,0,0,0.7);
+  transform:translateY(6px);opacity:0;transition:transform .20s ease,opacity .20s ease;
+}
+.modal-bg.show .modal-card{transform:translateY(0);opacity:1}
+
+/* modal header */
+.modal-title{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+.modal-title > div{flex:1;min-width:0}
+.modal-name{font-weight:900;color:var(--gold);font-size:18px;line-height:1.05}
+.modal-price{font-weight:800;color:#fff;font-size:14px;opacity:0.95;margin-top:6px}
+.modal-desc{color:var(--muted);margin-top:12px;font-size:14px;white-space:normal}
+
+/* fixed close button size (prevents stretching) */
+.modal-close-btn{
+  flex:0 0 auto;width:36px;height:36px;border-radius:50%;border:1px solid var(--gold);background:transparent;color:var(--gold);display:flex;align-items:center;justify-content:center;cursor:pointer;font-weight:700;font-size:15px;padding:0;
+}
+
+/* Option cards (premium) */
+.option-block{margin-top:12px}
+.option-cards{display:flex;gap:10px;flex-wrap:wrap}
+.option-card{
+  display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:12px;background:var(--option-bg);border:1px solid var(--option-border);cursor:pointer;min-width:120px;flex:0 0 auto;
+  transition:transform .12s ease,box-shadow .12s ease;
+}
+.option-card input{margin:0}
+.option-card .label-text{font-weight:700;color:#ddd;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.option-card .price-addon{font-weight:800;color:var(--gold);font-size:13px;white-space:nowrap;margin-left:6px}
+
+.option-group{
+  margin-top:14px;
+}
+
+.option-title{
+  font-size:13px;
+  font-weight:800;
+  color:#ddd;
+  margin-bottom:8px;
+}
+
+.option-radio{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:10px 12px;
+  border-radius:12px;
+  border:1px solid rgba(255,255,255,0.06);
+  background:rgba(255,255,255,0.02);
+  cursor:pointer;
+  margin-bottom:8px;
+}
+
+.option-radio input{
+  accent-color: var(--gold);
+}
+
+.option-radio span{
+  font-size:13px;
+  font-weight:700;
+  color:#e5e5e5;
+}
+
+.option-radio .addon-price{
+  margin-left:auto;
+  font-size:13px;
+  font-weight:800;
+  color:var(--gold);
+}
+
+/* ensure very long addon text doesn't wrap and stays succinct */
+.option-card .label-text, .option-card .price-addon {max-width:180px;}
+
+/* textarea (special request) */
+textarea{width:100%;height:84px;border-radius:12px;border:1px solid rgba(255,255,255,0.06);background:rgba(0,0,0,0.35);padding:10px;color:#fff;font-size:14px;resize:none;outline:none;margin-top:8px}
+
+/* qty row */
+.qty-row{display:flex;align-items:center;gap:12px;margin-top:12px}
+.qty-btn{width:38px;height:38px;border-radius:10px;border:1px solid rgba(255,255,255,0.06);background:transparent;color:#fff;font-size:18px;display:flex;align-items:center;justify-content:center;cursor:pointer}
+.qty-val{min-width:36px;text-align:center;font-weight:800}
+
+/* Add + Cancel buttons */
+.add-row{margin-top:16px;text-align:center}
+.btn-pill{display:inline-block;width:100%;padding:12px 18px;border-radius:999px;text-align:center;background:transparent;color:var(--gold);border:1px solid var(--gold);font-weight:800;font-size:15px;cursor:pointer}
+.cancel-btn{display:block;margin:12px auto 0 auto;width:68%;padding:12px;border-radius:12px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);color:#ddd;font-weight:700;cursor:pointer}
+
+/* bottom pagination */
+.footer-pages{position:fixed;left:0;right:0;bottom:0;padding:10px;background:linear-gradient(180deg,rgba(0,0,0,0),#070707 20%);display:flex;justify-content:center;gap:8px;z-index:900}
+.page-num{padding:8px 12px;border-radius:8px;background:rgba(255,255,255,0.03);color:#ddd;border:1px solid rgba(255,255,255,0.03);font-weight:600}
+.page-num.current{background:var(--gold);color:#000;border-color:var(--gold)}
+
+/* premium cart bottom-right */
+#cartWrap{position:fixed;bottom:96px;right:18px;z-index:1000} /* raised above pagination */
+
+/* GOLD PREMIUM CART ICON */
+#cartBtn{
+  width:56px;
+  height:56px;
+  border-radius:50%;
+  background: rgba(255,255,255,0.02);
+  border:1px solid rgba(212,175,55,0.28);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  box-shadow:
+    0 8px 20px rgba(0,0,0,0.45),
+    inset 0 0 0 0.5px rgba(255,255,255,0.15);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+  transition:transform .25s ease, box-shadow .25s ease;
+
+  color: var(--gold);
+}
+
+#cartBtn:hover{
+  transform: translateY(-2px) scale(1.04);
+  box-shadow:
+    0 14px 28px rgba(0,0,0,0.55),
+    inset 0 0 0 0.5px rgba(255,255,255,0.25);
+    color:#f1d36b;
+}
+
+#cartBtn svg{
+  width:28px;
+  height:28px;
+  opacity: 0.95;
+}
+
+/* responsive */
+@media(max-width:420px){
+  .restaurant-name{font-size:20px}
+  #cartWrap{bottom:86px; right:14px}
+  #cartBtn{width:50px;height:50px}
+  .modal-card{width:92vw}
+  .option-card{min-width:100px}
+}
+
+/* simple modern add-to-cart feedback */
+@keyframes btnPop {
+  0% { transform: scale(1); }
+  40% { transform: scale(0.94); }
+  100% { transform: scale(1); }
+}
+
+@keyframes cartPulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.12); }
+  100% { transform: scale(1); }
+}
+
+.btn-animate {
+  animation: btnPop 0.25s ease;
+}
+
+.cart-animate {
+  animation: cartPulse 0.35s ease;
+}
+
+/* BUBBLE TO CART ANIMATION */
+.cart-bubble{
+  position:fixed;
+  z-index:140000;
+  width:22px;
+  height:22px;
+  border-radius:50%;
+  background: radial-gradient(circle at 30% 30%, #ffffff, #eaeaea 65%);
+  box-shadow:
+    inset 0 1px 2px rgba(255,255,255,0.9),
+    0 8px 22px rgba(0,0,0,0.55);
+  pointer-events:none;
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- Top header (CENTERED) -->
+<div class="top-header">
+  <div class="restaurant-name">MINGLE BISTRO (FUNAN)</div>
+</div>
+
+<!-- Main content -->
+<div class="container">
+
+<!-- TABS -->
+<div class="tab-row">
+  <button class="tab active" data-tab="desserts" onclick="openTab('desserts')">Desserts</button>
+  <button class="tab" data-tab="beverages" onclick="openTab('beverages')">Beverages</button>
+</div>
+
+<!-- DESSERTS -->
+<div class="tab-panel" data-panel="desserts" style="display:block">
+  <div class="section-title">Desserts</div>
+  <div class="grid">
+
+    <div class="item-card" onclick="openItem({name:'TIRAMISU KUEH PIE TEE',price:'$9 / $15',desc:'Signature tiramisu mousse, toasted pistachios and espresso soaked savoiardi fingers in crispy kueh pie tee shell'})">
+      <div class="item-row">
+        <div>
+          <div class="item-title">TIRAMISU KUEH PIE TEE</div>
+          <div class="item-desc">Signature tiramisu mousse, toasted pistachios and espresso soaked savoiardi fingers in crispy kueh pie tee shell</div>
+        </div>
+        <div class="price">$9 / $15</div>
+      </div>
+    </div>
+
+    <div class="item-card" onclick="openItem({name:'TIRAMISU YUZU KUEH PIE TEE',price:'$10 / $16',desc:'Signature tiramisu mousse, yuzu marmalade and espresso soaked savoiardi fingers in crispy kueh pie tee shell'})">
+      <div class="item-row">
+        <div>
+          <div class="item-title">TIRAMISU YUZU KUEH PIE TEE</div>
+          <div class="item-desc">Signature tiramisu mousse, yuzu marmalade and espresso soaked savoiardi fingers in crispy kueh pie tee shell</div>
+        </div>
+        <div class="price">$10 / $16</div>
+      </div>
+    </div>
+
+    <div class="item-card" onclick="openItem({name:'MOLTEN CHOCOLATE LAVA CAKE',price:15,desc:'Served with choice of vanilla or chocolate gelato'})">
+      <div class="item-row">
+        <div>
+          <div class="item-title">MOLTEN CHOCOLATE LAVA CAKE</div>
+          <div class="item-desc">Served with choice of vanilla or chocolate gelato</div>
+        </div>
+        <div class="price">$15</div>
+      </div>
+    </div>
+
+    <div class="item-card" onclick="openItem({name:'CHEESECAKE WITH ROCK MELON GRANITA',price:15,desc:'Graham cracker crust, melon granita, berries'})">
+      <div class="item-row">
+        <div>
+          <div class="item-title">CHEESECAKE WITH ROCK MELON GRANITA</div>
+          <div class="item-desc">Graham cracker crust, melon granita, berries</div>
+        </div>
+        <div class="price">$15</div>
+      </div>
+    </div>
+
+    <div class="item-card" onclick="openItem({name:'VANILLA GELATO',price:5,desc:''})">
+      <div class="item-row">
+        <div class="item-title">VANILLA GELATO</div>
+        <div class="price">$5</div>
+      </div>
+    </div>
+
+    <div class="item-card" onclick="openItem({name:'CHOCOLATE GELATO',price:5,desc:''})">
+      <div class="item-row">
+        <div class="item-title">CHOCOLATE GELATO</div>
+        <div class="price">$5</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+    <!-- BEVERAGES TAB -->
+<div class="tab-panel" data-panel="beverages" style="display:none">
+<div class="grid">
+    
+<!-- FRESHLY BREWED COFFEE -->
+<div class="section-title">Freshly Brewed Coffee</div>
+
+<div class="item-card" onclick="openItem({name:'ESPRESSO',price:5})"><div class="item-row"><div class="item-title">ESPRESSO</div><div class="price">$5</div></div></div>
+<div class="item-card" onclick="openItem({name:'AMERICANO',price:5.5})"><div class="item-row"><div class="item-title">AMERICANO</div><div class="price">$5.5</div></div></div>
+<div class="item-card" onclick="openItem({name:'LATTE',price:6.5})"><div class="item-row"><div class="item-title">LATTE</div><div class="price">$6.5</div></div></div>
+<div class="item-card" onclick="openItem({name:'CAPPUCCINO',price:6.5})"><div class="item-row"><div class="item-title">CAPPUCCINO</div><div class="price">$6.5</div></div></div>
+<div class="item-card" onclick="openItem({name:'BUTTERSCOTCH LATTE',price:7})"><div class="item-row"><div class="item-title">BUTTERSCOTCH LATTE</div><div class="price">$7</div></div></div>
+<div class="item-card" onclick="openItem({name:'CARAMEL LATTE',price:7})"><div class="item-row"><div class="item-title">CARAMEL LATTE</div><div class="price">$7</div></div></div>
+<div class="item-card" onclick="openItem({name:'MOCHA LATTE',price:7})"><div class="item-row"><div class="item-title">MOCHA LATTE</div><div class="price">$7</div></div></div>
+<div class="item-card" onclick="openItem({name:'HAZELNUT LATTE',price:7})"><div class="item-row"><div class="item-title">HAZELNUT LATTE</div><div class="price">$7</div></div></div>
+<div class="item-card" onclick="openItem({name:'DIRTY MATCHA LATTE',price:8})"><div class="item-row"><div class="item-title">DIRTY MATCHA LATTE</div><div class="price">$8</div></div></div>
+<div class="item-card" onclick="openItem({name:'MATCHA LATTE',price:7.5})"><div class="item-row"><div class="item-title">MATCHA LATTE</div><div class="price">$7.5</div></div></div>
+<div class="item-card" onclick="openItem({name:'CHAI LATTE',price:7})"><div class="item-row"><div class="item-title">CHAI LATTE</div><div class="price">$7</div></div></div>
+<div class="item-card" onclick="openItem({name:'PREMIUM CHOCOLATE',price:7})"><div class="item-row"><div class="item-title">PREMIUM CHOCOLATE</div><div class="price">$7</div></div></div>
+<div class="item-card" onclick="openItem({name:'VANILLA AFFOGATO',price:10})"><div class="item-row"><div class="item-title">VANILLA AFFOGATO</div><div class="price">$10</div></div></div>
+
+<!-- INFUSED ICE BREWED TEAS -->
+<div class="section-title">Infused Ice Brewed Teas</div>
+
+<div class="item-card" onclick="openItem({name:'ICE BLACK TEA',price:5})"><div class="item-row"><div class="item-title">ICE BLACK TEA</div><div class="price">$5</div></div></div>
+<div class="item-card" onclick="openItem({name:'ICE LYCHEE TEA',price:6})"><div class="item-row"><div class="item-title">ICE LYCHEE TEA</div><div class="price">$6</div></div></div>
+<div class="item-card" onclick="openItem({name:'ICE STRAWBERRY TEA',price:6})"><div class="item-row"><div class="item-title">ICE STRAWBERRY TEA</div><div class="price">$6</div></div></div>
+<div class="item-card" onclick="openItem({name:'ICE BLUEBERRY TEA',price:6})"><div class="item-row"><div class="item-title">ICE BLUEBERRY TEA</div><div class="price">$6</div></div></div>
+<div class="item-card" onclick="openItem({name:'ICE MANGO TEA',price:6})"><div class="item-row"><div class="item-title">ICE MANGO TEA</div><div class="price">$6</div></div></div>
+<div class="item-card" onclick="openItem({name:'ICE LEMON TEA',price:6})"><div class="item-row"><div class="item-title">ICE LEMON TEA</div><div class="price">$6</div></div></div>
+<div class="item-card" onclick="openItem({name:'ICE PASSIONFRUIT TEA',price:6})"><div class="item-row"><div class="item-title">ICE PASSIONFRUIT TEA</div><div class="price">$6</div></div></div>
+<div class="item-card" onclick="openItem({name:'ICE PEACH TEA',price:6})"><div class="item-row"><div class="item-title">ICE PEACH TEA</div><div class="price">$6</div></div></div>
+<div class="item-card" onclick="openItem({name:'ICE APPLE CINNAMON SPICE TEA',price:7})"><div class="item-row"><div class="item-title">ICE APPLE CINNAMON SPICE TEA</div><div class="price">$7</div></div></div>
+
+<!-- JUICES -->
+<div class="section-title">Juices</div>
+
+<div class="item-card" onclick="openItem({name:'APPLE JUICE',price:7})"><div class="item-row"><div class="item-title">APPLE JUICE</div><div class="price">$7</div></div></div>
+<div class="item-card" onclick="openItem({name:'LIME JUICE',price:7})"><div class="item-row"><div class="item-title">LIME JUICE</div><div class="price">$7</div></div></div>
+<div class="item-card" onclick="openItem({name:'PINEAPPLE JUICE',price:7})"><div class="item-row"><div class="item-title">PINEAPPLE JUICE</div><div class="price">$7</div></div></div>
+<div class="item-card" onclick="openItem({name:'MANGO JUICE',price:7})"><div class="item-row"><div class="item-title">MANGO JUICE</div><div class="price">$7</div></div></div>
+<div class="item-card" onclick="openItem({name:'ORANGE JUICE',price:7})"><div class="item-row"><div class="item-title">ORANGE JUICE</div><div class="price">$7</div></div></div>
+
+<!-- SOFT DRINKS & WATER -->
+<div class="section-title">Soft Drinks & Water</div>
+
+<div class="item-card" onclick="openItem({name:'COKE',price:6})"><div class="item-row"><div class="item-title">COKE</div><div class="price">$6</div></div></div>
+<div class="item-card" onclick="openItem({name:'COKE ZERO',price:6})"><div class="item-row"><div class="item-title">COKE ZERO</div><div class="price">$6</div></div></div>
+<div class="item-card" onclick="openItem({name:'SPRITE',price:6})"><div class="item-row"><div class="item-title">SPRITE</div><div class="price">$6</div></div></div>
+<div class="item-card" onclick="openItem({name:'TONIC WATER',price:6})"><div class="item-row"><div class="item-title">TONIC WATER</div><div class="price">$6</div></div></div>
+<div class="item-card" onclick="openItem({name:'SODA WATER',price:6})"><div class="item-row"><div class="item-title">SODA WATER</div><div class="price">$6</div></div></div>
+<div class="item-card" onclick="openItem({name:'ACQUA SAN FELICE MINERAL WATER',price:5})"><div class="item-row"><div class="item-title">ACQUA SAN FELICE MINERAL WATER</div><div class="price">$5</div></div></div>
+<div class="item-card" onclick="openItem({name:'ACQUA SAN FELICE SPARKLING WATER',price:5})"><div class="item-row"><div class="item-title">ACQUA SAN FELICE SPARKLING WATER</div><div class="price">$5</div></div></div>
+
+  </div>
+</div>
+
+</div>
+
+</div><!-- /.container -->
+
+<!-- Modal -->
+<div id="modalBg" class="modal-bg" aria-hidden="true" onclick="closeModalAnimated()">
+  <div class="modal-card" role="dialog" aria-modal="true" onclick="event.stopPropagation()">
+
+    <div class="modal-title">
+      <div>
+        <div id="modalNamePrice" class="modal-name"></div>
+        <div id="modalPrice" class="modal-price"></div>
+      </div>
+      <button class="modal-close-btn" onclick="closeModalAnimated()">✕</button>
+    </div>
+
+    <div id="modalDesc" class="modal-desc"></div>
+
+    <!-- OPTIONS -->
+    <div id="modalOptions" class="modal-options" style="display:none;"></div>
+
+    <!-- special request -->
+    <div class="option-block">
+      <div style="font-weight:700;color:#ddd;margin-bottom:8px">Special Request (Optional)</div>
+      <textarea id="specialRequestInput"></textarea>
+    </div>
+
+    <!-- quantity -->
+    <div class="qty-row">
+      <button class="qty-btn" onclick="qtyChange(-1)">−</button>
+      <div class="qty-val" id="qtyValue">1</div>
+      <button class="qty-btn" onclick="qtyChange(1)">+</button>
+    </div>
+
+    <div class="add-row">
+      <button id="modalAddBtn" class="btn-pill">Add to Cart</button>
+      <button class="cancel-btn" onclick="closeModalAnimated()">Cancel</button>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- pagination -->
+<div class="footer-pages" role="navigation" aria-label="Pages">
+  <a class="page-num" href="sharing_plates.html">1</a>
+  <a class="page-num" href="mains_sides.html">2</a>
+  <a class="page-num" href="pastas.html">3</a>
+  <a class="page-num" href="hot_stone_pizzas.html">4</a>
+  <a class="page-num current" href="desserts_beverages.html">5</a>
+  <a class="page-num" href="page6.html">6</a>
+  <a class="page-num" href="page7.html">7</a>
+</div>
+
+<!-- premium cart bottom-right -->
+<div id="cartWrap" aria-hidden="false">
+  <div id="cartBtn" title="View cart" role="button" aria-label="View cart">
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <defs>
+        <linearGradient id="goldGradient" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#f7e7a0"/>
+          <stop offset="45%" stop-color="#d4af37"/>
+          <stop offset="100%" stop-color="#9f7c1c"/>
+        </linearGradient>
+      </defs>
+      <g stroke="none" fill="none">
+        <path d="M3 4h2l1.5 7h9L21 6H7z"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.4"
+              stroke-linejoin="round"/>
+        <circle cx="9" cy="18.2" r="1.6"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.4"/>
+        <circle cx="17" cy="18.2" r="1.6"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.4"/>
+      </g>
+    </svg>
+
+    <!-- CART BADGE -->
+    <div id="cartBadge" aria-live="polite"></div>
+  </div>
+</div>
+
+</body>
+
+<script>
+let cart = JSON.parse(localStorage.getItem("cart") || "[]");
+
+/* TAB SWITCH */
+function openTab(tabName){
+  document.querySelectorAll('.tab-row > .tab').forEach(t=>{
+    t.classList.remove('active');
+  });
+
+  document.querySelector(`.tab[data-tab="${tabName}"]`).classList.add('active');
+
+  document.querySelectorAll('.tab-panel').forEach(p=>{
+    p.style.display = 'none';
+  });
+
+  document.querySelector(`.tab-panel[data-panel="${tabName}"]`).style.display = 'block';
+}
+
+/* MODAL */
+let currentItem = null;
+
+function openItem(item){
+  currentItem = {
+    id: Date.now(),
+    name: item.name,
+    rawPrice: item.price,
+    price: typeof item.price === 'number'
+      ? item.price
+      : Number(String(item.price).split('/')[0].replace('$','').trim()),
+    desc: item.desc || ''
+  };
+
+  renderOptions(item.name);
+
+  document.getElementById('modalNamePrice').textContent = item.name;
+  document.getElementById('modalPrice').textContent =
+    typeof item.price === 'number' ? `$${item.price}` : item.price;
+
+  document.getElementById('modalDesc').textContent = item.desc || '';
+  document.getElementById('qtyValue').textContent = 1;
+  document.getElementById('specialRequestInput').value = '';
+
+  const bg = document.getElementById('modalBg');
+  bg.style.display = 'flex';
+  bg.setAttribute('aria-hidden', 'false');
+  setTimeout(() => bg.classList.add('show'), 10);
+}
+
+let selectedOptions = {};
+
+function renderOptions(itemName){
+  const wrap = document.getElementById('modalOptions');
+  wrap.innerHTML = '';
+  selectedOptions = {};
+
+  const config = itemOptions[itemName];
+  if(!config){
+    wrap.style.display = 'none';
+    return;
+  }
+
+  wrap.style.display = 'block';
+
+  /* SIZE (Desserts) */
+  if(config.size){
+    renderRadioGroup("Size", config.size, "size");
+  }
+
+  /* ADDONS (Molten Cake) */
+  if(config.addon){
+    renderRadioGroup("Addon", config.addon, "addon");
+  }
+
+  /* COFFEE */
+  if(config === "coffee"){
+    renderRadioGroup("Temperature", [
+      {label:"Hot", price:0},
+      {label:"Ice", price:1}
+    ], "option");
+
+    renderRadioGroup("Extras", [
+      {label:"None", price:0},
+      {label:"Extra Shot", price:1},
+      {label:"Oat Milk", price:1.5}
+    ], "addon");
+  }
+
+  function renderRadioGroup(title, options, key){
+    const group = document.createElement('div');
+    group.className = 'option-group';
+    group.innerHTML = `<div class="option-title">${title}</div>`;
+
+    options.forEach((opt, i)=>{
+      const label = document.createElement('label');
+      label.className = 'option-radio';
+
+      const input = document.createElement('input');
+      input.type = 'radio';
+      input.name = key;
+      input.checked = i === 0;
+
+      selectedOptions[key] = options[0];
+
+      input.onchange = () => selectedOptions[key] = opt;
+
+      const text = document.createElement('span');
+      text.textContent = opt.label;
+
+      const price = document.createElement('span');
+      price.className = 'addon-price';
+      price.textContent = opt.price ? `+$${opt.price}` : '';
+
+      label.append(input, text, price);
+      group.appendChild(label);
+    });
+
+    wrap.appendChild(group);
+  }
+}
+
+
+const itemOptions = {
+  "TIRAMISU KUEH PIE TEE": {
+    size: [
+      { label:"3 pcs", price:9 },
+      { label:"5 pcs", price:15 }
+    ]
+  },
+  "TIRAMISU YUZU KUEH PIE TEE": {
+    size: [
+      { label:"3 pcs", price:9 },
+      { label:"5 pcs", price:15 }
+    ]
+  },
+  "MOLTEN CHOCOLATE LAVA CAKE": {
+    addon: [
+      { label:"With Chocolate Gelato", price:0 },
+      { label:"With Vanilla Gelato", price:0 }
+    ]
+  },
+
+  /* ☕ COFFEE */
+  "ESPRESSO": "coffee",
+  "AMERICANO": "coffee",
+  "LATTE": "coffee",
+  "CAPPUCCINO": "coffee",
+  "BUTTERSCOTCH LATTE": "coffee",
+  "CARAMEL LATTE": "coffee",
+  "MOCHA LATTE": "coffee",
+  "HAZELNUT LATTE": "coffee",
+  "DIRTY MATCHA LATTE": "coffee",
+  "MATCHA LATTE": "coffee",
+  "CHAI LATTE": "coffee",
+  "PREMIUM CHOCOLATE": "coffee"
+};
+
+function closeModalAnimated(){
+  const bg = document.getElementById('modalBg');
+  if(!bg) return;
+
+  bg.classList.remove('show');
+
+  // wait for fade animation before hiding
+  setTimeout(() => {
+    bg.style.display = 'none';
+    bg.setAttribute('aria-hidden', 'true');
+  }, 200);
+}
+
+/* Qty */
+function qtyChange(dir){
+  let q = Number(document.getElementById('qtyValue').textContent);
+  q += dir;
+  if(q < 1) q = 1;
+  document.getElementById('qtyValue').textContent = q;
+}
+
+/* CART ADD */
+function pushToCart(itemObj){
+  let match = cart.find(i =>
+    i.id === itemObj.id &&
+    i.option === itemObj.option &&
+    i.spicy === itemObj.spicy &&
+    i.fries === itemObj.fries &&
+    i.request === itemObj.request
+  );
+
+  if(match) match.qty += itemObj.qty;
+  else cart.push(itemObj);
+
+  saveCart();
+}
+
+/* modalAddBtn CLICK HANDLER */
+document.getElementById('modalAddBtn').onclick = function(e){
+  e.preventDefault();
+
+  const qty = Number(document.getElementById('qtyValue').textContent);
+  const request = document.getElementById('specialRequestInput').value.trim();
+
+  let basePrice = currentItem.price;
+  let optionText = [];
+  let addons = [];
+
+  /* SIZE */
+  if(selectedOptions.size){
+    basePrice = selectedOptions.size.price;
+    optionText.push(selectedOptions.size.label);
+  }
+
+  /* OPTION (Hot / Ice) */
+  if(selectedOptions.option){
+    optionText.push(selectedOptions.option.label);
+    basePrice += selectedOptions.option.price || 0;
+  }
+
+  /* ADDONS */
+  if(selectedOptions.addon){
+    if(selectedOptions.addon.label !== "None"){
+      addons.push({
+        name: selectedOptions.addon.label,
+        price: selectedOptions.addon.price || 0
+      });
+      basePrice += selectedOptions.addon.price || 0;
+    }
+  }
+
+  const cartItem = {
+    id: currentItem.id,
+    name: currentItem.name,
+    unitPrice: basePrice,
+    qty: qty,
+    option: optionText.join(" / "),
+    addons: addons,
+    request: request
+  };
+
+    cart.push(cartItem);
+  localStorage.setItem("cart", JSON.stringify(cart));
+  updateCartBadge();
+
+  /* ANIMATION */
+  this.classList.add('btn-animate');
+  bubbleToCart();
+  document.getElementById('cartBtn').classList.add('cart-animate');
+
+  setTimeout(() => {
+    this.classList.remove('btn-animate');
+    document.getElementById('cartBtn').classList.remove('cart-animate');
+    closeModalAnimated();
+  }, 220);
+};
+  
+function bubbleToCart(){
+  const modal = document.querySelector('.modal-card');
+  const cartBtn = document.getElementById('cartBtn');
+  if(!modal || !cartBtn) return;
+
+  const m = modal.getBoundingClientRect();
+  const c = cartBtn.getBoundingClientRect();
+
+  const bubble = document.createElement('div');
+  bubble.className = 'cart-bubble';
+
+  bubble.style.top = (m.top + m.height / 2 - 11) + 'px';
+  bubble.style.left = (m.left + m.width / 2 - 11) + 'px';
+
+  document.body.appendChild(bubble);
+
+  bubble.animate([
+  {
+    transform: 'scale(1)',
+    opacity: 0.85
+  },
+  {
+    top: (c.top + c.height / 2 - 11) + 'px',
+    left: (c.left + c.width / 2 - 11) + 'px',
+    transform: 'scale(0.6)',
+    opacity: 0.9
+  }
+],{
+  duration: 600,
+  easing: 'cubic-bezier(.22,.61,.36,1)',
+  fill: 'forwards'
+});
+
+  setTimeout(() => bubble.remove(), 700);
+}
+
+function updateCartBadge(){
+  const badge = document.getElementById('cartBadge');
+  if(!badge) return;
+
+  const totalQty = cart.reduce((sum, item) => {
+    return sum + (item.qty || 1);
+  }, 0);
+
+  if(totalQty > 0){
+    badge.textContent = totalQty;
+    badge.style.display = 'flex';
+
+    /* pulse animation */
+    badge.classList.remove('cart-animate');
+    void badge.offsetWidth; // restart animation
+    badge.classList.add('cart-animate');
+  } else {
+    badge.textContent = '';
+    badge.style.display = 'none';
+  }
+}
+
+/* OPEN CART PAGE */
+document.getElementById('cartBtn').onclick = function(){
+  window.location.href = "cart.html";
+};
+
+updateCartBadge();
+
+</script>
+</html>
