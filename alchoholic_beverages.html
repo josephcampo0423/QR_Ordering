@@ -674,6 +674,17 @@ function saveCart(){
   updateCartBadge();
 }
 
+function closeModal(){
+  const bg = document.getElementById('modalBg');
+  bg.classList.remove('show');
+  bg.style.display = 'none';
+  qty = 1;
+  document.getElementById('qtyVal').textContent = 1;
+
+  // reset size selection
+  document.querySelectorAll('#sizeOptions input').forEach(i => i.checked = false);
+}
+
 function updateCartBadge(){
   const badge = document.getElementById('cartBadge');
   let totalQty = cart.reduce((sum,item)=>sum+item.qty,0);
@@ -705,7 +716,7 @@ function openTab(tab){
 }
 
 function openItem(name, priceText, desc, glassPrice = null, bottlePrice = null){
-  currentItem = { name, glassPrice, bottlePrice };
+  currentItem = {name,glassPrice,bottlePrice,priceText};
 
   document.getElementById('modalName').textContent = name.toUpperCase();
   document.getElementById('modalDesc').innerHTML = desc.replace(/\n/g,'<br>');
@@ -717,7 +728,7 @@ function openItem(name, priceText, desc, glassPrice = null, bottlePrice = null){
     sizeWrap.style.display = 'block';
     document.getElementById('glassPrice').textContent = `$${glassPrice}`;
     document.getElementById('bottlePrice').textContent = `$${bottlePrice}`;
-    document.getElementById('modalPrice').textContent = `Glass $${glassPrice} / Bottle $${bottlePrice}`;
+    document.getElementById('modalPrice').textContent = `$${glassPrice} / $${bottlePrice}`;
   }else{
     // Premium
     sizeWrap.style.display = 'none';
@@ -737,6 +748,9 @@ function changeQty(delta){
 
 function addToCart(){
   let price = 0;
+  if(!currentItem.glassPrice && currentItem.priceText){
+    price = Number(currentItem.priceText.replace('$',''));
+  }
   let sizeLabel = '';
 
   if(currentItem.glassPrice && currentItem.bottlePrice){
