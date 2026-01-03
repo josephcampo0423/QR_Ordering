@@ -5,8 +5,8 @@
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>Mingle Bistro — Alcoholic Beverages</title>
 
+<!-- ===== SAME CSS AS PASTAS.HTML (UNCHANGED) ===== -->
 <style>
-/* ===== SAME STYLE AS PASTAS (UNCHANGED) ===== */
 :root{
   --gold:#D4AF37;
   --bg:#0f0f0f;
@@ -18,56 +18,96 @@
   --option-border: rgba(255,255,255,0.04);
 }
 *{box-sizing:border-box}
-html,body{height:100%;margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif}
-a{color:inherit;text-decoration:none}
+html,body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif}
+a{text-decoration:none;color:inherit}
 
-/* header */
-.top-header{padding:20px 16px 10px;border-bottom:1px solid rgba(255,255,255,0.03);text-align:center}
-.restaurant-name{font-size:26px;font-weight:900;color:var(--gold)}
+.top-header{
+  padding:20px 16px 10px;
+  border-bottom:1px solid rgba(255,255,255,0.03);
+  text-align:center;
+}
+.restaurant-name{
+  font-size:26px;
+  font-weight:900;
+  color:var(--gold);
+}
 
-/* layout */
 .container{padding:12px 12px 140px}
-.tab-row{display:flex;gap:8px;overflow:auto;padding:12px 6px;justify-content:center}
-.tab{padding:10px 14px;border-radius:999px;border:1px solid rgba(255,255,255,0.03);color:var(--gold);background:transparent;font-weight:700;cursor:pointer}
+
+.tab-row{
+  display:flex;
+  gap:8px;
+  justify-content:center;
+  padding:12px 6px;
+  overflow:auto;
+}
+.tab{
+  padding:10px 14px;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,0.03);
+  color:var(--gold);
+  background:transparent;
+  cursor:pointer;
+  font-weight:700;
+}
 .tab.active{background:rgba(212,175,55,0.08)}
-.section-title{color:var(--gold);font-weight:800;margin:6px;font-size:16px;border-left:4px solid var(--gold);padding-left:10px}
+
+.section-title{
+  color:var(--gold);
+  font-weight:800;
+  margin:6px 6px 12px;
+  font-size:16px;
+  border-left:4px solid var(--gold);
+  padding-left:10px;
+}
+
 .grid{display:grid;grid-template-columns:1fr;gap:12px}
 @media(min-width:900px){.grid{grid-template-columns:repeat(2,1fr)}}
 
-.item-card{background:var(--card);padding:14px;border-radius:12px;border:1px solid rgba(255,255,255,0.02);cursor:pointer}
+.item-card{
+  background:var(--card);
+  padding:14px;
+  border-radius:12px;
+  border:1px solid rgba(255,255,255,0.02);
+  cursor:pointer;
+}
 .item-row{display:flex;justify-content:space-between;gap:12px}
 .item-title{font-weight:900;font-size:15px}
 .item-desc{color:var(--muted);font-size:13px;margin-top:6px}
 .price{font-weight:800;font-size:14px;text-align:right}
 
-/* modal, options, cart — IDENTICAL */
-.modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.62);backdrop-filter:blur(6px);align-items:center;justify-content:center;z-index:120000}
-.modal-card{width:clamp(340px,92vw,560px);max-height:86vh;background:#0f0f0f;border-radius:16px;padding:18px;border:1px solid var(--glass-border);overflow:auto}
-.modal-title{display:flex;justify-content:space-between}
-.modal-name{font-weight:900;color:var(--gold);font-size:20px}
-.modal-price{font-weight:800;margin-top:6px}
-.modal-desc{color:var(--muted);margin-top:12px}
-.modal-close-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--gold);background:transparent;color:var(--gold)}
+.modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.62);backdrop-filter:blur(6px);align-items:center;justify-content:center;z-index:120000}
+.modal-card{
+  width:clamp(340px,92vw,560px);
+  background:#0f0f0f;
+  border-radius:16px;
+  padding:18px;
+  border:1px solid var(--glass-border);
+}
+.modal-name{font-size:20px;font-weight:900;color:var(--gold)}
+.modal-price{margin-top:6px;font-weight:800}
+.modal-desc{margin-top:12px;color:var(--muted)}
+.modal-close-btn{
+  width:36px;height:36px;border-radius:50%;
+  border:1px solid var(--gold);
+  background:transparent;color:var(--gold);
+  cursor:pointer;
+}
 
-.option-card{display:flex;justify-content:space-between;gap:8px;padding:10px;border-radius:12px;border:1px solid var(--option-border);cursor:pointer}
-.option-card input{margin:0}
-.label-text{font-weight:700}
-.price-addon{font-weight:800;color:var(--gold)}
-
-.qty-row{display:flex;align-items:center;gap:12px;margin-top:12px}
-.qty-btn{width:38px;height:38px;border-radius:10px;border:1px solid rgba(255,255,255,0.06);background:transparent;color:#fff;font-size:18px}
-.qty-val{font-weight:800}
-
-.btn-pill{width:100%;padding:12px;border-radius:999px;border:1px solid var(--gold);background:transparent;color:var(--gold);font-weight:800}
-.cancel-btn{margin-top:12px;width:70%;padding:12px;border-radius:12px;border:1px solid rgba(255,255,255,0.06);background:rgba(255,255,255,0.03)}
-
-.footer-pages{position:fixed;bottom:0;left:0;right:0;padding:10px;display:flex;justify-content:center;gap:8px;background:#070707}
-.page-num{padding:8px 12px;border-radius:8px;border:1px solid rgba(255,255,255,0.03)}
+.footer-pages{
+  position:fixed;left:0;right:0;bottom:0;
+  padding:10px;
+  background:#070707;
+  display:flex;
+  justify-content:center;
+  gap:8px;
+}
+.page-num{
+  padding:8px 12px;
+  border-radius:8px;
+  background:rgba(255,255,255,0.03);
+}
 .page-num.current{background:var(--gold);color:#000}
-
-#cartWrap{position:fixed;bottom:96px;right:18px}
-#cartBtn{width:56px;height:56px;border-radius:50%;border:1px solid rgba(212,175,55,.28);display:flex;align-items:center;justify-content:center;color:var(--gold)}
-#cartBadge{position:absolute;top:-4px;right:-4px;background:var(--gold);color:#000;font-size:12px;font-weight:900;padding:2px 6px;border-radius:999px}
 </style>
 </head>
 
@@ -79,149 +119,188 @@ a{color:inherit;text-decoration:none}
 
 <div class="container">
 
+<!-- TABS -->
 <div class="tab-row">
-  <button class="tab active" data-tab="white" onclick="openTab('white')">White Wine</button>
-  <button class="tab" data-tab="red" onclick="openTab('red')">Red Wine</button>
-  <button class="tab" data-tab="moscato" onclick="openTab('moscato')">Moscato</button>
-  <button class="tab" data-tab="champagne" onclick="openTab('champagne')">Champagne</button>
+  <button class="tab active" onclick="openTab('white')">White Wine</button>
+  <button class="tab" onclick="openTab('red')">Red Wine</button>
+  <button class="tab" onclick="openTab('moscato')">Moscato</button>
+  <button class="tab" onclick="openTab('champagne')">Champagne</button>
 </div>
 
 <!-- WHITE WINE -->
 <div class="tab-panel" data-panel="white" style="display:block">
-<div class="section-title">House & Premium White Wines</div>
-<div class="grid">
+  <div class="section-title">White Wine</div>
+  <div class="grid">
 
-<div class="item-card" onclick="openItem({
-id:'santa_chard',
-name:'SANTA HELENA CHARDONNAY 2023',
-desc:'Tropical aromas of peach and pineapple with subtle hints of banana and vanilla. Refreshing and fruity on the palate, balanced acidity with a gentle sensation of sweetness. Country: Chile. Varietal: Chardonnay. Body: Light.',
-basePrices:{glass:10.9,bottle:60}
-})">
-<div class="item-row">
-<div>
-<div class="item-title">SANTA HELENA CHARDONNAY ’23</div>
-<div class="item-desc">Peach, pineapple, banana, vanilla • Chile</div>
-</div>
-<div class="price">$10.90 / $60</div>
-</div>
-</div>
+    <div class="item-card" onclick="openItem(
+      'Santa Helena Chardonnay 23',
+      'Glass $10.90 / Bottle $60',
+      'Tropical aroma of peach & pineapple, hints of banana and vanilla. Country: Chile · Body: Light'
+    )">
+      <div class="item-row">
+        <div>
+          <div class="item-title">Santa Helena Chardonnay ’23</div>
+          <div class="item-desc">Chile · Chardonnay · Light</div>
+        </div>
+        <div class="price">$10.90 / $60</div>
+      </div>
+    </div>
 
-<div class="item-card" onclick="openItem({
-id:'oyster_sb',
-name:'OYSTER BAY MARLBOROUGH SAUVIGNON BLANC 2022',
-desc:'Pear, citrus and lemon curd flavours that are generous and balanced, complemented by touches of matcha and lime zest on a light, refreshing frame. Country: New Zealand. Varietal: Sauvignon Blanc. Body: Medium.',
-basePrices:{glass:13.9,bottle:78}
-})">
-<div class="item-row">
-<div>
-<div class="item-title">OYSTER BAY SAUVIGNON BLANC ’22</div>
-<div class="item-desc">Pear, citrus, lime zest • New Zealand</div>
-</div>
-<div class="price">$13.90 / $78</div>
-</div>
-</div>
+    <div class="item-card" onclick="openItem(
+      'Piccini Pinot Grigio 23',
+      'Glass $11.90 / Bottle $66',
+      'Flowery bouquet with apple & peach. Crisp acidity. Country: Italy · Body: Medium'
+    )">
+      <div class="item-row">
+        <div>
+          <div class="item-title">Piccini Pinot Grigio ’23</div>
+          <div class="item-desc">Italy · Pinot Grigio · Medium</div>
+        </div>
+        <div class="price">$11.90 / $66</div>
+      </div>
+    </div>
 
-</div>
+    <div class="item-card" onclick="openItem(
+      'Oyster Bay Sauvignon Blanc 22',
+      'Glass $13.90 / Bottle $78',
+      'Pear, citrus & lemon curd. Country: New Zealand · Body: Medium'
+    )">
+      <div class="item-row">
+        <div>
+          <div class="item-title">Oyster Bay Sauvignon Blanc ’22</div>
+          <div class="item-desc">New Zealand · Sauvignon Blanc · Medium</div>
+        </div>
+        <div class="price">$13.90 / $78</div>
+      </div>
+    </div>
+
+  </div>
 </div>
 
 <!-- RED WINE -->
 <div class="tab-panel" data-panel="red" style="display:none">
-<div class="section-title">House & Premium Red Wines</div>
-<div class="grid">
+  <div class="section-title">Red Wine</div>
+  <div class="grid">
 
-<div class="item-card" onclick="openItem({
-id:'santa_cab',
-name:'SANTA HELENA CABERNET SAUVIGNON 2023',
-desc:'Very intense Cabernet Sauvignon with berries, cherry and black currant notes, blended harmoniously with soft vanilla and chocolate undertones. Good acidity enhances the fruit expression. Country: Chile. Varietal: 85% Cabernet Sauvignon, 15% Syrah. Body: Medium.',
-basePrices:{glass:10.9,bottle:60}
-})">
-<div class="item-row">
-<div>
-<div class="item-title">SANTA HELENA CABERNET ’23</div>
-<div class="item-desc">Blackcurrant, cherry, vanilla • Chile</div>
-</div>
-<div class="price">$10.90 / $60</div>
-</div>
-</div>
+    <div class="item-card" onclick="openItem(
+      'Santa Helena Cabernet Sauvignon 23',
+      'Glass $10.90 / Bottle $60',
+      'Berries, cherry & blackcurrant. Country: Chile · Body: Medium'
+    )">
+      <div class="item-row">
+        <div>
+          <div class="item-title">Santa Helena Cabernet Sauvignon ’23</div>
+          <div class="item-desc">Chile · Cabernet Sauvignon · Medium</div>
+        </div>
+        <div class="price">$10.90 / $60</div>
+      </div>
+    </div>
 
-<div class="item-card" onclick="openItem({
-id:'lake_shiraz',
-name:'LAKE BREEZE BULLANT SHIRAZ 2021',
-desc:'A ripe, full-bodied Shiraz matured for 15 months in oak, displaying aromas of plums and chocolate with an earthy complexity. Country: Australia. Varietal: Shiraz. Body: Full.',
-basePrices:{bottle:114}
-})">
-<div class="item-row">
-<div>
-<div class="item-title">LAKE BREEZE BULLANT SHIRAZ ’21</div>
-<div class="item-desc">Plum, chocolate, oak • Australia</div>
-</div>
-<div class="price">$114</div>
-</div>
-</div>
+    <div class="item-card" onclick="openItem(
+      'Piccini Chianti DOCG 22',
+      'Glass $11.90 / Bottle $66',
+      'Mature red fruit, smooth & structured. Country: Italy · Body: Medium'
+    )">
+      <div class="item-row">
+        <div>
+          <div class="item-title">Piccini Chianti DOCG ’22</div>
+          <div class="item-desc">Italy · Sangiovese · Medium</div>
+        </div>
+        <div class="price">$11.90 / $66</div>
+      </div>
+    </div>
 
-</div>
+    <div class="item-card" onclick="openItem(
+      'Oyster Bay Merlot 22',
+      'Glass $13.90 / Bottle $78',
+      'Cherry, plum & spice. Country: New Zealand · Body: Medium'
+    )">
+      <div class="item-row">
+        <div>
+          <div class="item-title">Oyster Bay Merlot ’22</div>
+          <div class="item-desc">New Zealand · Merlot · Medium</div>
+        </div>
+        <div class="price">$13.90 / $78</div>
+      </div>
+    </div>
+
+  </div>
 </div>
 
 <!-- MOSCATO -->
 <div class="tab-panel" data-panel="moscato" style="display:none">
-<div class="section-title">Moscato</div>
-<div class="grid">
-<div class="item-card">
-<div class="item-row">
-<div>
-<div class="item-title">Coming Soon</div>
-<div class="item-desc">Light, aromatic Moscato selections will be available soon.</div>
-</div>
-<div class="price">—</div>
-</div>
-</div>
-</div>
+  <div class="section-title">Moscato</div>
+  <div class="grid">
+    <div class="item-card">
+      <div class="item-row">
+        <div>
+          <div class="item-title">Coming Soon</div>
+          <div class="item-desc">Light & sweet selections arriving soon</div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
 <!-- CHAMPAGNE -->
 <div class="tab-panel" data-panel="champagne" style="display:none">
-<div class="section-title">Champagne</div>
-<div class="grid">
-<div class="item-card">
-<div class="item-row">
-<div>
-<div class="item-title">Coming Soon</div>
-<div class="item-desc">Premium Champagne and sparkling selections coming soon.</div>
-</div>
-<div class="price">—</div>
-</div>
-</div>
-</div>
+  <div class="section-title">Champagne</div>
+  <div class="grid">
+    <div class="item-card">
+      <div class="item-row">
+        <div>
+          <div class="item-title">Coming Soon</div>
+          <div class="item-desc">Premium sparkling wines arriving soon</div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
+</div>
+
+<!-- MODAL -->
+<div id="modalBg" class="modal-bg" onclick="closeModal()">
+  <div class="modal-card" onclick="event.stopPropagation()">
+    <div style="display:flex;justify-content:space-between">
+      <div>
+        <div id="modalName" class="modal-name"></div>
+        <div id="modalPrice" class="modal-price"></div>
+      </div>
+      <button class="modal-close-btn" onclick="closeModal()">✕</button>
+    </div>
+    <div id="modalDesc" class="modal-desc"></div>
+  </div>
 </div>
 
 <!-- PAGINATION -->
 <div class="footer-pages">
-<a class="page-num" href="sharing_plates.html">1</a>
-<a class="page-num" href="mains_sides.html">2</a>
-<a class="page-num" href="pastas.html">3</a>
-<a class="page-num" href="hot_stone_pizzas.html">4</a>
-<a class="page-num" href="desserts_beverages.html">5</a>
-<a class="page-num current" href="alcoholic_beverages.html">6</a>
-<a class="page-num" href="happy_hours.html">7</a>
-</div>
-
-<!-- CART -->
-<div id="cartWrap">
-<div id="cartBtn">
-🛒
-<div id="cartBadge">0</div>
-</div>
+  <a class="page-num" href="sharing_plates.html">1</a>
+  <a class="page-num" href="mains_sides.html">2</a>
+  <a class="page-num" href="pastas.html">3</a>
+  <a class="page-num" href="hot_stone_pizzas.html">4</a>
+  <a class="page-num" href="desserts_beverages.html">5</a>
+  <a class="page-num current" href="alcoholic_beverages.html">6</a>
+  <a class="page-num" href="happy_hours.html">7</a>
 </div>
 
 <script>
-let cart=JSON.parse(localStorage.getItem('cart')||'[]');
-function openTab(t){
-document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));
-document.querySelector(`.tab[data-tab="${t}"]`).classList.add('active');
-document.querySelectorAll('.tab-panel').forEach(p=>p.style.display='none');
-document.querySelector(`.tab-panel[data-panel="${t}"]`).style.display='block';
+function openTab(tab){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.tab-panel').forEach(p=>p.style.display='none');
+  event.target.classList.add('active');
+  document.querySelector(`[data-panel="${tab}"]`).style.display='block';
+}
+
+function openItem(name, price, desc){
+  document.getElementById('modalName').textContent = name;
+  document.getElementById('modalPrice').textContent = price;
+  document.getElementById('modalDesc').textContent = desc;
+  document.getElementById('modalBg').style.display = 'flex';
+}
+
+function closeModal(){
+  document.getElementById('modalBg').style.display = 'none';
 }
 </script>
 
