@@ -340,6 +340,7 @@ textarea{width:100%;height:84px;border-radius:12px;border:1px solid rgba(255,255
             Tropical aroma of peach & pineapple, hints of banana and vanilla.<br>
             <strong>Country:</strong> Chile · <strong>Body:</strong> Light
           </div>
+        </div>
         <div class="price">$10.90 / $60</div>
       </div>
     </div>
@@ -557,6 +558,16 @@ textarea{width:100%;height:84px;border-radius:12px;border:1px solid rgba(255,255
     </div>
     
     <div id="modalDesc" class="modal-desc"></div>
+    <div class="qty-row">
+      <button class="qty-btn" onclick="changeQty(-1)">−</button>
+      <div id="qtyVal" class="qty-val">1</div>
+      <button class="qty-btn" onclick="changeQty(1)">+</button>
+    </div>
+    
+    <div class="add-row">
+      <button class="btn-pill" onclick="addToCart()">ADD TO CART</button>
+      <button class="cancel-btn" onclick="closeModal()">CANCEL</button>
+    </div>
   </div>
 </div>
 
@@ -604,7 +615,42 @@ function openItem(name, priceText, desc, glassPrice = null, bottlePrice = null){
   document.getElementById('modalBg').style.display = 'flex';
   document.getElementById('modalBg').classList.add('show');
 }
+
+let qty = 1;
+
+function changeQty(delta){
+  qty = Math.max(1, qty + delta);
+  document.getElementById('qtyVal').textContent = qty;
+}
+
+function addToCart(){
+  document.getElementById('cartBtn')?.classList.add('cart-animate');
+  setTimeout(()=>{
+    document.getElementById('cartBtn')?.classList.remove('cart-animate');
+  },350);
+  closeModal();
+}
+
+function closeModal(){
+  const bg = document.getElementById('modalBg');
+  bg.classList.remove('show');
+  setTimeout(()=>{
+    bg.style.display = 'none';
+  },200);
+}
+
 </script>
+
+<!-- CART FLOATING BUTTON -->
+<div id="cartWrap">
+  <div id="cartBtn">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <circle cx="9" cy="21" r="1"></circle>
+      <circle cx="20" cy="21" r="1"></circle>
+      <path d="M1 1h4l2.6 13.4a2 2 0 0 0 2 1.6h9.8a2 2 0 0 0 2-1.6L23 6H6"></path>
+    </svg>
+  </div>
+</div>
 
 </body>
 </html>
