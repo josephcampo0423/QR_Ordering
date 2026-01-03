@@ -89,21 +89,6 @@ a{color:inherit;text-decoration:none}
 .modal-price{font-size:15px;font-weight:800;color:#fff;margin-top:6px;opacity:0.95;}
 .modal-desc{color:var(--muted);margin-top:12px;font-size:14px;white-space:normal}
 
-<div class="option-block">
-  <div class="option-cards" id="sizeOptions">
-    <label class="option-card" onclick="selectSize('Glass')">
-      <input type="radio" name="size">
-      <span class="label-text">Glass</span>
-      <span class="price-addon" id="glassPrice"></span>
-    </label>
-
-    <label class="option-card" onclick="selectSize('Bottle')">
-      <input type="radio" name="size">
-      <span class="label-text">Bottle</span>
-      <span class="price-addon" id="bottlePrice"></span>
-    </label>
-  </div>
-</div>
 
 /* fixed close button size (prevents stretching) */
 .modal-close-btn{
@@ -555,6 +540,22 @@ textarea{width:100%;height:84px;border-radius:12px;border:1px solid rgba(255,255
       </div>
       <button class="modal-close-btn" onclick="closeModal()">✕</button>
     </div>
+    <div class="option-block" id="sizeWrap" style="display:none">
+      <div class="option-cards" id="sizeOptions">
+        <label class="option-card" onclick="selectSize('Glass')">
+          <input type="radio" name="size">
+          <span class="label-text">Glass</span>
+          <span class="price-addon" id="glassPrice"></span>
+        </label>
+    
+        <label class="option-card" onclick="selectSize('Bottle')">
+          <input type="radio" name="size">
+          <span class="label-text">Bottle</span>
+          <span class="price-addon" id="bottlePrice"></span>
+        </label>
+      </div>
+    </div>
+    
     <div id="modalDesc" class="modal-desc"></div>
   </div>
 </div>
@@ -580,32 +581,28 @@ function openTab(tab){
   document.querySelector(`[data-panel="${tab}"]`).style.display='block';
 }
 
-function openItem(name, priceText, desc){
-  currentItem = { name };
+function openItem(name, priceText, desc, glassPrice = null, bottlePrice = null){
+  currentItem = { name, glassPrice, bottlePrice };
 
   document.getElementById('modalName').textContent = name.toUpperCase();
-  document.getElementById('modalPrice').textContent = priceText;
-  document.getElementById('modalDesc').textContent = desc;
+  document.getElementById('modalDesc').innerHTML = desc.replace(/\n/g,'<br>');
+
+  const sizeWrap = document.getElementById('sizeWrap');
+
+  if(glassPrice && bottlePrice){
+    // House Pour
+    sizeWrap.style.display = 'block';
+    document.getElementById('glassPrice').textContent = `$${glassPrice}`;
+    document.getElementById('bottlePrice').textContent = `$${bottlePrice}`;
+    document.getElementById('modalPrice').textContent = `Glass $${glassPrice} / Bottle $${bottlePrice}`;
+  }else{
+    // Premium
+    sizeWrap.style.display = 'none';
+    document.getElementById('modalPrice').textContent = priceText;
+  }
 
   document.getElementById('modalBg').style.display = 'flex';
   document.getElementById('modalBg').classList.add('show');
-}
-
-function selectSize(size){
-  document.querySelectorAll('#sizeOptions input').forEach(i=>i.checked=false);
-
-  if(size === 'Glass'){
-    document.querySelector('#sizeOptions input').checked = true;
-    document.getElementById('modalPrice').textContent = `$${currentItem.glassPrice} (Glass)`;
-  }else{
-    document.querySelectorAll('#sizeOptions input')[1].checked = true;
-    document.getElementById('modalPrice').textContent = `$${currentItem.bottlePrice} (Bottle)`;
-  }
-}
-
-function closeModal(){
-  document.getElementById('modalBg').style.display = 'none';
-  document.getElementById('modalBg').classList.remove('show');
 }
 </script>
 
