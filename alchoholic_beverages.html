@@ -627,6 +627,26 @@ textarea{width:100%;height:84px;border-radius:12px;border:1px solid rgba(255,255
 </div>
 
 <script>
+/* GLOBAL CART */
+let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+
+function saveCart(){
+  localStorage.setItem('cart', JSON.stringify(cart));
+  updateCartBadge();
+}
+
+function updateCartBadge(){
+  const badge = document.getElementById('cartBadge');
+  let totalQty = cart.reduce((sum,item)=>sum+item.qty,0);
+  if(totalQty > 0){
+    badge.style.display = 'block';
+    badge.textContent = totalQty;
+  } else {
+    badge.style.display = 'none';
+  }
+}
+updateCartBadge();
+
 let currentItem = {};
 
 function openTab(tab){
@@ -708,16 +728,61 @@ document.getElementById('cartBtn').onclick = function(){
   window.location.href = "cart.html";
 };
 
+function bubbleToCart(){
+  const modal = document.querySelector('.modal-card');
+  const cartBtn = document.getElementById('cartBtn');
+  if(!modal || !cartBtn) return;
+
+  const m = modal.getBoundingClientRect();
+  const c = cartBtn.getBoundingClientRect();
+
+  const bubble = document.createElement('div');
+  bubble.className = 'cart-bubble';
+
+  bubble.style.top = (m.top + m.height / 2 - 11) + 'px';
+  bubble.style.left = (m.left + m.width / 2 - 11) + 'px';
+
+  document.body.appendChild(bubble);
+
+  bubble.animate([
+  {
+    transform: 'scale(1)',
+    opacity: 0.85
+  },
+  {
+    top: (c.top + c.height / 2 - 11) + 'px',
+    left: (c.left + c.width / 2 - 11) + 'px',
+    transform: 'scale(0.6)',
+    opacity: 0.9
+  }
+],{
+  duration: 600,
+  easing: 'cubic-bezier(.22,.61,.36,1)',
+  fill: 'forwards'
+});
+
+  setTimeout(() => bubble.remove(), 700);
+
 </script>
 
-<!-- CART FLOATING BUTTON -->
-<div id="cartWrap">
-  <div id="cartBtn">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-      <circle cx="9" cy="21" r="1"></circle>
-      <circle cx="20" cy="21" r="1"></circle>
-      <path d="M1 1h4l2.6 13.4a2 2 0 0 0 2 1.6h9.8a2 2 0 0 0 2-1.6L23 6H6"></path>
+<!-- premium cart bottom-right -->
+<div id="cartWrap" aria-hidden="false">
+  <div id="cartBtn" title="View cart" role="button" aria-label="View cart">
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <defs>
+        <linearGradient id="goldGradient" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#f7e7a0"/>
+          <stop offset="45%" stop-color="#d4af37"/>
+          <stop offset="100%" stop-color="#9f7c1c"/>
+        </linearGradient>
+      </defs>
+      <g stroke="none" fill="none">
+        <path d="M3 4h2l1.5 7h9L21 6H7z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/>
+        <circle cx="9" cy="18.2" r="1.6" fill="none" stroke="currentColor" stroke-width="1.4"/>
+        <circle cx="17" cy="18.2" r="1.6" fill="none" stroke="currentColor" stroke-width="1.4"/>
+      </g>
     </svg>
+    <div id="cartBadge" aria-live="polite">0</div>
   </div>
 </div>
 
