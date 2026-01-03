@@ -677,6 +677,18 @@ function changeQty(delta){
 }
 
 function addToCart(){
+  saveCart();
+  
+  document.querySelector('.btn-pill').classList.add('btn-animate');
+  bubbleToCart();
+  document.getElementById('cartBtn').classList.add('cart-animate');
+  
+  setTimeout(()=>{
+    document.querySelector('.btn-pill').classList.remove('btn-animate');
+    document.getElementById('cartBtn').classList.remove('cart-animate');
+    closeModal();
+  },220);
+  
   document.getElementById('cartBtn')?.classList.add('cart-animate');
   setTimeout(()=>{
     document.getElementById('cartBtn')?.classList.remove('cart-animate');
@@ -691,6 +703,10 @@ function closeModal(){
     bg.style.display = 'none';
   },200);
 }
+
+document.getElementById('cartBtn').onclick = function(){
+  window.location.href = "cart.html";
+};
 
 </script>
 
