@@ -66,7 +66,7 @@ a{color:inherit;text-decoration:none}
 .item-card:active{transform:scale(.998)}
 .item-row{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
 .item-left{min-width:0}
-.item-title{font-weight:900;font-size:15px;white-space:normal;line-height:1.05}
+.item-title{text-transform: uppercase;font-weight:900;font-size:15px;white-space:normal;line-height:1.05}
 .item-desc{color:var(--muted);font-size:13px;margin-top:6px;white-space:normal}
 .price{color:#ddd;font-weight:800;font-size:14px;white-space:nowrap;min-width:84px;text-align:right;line-height:1;}
 
@@ -351,8 +351,10 @@ textarea{width:100%;height:84px;border-radius:12px;border:1px solid rgba(255,255
       <div class="item-row">
         <div>
           <div class="item-title">Santa Helena Chardonnay ’23</div>
-          <div class="item-desc">Chile · Chardonnay · Light</div>
-        </div>
+          <div class="item-desc">
+            Tropical aroma of peach & pineapple, hints of banana and vanilla.<br>
+            <strong>Country:</strong> Chile · <strong>Body:</strong> Light
+          </div>
         <div class="price">$10.90 / $60</div>
       </div>
     </div>
@@ -385,6 +387,41 @@ textarea{width:100%;height:84px;border-radius:12px;border:1px solid rgba(255,255
       </div>
     </div>
 
+  </div>
+</div>
+
+<!-- PREMIUM WHITE WINE -->
+<div class="item-card" onclick="openItem(
+  'CHÂTEAU TEYSSIER PEZAT SAUVIGNON BLANC GRAND VIN DE BORDEAUX 22',
+  '$105',
+  'Citrus fruit & white peaches with white floral notes. Crisp and refreshing finish. Country: France · Varietal: Sauvignon Blanc, Semillon, Muscadelle · Body: Light'
+)">
+  <div class="item-row">
+    <div>
+      <div class="item-title">Château Teyssier Pezat Sauvignon Blanc ’22</div>
+      <div class="item-desc">
+        Citrus fruit & white peaches with floral notes.<br>
+        France · Light-bodied
+      </div>
+    </div>
+    <div class="price">$105</div>
+  </div>
+</div>
+
+<div class="item-card" onclick="openItem(
+  'MAN FREE-RUN STEEN CHENIN BLANC 23',
+  '$99',
+  'Vibrant quince and tropical aromas. Fresh stone fruit and apple flavours. Country: South Africa · Body: Medium'
+)">
+  <div class="item-row">
+    <div>
+      <div class="item-title">Man Free-Run Steen Chenin Blanc ’23</div>
+      <div class="item-desc">
+        Quince & tropical fruit · Fresh & crisp<br>
+        South Africa · Medium-bodied
+      </div>
+    </div>
+    <div class="price">$99</div>
   </div>
 </div>
 
@@ -435,6 +472,41 @@ textarea{width:100%;height:84px;border-radius:12px;border:1px solid rgba(255,255
       </div>
     </div>
 
+  </div>
+</div>
+
+<!-- PREMIUM RED WINE -->
+<div class="item-card" onclick="openItem(
+  'CHÂTEAU TEYSSIER PEZAT BORDEAUX SUPERIEUR 2020',
+  '$105',
+  'Baked plums, raspberry preserves with hints of menthol and spice. Country: France · Body: Full'
+)">
+  <div class="item-row">
+    <div>
+      <div class="item-title">Château Teyssier Pezat Bordeaux Supérieur 2020</div>
+      <div class="item-desc">
+        Plum & raspberry preserves · Rich & bold<br>
+        France · Full-bodied
+      </div>
+    </div>
+    <div class="price">$105</div>
+  </div>
+</div>
+
+<div class="item-card" onclick="openItem(
+  'LAKE BREEZE BULLANT SHIRAZ 21',
+  '$114',
+  'Plum, chocolate and earthy complexity with oak maturation. Country: Australia · Body: Full'
+)">
+  <div class="item-row">
+    <div>
+      <div class="item-title">Lake Breeze Bullant Shiraz ’21</div>
+      <div class="item-desc">
+        Plum & chocolate · Oak-matured<br>
+        Australia · Full-bodied
+      </div>
+    </div>
+    <div class="price">$114</div>
   </div>
 </div>
 
@@ -505,16 +577,12 @@ function openTab(tab){
   document.querySelector(`[data-panel="${tab}"]`).style.display='block';
 }
 
-function openItem(name, glassPrice, bottlePrice, desc){
-  currentItem = { name, glassPrice, bottlePrice };
+function openItem(name, priceText, desc){
+  currentItem = { name };
 
-  document.getElementById('modalName').textContent = name;
+  document.getElementById('modalName').textContent = name.toUpperCase();
+  document.getElementById('modalPrice').textContent = priceText;
   document.getElementById('modalDesc').textContent = desc;
-
-  document.getElementById('glassPrice').textContent = `$${glassPrice}`;
-  document.getElementById('bottlePrice').textContent = `$${bottlePrice}`;
-
-  document.getElementById('modalPrice').textContent = `From $${glassPrice}`;
 
   document.getElementById('modalBg').style.display = 'flex';
   document.getElementById('modalBg').classList.add('show');
