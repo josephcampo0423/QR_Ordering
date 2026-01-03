@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>Mingle Bistro — Alcoholic Beverages</title>
 
+<!-- ===== SAME CSS AS PASTAS.HTML (UNCHANGED) ===== -->
 <style>
 :root{
   --gold:#D4AF37;
@@ -16,524 +17,264 @@
   --option-bg: rgba(255,255,255,0.02);
   --option-border: rgba(255,255,255,0.04);
 }
-
-/* Reset / Base */
 *{box-sizing:border-box}
-html,body{height:100%;margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;-webkit-font-smoothing:antialiased}
-a{color:inherit;text-decoration:none}
+html,body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif}
+a{text-decoration:none;color:inherit}
 
-/* Top header - centered */
 .top-header{
-  padding:20px 16px 10px 16px;
+  padding:20px 16px 10px;
   border-bottom:1px solid rgba(255,255,255,0.03);
-  background:linear-gradient(180deg, rgba(0,0,0,0.02), transparent);
   text-align:center;
 }
 .restaurant-name{
   font-size:26px;
   font-weight:900;
   color:var(--gold);
-  line-height:1;
-  letter-spacing:0.6px;
 }
 
-/* Container */
-.container{padding:12px 12px 140px 12px}
+.container{padding:12px 12px 140px}
 
-/* Tabs (centered) */
-.tab-row{display:flex;gap:8px;overflow:auto;padding:12px 6px 6px;white-space:nowrap;justify-content:center}
-.tab{padding:10px 14px;border-radius:999px;border:1px solid rgba(255,255,255,0.03);color:var(--gold);background:transparent;cursor:pointer;font-weight:700;flex:0 0 auto}
+.tab-row{
+  display:flex;
+  gap:8px;
+  justify-content:center;
+  padding:12px 6px;
+  overflow:auto;
+}
+.tab{
+  padding:10px 14px;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,0.03);
+  color:var(--gold);
+  background:transparent;
+  cursor:pointer;
+  font-weight:700;
+}
 .tab.active{background:rgba(212,175,55,0.08)}
 
-/* Section title (inside tab content) */
-.section-title{color:var(--gold);font-weight:800;margin:6px 6px 12px 6px;font-size:16px;border-left:4px solid var(--gold);padding-left:10px}
+.section-title{
+  color:var(--gold);
+  font-weight:800;
+  margin:6px 6px 12px;
+  font-size:16px;
+  border-left:4px solid var(--gold);
+  padding-left:10px;
+}
 
-/* Grid */
 .grid{display:grid;grid-template-columns:1fr;gap:12px}
-@media(min-width:900px){ .grid{grid-template-columns:repeat(2,1fr)} }
+@media(min-width:900px){.grid{grid-template-columns:repeat(2,1fr)}}
 
-/* Item Card */
 .item-card{
   background:var(--card);
   padding:14px;
   border-radius:12px;
-  box-shadow:0 8px 22px rgba(0,0,0,0.6);
-  cursor:pointer;
-  transition:transform .10s ease,box-shadow .12s ease;
   border:1px solid rgba(255,255,255,0.02);
+  cursor:pointer;
 }
-.item-card:hover{box-shadow:0 18px 36px rgba(0,0,0,0.55)}
-.item-card:active{transform:scale(.998)}
-.item-row{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
-.item-left{min-width:0}
-.item-title{font-weight:900;font-size:15px;white-space:normal;line-height:1.05}
-.item-desc{color:var(--muted);font-size:13px;margin-top:6px;white-space:normal}
-.price{color:#ddd;font-weight:800;min-width:54px;text-align:right}
+.item-row{display:flex;justify-content:space-between;gap:12px}
+.item-title{font-weight:900;font-size:15px}
+.item-desc{color:var(--muted);font-size:13px;margin-top:6px}
+.price{font-weight:800;font-size:14px;text-align:right}
 
-/* Modal backdrop & card */
-.modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.62);backdrop-filter:blur(6px);align-items:center;justify-content:center;z-index:120000;padding:18px}
+.modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.62);backdrop-filter:blur(6px);align-items:center;justify-content:center;z-index:120000}
 .modal-card{
   width:clamp(340px,92vw,560px);
-  max-height:86vh;
-  background:linear-gradient(180deg, #0f0f0f, #0c0c0c);
-  border-radius:16px;padding:18px;border:1px solid var(--glass-border);overflow:auto;
-  box-shadow:0 22px 50px rgba(0,0,0,0.7);
-  transform:translateY(6px);opacity:0;transition:transform .20s ease,opacity .20s ease;
+  background:#0f0f0f;
+  border-radius:16px;
+  padding:18px;
+  border:1px solid var(--glass-border);
 }
-.modal-bg.show .modal-card{transform:translateY(0);opacity:1}
-
-/* modal header */
-.modal-title{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
-.modal-title > div{flex:1;min-width:0}
-.modal-name{font-weight:900;color:var(--gold);font-size:18px;line-height:1.05}
-.modal-price{font-weight:800;color:#fff;font-size:14px;opacity:0.95;margin-top:6px}
-.modal-desc{color:var(--muted);margin-top:12px;font-size:14px;white-space:normal}
-
-/* fixed close button size (prevents stretching) */
+.modal-name{font-size:20px;font-weight:900;color:var(--gold)}
+.modal-price{margin-top:6px;font-weight:800}
+.modal-desc{margin-top:12px;color:var(--muted)}
 .modal-close-btn{
-  flex:0 0 auto;width:36px;height:36px;border-radius:50%;border:1px solid var(--gold);background:transparent;color:var(--gold);display:flex;align-items:center;justify-content:center;cursor:pointer;font-weight:700;font-size:15px;padding:0;
-}
-
-/* Option cards (premium) */
-.option-block{margin-top:12px}
-.option-cards{display:flex;gap:10px;flex-wrap:wrap}
-.option-card{
-  display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:12px;background:var(--option-bg);border:1px solid var(--option-border);cursor:pointer;min-width:120px;flex:0 0 auto;
-  transition:transform .12s ease,box-shadow .12s ease;
-}
-.option-card input{margin:0}
-.option-card .label-text{font-weight:700;color:#ddd;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.option-card .price-addon{font-weight:800;color:var(--gold);font-size:13px;white-space:nowrap;margin-left:6px}
-
-/* ensure very long addon text doesn't wrap and stays succinct */
-.option-card .label-text, .option-card .price-addon {max-width:180px;}
-
-/* textarea (special request) */
-textarea{width:100%;height:84px;border-radius:12px;border:1px solid rgba(255,255,255,0.06);background:rgba(0,0,0,0.35);padding:10px;color:#fff;font-size:14px;resize:none;outline:none;margin-top:8px}
-
-/* qty row */
-.qty-row{display:flex;align-items:center;gap:12px;margin-top:12px}
-.qty-btn{width:38px;height:38px;border-radius:10px;border:1px solid rgba(255,255,255,0.06);background:transparent;color:#fff;font-size:18px;display:flex;align-items:center;justify-content:center;cursor:pointer}
-.qty-val{min-width:36px;text-align:center;font-weight:800}
-
-/* Add + Cancel buttons */
-.add-row{margin-top:16px;text-align:center}
-.btn-pill{display:inline-block;width:100%;padding:12px 18px;border-radius:999px;text-align:center;background:transparent;color:var(--gold);border:1px solid var(--gold);font-weight:800;font-size:15px;cursor:pointer}
-.cancel-btn{display:block;margin:12px auto 0 auto;width:68%;padding:12px;border-radius:12px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);color:#ddd;font-weight:700;cursor:pointer}
-
-/* bottom pagination */
-.footer-pages{position:fixed;left:0;right:0;bottom:0;padding:10px;background:linear-gradient(180deg,rgba(0,0,0,0),#070707 20%);display:flex;justify-content:center;gap:8px;z-index:900}
-.page-num{padding:8px 12px;border-radius:8px;background:rgba(255,255,255,0.03);color:#ddd;border:1px solid rgba(255,255,255,0.03);font-weight:600}
-.page-num.current{background:var(--gold);color:#000;border-color:var(--gold)}
-
-/* premium cart bottom-right */
-#cartWrap{position:fixed;bottom:96px;right:18px;z-index:1000} /* raised above pagination */
-
-/* GOLD PREMIUM CART ICON */
-#cartBtn{
-  width:56px;
-  height:56px;
-  border-radius:50%;
-  background: rgba(255,255,255,0.02);
-  border:1px solid rgba(212,175,55,0.28);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
-  box-shadow:
-    0 8px 20px rgba(0,0,0,0.45),
-    inset 0 0 0 0.5px rgba(255,255,255,0.15);
-  display:flex;
-  align-items:center;
-  justify-content:center;
+  width:36px;height:36px;border-radius:50%;
+  border:1px solid var(--gold);
+  background:transparent;color:var(--gold);
   cursor:pointer;
-  transition:transform .25s ease, box-shadow .25s ease;
-
-  color: var(--gold);
 }
 
-#cartBtn:hover{
-  transform: translateY(-2px) scale(1.04);
-  box-shadow:
-    0 14px 28px rgba(0,0,0,0.55),
-    inset 0 0 0 0.5px rgba(255,255,255,0.25);
-    color:#f1d36b;
+.footer-pages{
+  position:fixed;left:0;right:0;bottom:0;
+  padding:10px;
+  background:#070707;
+  display:flex;
+  justify-content:center;
+  gap:8px;
 }
-
-#cartBtn svg{
-  width:28px;
-  height:28px;
-  opacity: 0.95;
+.page-num{
+  padding:8px 12px;
+  border-radius:8px;
+  background:rgba(255,255,255,0.03);
 }
-
-/* responsive */
-@media(max-width:420px){
-  .restaurant-name{font-size:20px}
-  #cartWrap{bottom:86px; right:14px}
-  #cartBtn{width:50px;height:50px}
-  .modal-card{width:92vw}
-  .option-card{min-width:100px}
-}
-
-/* simple modern add-to-cart feedback */
-@keyframes btnPop {
-  0% { transform: scale(1); }
-  40% { transform: scale(0.94); }
-  100% { transform: scale(1); }
-}
-
-@keyframes cartPulse {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.12); }
-  100% { transform: scale(1); }
-}
-
-.btn-animate {
-  animation: btnPop 0.25s ease;
-}
-
-.cart-animate {
-  animation: cartPulse 0.35s ease;
-}
-
-/* BUBBLE TO CART ANIMATION */
-.cart-bubble{
-  position:fixed;
-  z-index:140000;
-  width:22px;
-  height:22px;
-  border-radius:50%;
-  background: radial-gradient(circle at 30% 30%, #ffffff, #eaeaea 65%);
-  box-shadow:
-    inset 0 1px 2px rgba(255,255,255,0.9),
-    0 8px 22px rgba(0,0,0,0.55);
-  pointer-events:none;
-}
-
+.page-num.current{background:var(--gold);color:#000}
 </style>
 </head>
 
 <body>
 
-<!-- Top header (CENTERED) -->
 <div class="top-header">
   <div class="restaurant-name">MINGLE BISTRO (FUNAN)</div>
 </div>
 
-<!-- Main content -->
 <div class="container">
 
 <!-- TABS -->
 <div class="tab-row">
-  <div class="tab active" onclick="openTab('white')">White Wines</div>
-  <div class="tab" onclick="openTab('red')">Red Wines</div>
-  <div class="tab" onclick="openTab('moscato')">Moscato</div>
-  <div class="tab" onclick="openTab('champagne')">Champagne</div>
+  <button class="tab active" onclick="openTab('white')">White Wine</button>
+  <button class="tab" onclick="openTab('red')">Red Wine</button>
+  <button class="tab" onclick="openTab('moscato')">Moscato</button>
+  <button class="tab" onclick="openTab('champagne')">Champagne</button>
 </div>
 
-<!-- WHITE WINES -->
-<div class="tab-panel" id="white" style="display:block">
-<div class="section-title">House Pour White Wines</div>
-<div class="grid">
+<!-- WHITE WINE -->
+<div class="tab-panel" data-panel="white" style="display:block">
+  <div class="section-title">White Wine</div>
+  <div class="grid">
 
-<div class="item-card" onclick="openItem({
-id:'santaWhite',
-name:'SANTA HELENA CHARDONNAY ’23',
-desc:`Tropical aroma of peach and pineapple along with slight hints of banana and vanilla.
-Refreshing and fruity, with balanced acidity with a sensation of sweetness.
+    <div class="item-card" onclick="openItem(
+      'Santa Helena Chardonnay 23',
+      'Glass $10.90 / Bottle $60',
+      'Tropical aroma of peach & pineapple, hints of banana and vanilla. Country: Chile · Body: Light'
+    )">
+      <div class="item-row">
+        <div>
+          <div class="item-title">Santa Helena Chardonnay ’23</div>
+          <div class="item-desc">Chile · Chardonnay · Light</div>
+        </div>
+        <div class="price">$10.90 / $60</div>
+      </div>
+    </div>
 
-Country: Chile
-Varietal: Chardonnay
-Body: Light`,
-glass:10.9,bottle:60
-})">
-<div class="item-title">SANTA HELENA CHARDONNAY ’23</div>
-<div class="item-desc">Glass $10.90 • Bottle $60</div>
+    <div class="item-card" onclick="openItem(
+      'Piccini Pinot Grigio 23',
+      'Glass $11.90 / Bottle $66',
+      'Flowery bouquet with apple & peach. Crisp acidity. Country: Italy · Body: Medium'
+    )">
+      <div class="item-row">
+        <div>
+          <div class="item-title">Piccini Pinot Grigio ’23</div>
+          <div class="item-desc">Italy · Pinot Grigio · Medium</div>
+        </div>
+        <div class="price">$11.90 / $66</div>
+      </div>
+    </div>
+
+    <div class="item-card" onclick="openItem(
+      'Oyster Bay Sauvignon Blanc 22',
+      'Glass $13.90 / Bottle $78',
+      'Pear, citrus & lemon curd. Country: New Zealand · Body: Medium'
+    )">
+      <div class="item-row">
+        <div>
+          <div class="item-title">Oyster Bay Sauvignon Blanc ’22</div>
+          <div class="item-desc">New Zealand · Sauvignon Blanc · Medium</div>
+        </div>
+        <div class="price">$13.90 / $78</div>
+      </div>
+    </div>
+
+  </div>
 </div>
 
-<div class="item-card" onclick="openItem({
-id:'picciniWhite',
-name:'PICCINI PINOT GRIGIO DELLE VENEZIE ’23',
-desc:`Flowery bouquet and fruit, especially apple and peach, holding a firm and fruity palate.
-Its crisp acidity balances well with the soft character.
+<!-- RED WINE -->
+<div class="tab-panel" data-panel="red" style="display:none">
+  <div class="section-title">Red Wine</div>
+  <div class="grid">
 
-Country: Italy
-Varietal: Pinot Grigio
-Body: Medium`,
-glass:11.9,bottle:66
-})">
-<div class="item-title">PICCINI PINOT GRIGIO ’23</div>
-<div class="item-desc">Glass $11.90 • Bottle $66</div>
-</div>
+    <div class="item-card" onclick="openItem(
+      'Santa Helena Cabernet Sauvignon 23',
+      'Glass $10.90 / Bottle $60',
+      'Berries, cherry & blackcurrant. Country: Chile · Body: Medium'
+    )">
+      <div class="item-row">
+        <div>
+          <div class="item-title">Santa Helena Cabernet Sauvignon ’23</div>
+          <div class="item-desc">Chile · Cabernet Sauvignon · Medium</div>
+        </div>
+        <div class="price">$10.90 / $60</div>
+      </div>
+    </div>
 
-<div class="item-card" onclick="openItem({
-id:'oysterWhite',
-name:'OYSTER BAY MARLBOROUGH SAUVIGNON BLANC ’22',
-desc:`Pear, citrus and lemon curd flavours that are generous and balanced, with touches of matcha and lime zest on a light, refreshing frame.
+    <div class="item-card" onclick="openItem(
+      'Piccini Chianti DOCG 22',
+      'Glass $11.90 / Bottle $66',
+      'Mature red fruit, smooth & structured. Country: Italy · Body: Medium'
+    )">
+      <div class="item-row">
+        <div>
+          <div class="item-title">Piccini Chianti DOCG ’22</div>
+          <div class="item-desc">Italy · Sangiovese · Medium</div>
+        </div>
+        <div class="price">$11.90 / $66</div>
+      </div>
+    </div>
 
-Country: New Zealand
-Varietal: Sauvignon Blanc
-Body: Medium`,
-glass:13.9,bottle:78
-})">
-<div class="item-title">OYSTER BAY SAUVIGNON BLANC ’22</div>
-<div class="item-desc">Glass $13.90 • Bottle $78</div>
-</div>
+    <div class="item-card" onclick="openItem(
+      'Oyster Bay Merlot 22',
+      'Glass $13.90 / Bottle $78',
+      'Cherry, plum & spice. Country: New Zealand · Body: Medium'
+    )">
+      <div class="item-row">
+        <div>
+          <div class="item-title">Oyster Bay Merlot ’22</div>
+          <div class="item-desc">New Zealand · Merlot · Medium</div>
+        </div>
+        <div class="price">$13.90 / $78</div>
+      </div>
+    </div>
 
-</div>
-
-<div class="section-title">Premium White Wines</div>
-<div class="grid">
-
-<div class="item-card" onclick="openItem({
-id:'tezWhite',
-name:'CHÂTEAU TEYSSIER PEZAT SAUVIGNON BLANC ’22',
-desc:`Citrus fruit & white peaches with a hint of white flowers.
-Crisp and fruity on the pallet with a refreshing finish.
-
-Country: France
-Varietal: 55% Sauvignon Blanc, 30% Semillon, 15% Muscadelle
-Body: Light`,
-bottle:105
-})">
-<div class="item-title">CHÂTEAU TEYSSIER PEZAT ’22</div>
-<div class="price">$105</div>
-</div>
-
-<div class="item-card" onclick="openItem({
-id:'manChenin',
-name:'MAN FREE-RUN STEEN CHENIN BLANC, COASTAL REGION ’23',
-desc:`A crisp & expressive, light-bodied wine. Light in appearance.
-Vibrant aromas of quince and tropical fruit.
-On the palate, fresh stone fruit and apple flavours.
-
-Country: South Africa
-Varietal: Chenin Blanc
-Body: Medium`,
-bottle:99
-})">
-<div class="item-title">MAN FREE-RUN STEEN CHENIN BLANC ’23</div>
-<div class="price">$99</div>
-</div>
-
-<div class="item-card" onclick="openItem({
-id:'lakeWhite',
-name:'LAKE BREEZE BULLANT CHARDONNAY ’22',
-desc:`Minimal oak influence, showing enticing tropical fruit characters
-and citrus elements on the bouquet.
-Fresh and vibrant palate with melon and pineapple flavours
-and a long dry finish.
-
-Country: Australia
-Varietal: Chardonnay
-Body: Light`,
-bottle:102
-})">
-<div class="item-title">LAKE BREEZE BULLANT CHARDONNAY ’22</div>
-<div class="price">$102</div>
-</div>
-
-</div>
-</div>
-
-<!-- RED WINES -->
-<div class="tab-panel" id="red" style="display:none">
-<div class="section-title">House Pour Red Wines</div>
-<div class="grid">
-
-<div class="item-card" onclick="openItem({
-id:'santaRed',
-name:'SANTA HELENA CABERNET SAUVIGNON ’23',
-desc:`Very intense Cabernet, with berries, cherry and black currant notes,
-perfectly blended with soft notes of vanilla and chocolate.
-With good acidity, improving the fruit taste.
-
-Country: Chile
-Varietal: 85% Cabernet Sauvignon, 15% Syrah
-Body: Medium`,
-glass:10.9,bottle:60
-})">
-<div class="item-title">SANTA HELENA CABERNET SAUVIGNON ’23</div>
-<div class="item-desc">Glass $10.90 • Bottle $60</div>
-</div>
-
-<div class="item-card" onclick="openItem({
-id:'picciniRed',
-name:'PICCINI CHIANTI DOCG ’22',
-desc:`Ruby red with an intense and persistent fragrance
-of mature red fruit.
-Well-structured and smooth on the palate.
-
-Country: Italy
-Varietal: 95% Sangiovese, 5% Ciliegiolo
-Body: Medium`,
-glass:11.9,bottle:66
-})">
-<div class="item-title">PICCINI CHIANTI DOCG ’22</div>
-<div class="item-desc">Glass $11.90 • Bottle $66</div>
-</div>
-
-<div class="item-card" onclick="openItem({
-id:'oysterMerlot',
-name:'OYSTER BAY HAWKES BAY MERLOT ’22',
-desc:`Cherry, plum and black licorice flavours
-with notes of eucalyptus.
-Smooth and appealing with spice and tobacco on the finish.
-
-Country: New Zealand
-Varietal: Merlot
-Body: Medium`,
-glass:13.9,bottle:78
-})">
-<div class="item-title">OYSTER BAY MERLOT ’22</div>
-<div class="item-desc">Glass $13.90 • Bottle $78</div>
-</div>
-
-</div>
-
-<div class="section-title">Premium Red Wines</div>
-<div class="grid">
-
-<div class="item-card" onclick="openItem({
-id:'tezRed',
-name:'CHÂTEAU TEYSSIER PEZAT BORDEAUX SUPÉRIEUR 2020',
-desc:`Baked plums and raspberry preserves with hints
-of menthol, tobacco leaf and powdered cinnamon.
-Full-bodied and jam-packed with juicy red and blackberry flavours.
-
-Country: France
-Varietal: 85% Merlot, 15% Cabernet Franc
-Body: Full`,
-bottle:105
-})">
-<div class="item-title">CHÂTEAU TEYSSIER PEZAT BORDEAUX SUPÉRIEUR 2020</div>
-<div class="price">$105</div>
-</div>
-
-<div class="item-card" onclick="openItem({
-id:'manPinotage',
-name:'MAN BOSSTOK PINOTAGE, COASTAL REGION ’20',
-desc:`Aromas of mocha chocolate and roasted coffee beans.
-Juicy flavours of red berries, nutmeg and vanilla spice.
-
-Country: South Africa
-Varietal: 87% Pinotage, 7% Cinsault, 6% Grenache
-Body: Full`,
-bottle:108
-})">
-<div class="item-title">MAN BOSSTOK PINOTAGE ’20</div>
-<div class="price">$108</div>
-</div>
-
-<div class="item-card" onclick="openItem({
-id:'lakeShiraz',
-name:'LAKE BREEZE BULLANT SHIRAZ ’21',
-desc:`Ripe and full-bodied, matured for 15 months in oak.
-Aromas of plums and chocolate with earthy complexity.
-
-Country: Australia
-Varietal: Shiraz
-Body: Full`,
-bottle:114
-})">
-<div class="item-title">LAKE BREEZE BULLANT SHIRAZ ’21</div>
-<div class="price">$114</div>
-</div>
-
-</div>
+  </div>
 </div>
 
 <!-- MOSCATO -->
-<div class="tab-panel" id="moscato" style="display:none">
-<div class="section-title">Moscato</div>
-<div class="grid">
-
-<div class="item-card" onclick="openItem({
-id:'moscato',
-name:'TENUTA CARRETTA MOSCATO D’ASTI DOCG',
-desc:`Taste: Sweet and aromatic
-Aroma: Delicate and fragrant, typical of the Moscato grape
-
-Country: Italy
-Grape Varietal: 100% Moscato Bianco
-Alcohol Content: 5.5%`,
-bottle:70
-})">
-<div class="item-title">TENUTA CARRETTA MOSCATO D’ASTI</div>
-<div class="price">$70</div>
-</div>
-
-</div>
-</div>
-
-<!-- CHAMPAGNE -->
-<div class="tab-panel" id="champagne" style="display:none">
-<div class="section-title">Champagne</div>
-<div class="grid">
-
-<div class="item-card" onclick="openItem({
-id:'champagne',
-name:'CHAMPAGNE COLLET BRUT NV',
-desc:`Notes of white flowers, citrus stone fruit such as quince, apple, pear and white peach.
-Delicate spices, cumin, anise and herbs, black tea and lime tea.
-Refined, persistent and crunchy like a thin caramel biscuit.`,
-bottle:130
-})">
-<div class="item-title">CHAMPAGNE COLLET BRUT NV</div>
-<div class="price">$130</div>
-</div>
-
-</div>
-</div>
-
-</div><!-- /.container -->
-
-<!-- Modal -->
-<div id="modalBg" class="modal-bg" aria-hidden="true">
-  <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modalNamePrice" onclick="event.stopPropagation()">
-    <div class="modal-title">
-      <div>
-        <div id="modalNamePrice" class="modal-name">Item name</div>
-        <div id="modalPrice" class="modal-price">$0</div>
+<div class="tab-panel" data-panel="moscato" style="display:none">
+  <div class="section-title">Moscato</div>
+  <div class="grid">
+    <div class="item-card">
+      <div class="item-row">
+        <div>
+          <div class="item-title">Coming Soon</div>
+          <div class="item-desc">Light & sweet selections arriving soon</div>
+        </div>
       </div>
-      <button class="modal-close-btn" onclick="closeModalAnimated()" aria-label="Close">✕</button>
-    </div>
-
-    <div id="modalDesc" class="modal-desc">Description ...</div>
-
-    <div id="wineOpt" class="option-block" style="display:none">
-      <label>
-        <input type="radio" name="wine_choice" value="glass">
-        Glass <span id="glassPrice"></span>
-      </label>
-      <label>
-        <input type="radio" name="wine_choice" value="bottle">
-        Bottle <span id="bottlePrice"></span>
-      </label>
-    </div>
-    </div>
-
-    <!-- special request -->
-    <div class="option-block">
-      <div style="font-weight:700;color:#ddd;margin-bottom:8px">Special Request (Optional)</div>
-      <textarea id="specialRequestInput" placeholder="e.g., less oil, no onion, sauce on the side"></textarea>
-    </div>
-
-    <!-- quantity -->
-    <div class="qty-row" aria-label="Quantity selector">
-      <button class="qty-btn" onclick="qtyChange(-1)" aria-label="Decrease quantity">−</button>
-      <div class="qty-val" id="qtyValue">1</div>
-      <button class="qty-btn" onclick="qtyChange(1)" aria-label="Increase quantity">+</button>
-    </div>
-
-    <div class="add-row">
-      <button id="modalAddBtn" class="btn-pill" aria-label="Add to cart">Add to Cart</button>
-      <button class="cancel-btn" onclick="closeModalAnimated()">Cancel</button>
     </div>
   </div>
 </div>
 
+<!-- CHAMPAGNE -->
+<div class="tab-panel" data-panel="champagne" style="display:none">
+  <div class="section-title">Champagne</div>
+  <div class="grid">
+    <div class="item-card">
+      <div class="item-row">
+        <div>
+          <div class="item-title">Coming Soon</div>
+          <div class="item-desc">Premium sparkling wines arriving soon</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
-<!-- pagination -->
-<div class="footer-pages" role="navigation" aria-label="Pages">
+</div>
+
+<!-- MODAL -->
+<div id="modalBg" class="modal-bg" onclick="closeModal()">
+  <div class="modal-card" onclick="event.stopPropagation()">
+    <div style="display:flex;justify-content:space-between">
+      <div>
+        <div id="modalName" class="modal-name"></div>
+        <div id="modalPrice" class="modal-price"></div>
+      </div>
+      <button class="modal-close-btn" onclick="closeModal()">✕</button>
+    </div>
+    <div id="modalDesc" class="modal-desc"></div>
+  </div>
+</div>
+
+<!-- PAGINATION -->
+<div class="footer-pages">
   <a class="page-num" href="sharing_plates.html">1</a>
   <a class="page-num" href="mains_sides.html">2</a>
   <a class="page-num" href="pastas.html">3</a>
@@ -543,229 +284,25 @@ bottle:130
   <a class="page-num" href="happy_hours.html">7</a>
 </div>
 
-<!-- premium cart bottom-right -->
-<div id="cartWrap" aria-hidden="false">
-  <div id="cartBtn" title="View cart" role="button" aria-label="View cart">
-    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-      <defs>
-        <linearGradient id="goldGradient" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stop-color="#f7e7a0"/>
-          <stop offset="45%" stop-color="#d4af37"/>
-          <stop offset="100%" stop-color="#9f7c1c"/>
-        </linearGradient>
-      </defs>
-      <g stroke="none" fill="none">
-        <path d="M3 4h2l1.5 7h9L21 6H7z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/>
-        <circle cx="9" cy="18.2" r="1.6" fill="none" stroke="currentColor" stroke-width="1.4"/>
-        <circle cx="17" cy="18.2" r="1.6" fill="none" stroke="currentColor" stroke-width="1.4"/>
-      </g>
-    </svg>
-    <div id="cartBadge" aria-live="polite">0</div>
-  </div>
-</div>
+<script>
+function openTab(tab){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.tab-panel').forEach(p=>p.style.display='none');
+  event.target.classList.add('active');
+  document.querySelector(`[data-panel="${tab}"]`).style.display='block';
+}
+
+function openItem(name, price, desc){
+  document.getElementById('modalName').textContent = name;
+  document.getElementById('modalPrice').textContent = price;
+  document.getElementById('modalDesc').textContent = desc;
+  document.getElementById('modalBg').style.display = 'flex';
+}
+
+function closeModal(){
+  document.getElementById('modalBg').style.display = 'none';
+}
+</script>
 
 </body>
-
-<script>
-/* GLOBAL CART */
-let cart = JSON.parse(localStorage.getItem('cart') || '[]');
-
-function saveCart(){
-  localStorage.setItem('cart', JSON.stringify(cart));
-  updateCartBadge();
-}
-
-function updateCartBadge(){
-  const badge = document.getElementById('cartBadge');
-  let totalQty = cart.reduce((sum,item)=>sum+item.qty,0);
-  if(totalQty > 0){
-    badge.style.display = 'block';
-    badge.textContent = totalQty;
-  } else {
-    badge.style.display = 'none';
-  }
-}
-updateCartBadge();
-
-/* TAB SWITCH */
-function openTab(id){
-document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
-event.target.classList.add('active');
-document.querySelectorAll('.tab-panel').forEach(p=>p.style.display='none');
-document.getElementById(id).style.display='block';
-}
-
-/* MODAL */
-let currentItem = null;
-
-function openItem(item){
-  currentItem = item;
-  window._currentItem = item;
-
-  document.getElementById('modalNamePrice').textContent = item.name;
-  document.getElementById('modalDesc').textContent = item.desc;
-
-  const priceEl = document.getElementById('modalPrice');
-  const wineOpt = document.getElementById('wineOpt');
-
-  /* RESET */
-  priceEl.textContent = "";
-  wineOpt.style.display = "none";
-  document.querySelectorAll('input[name="wine_choice"]').forEach(r => r.checked = false);
-
-  /* WINE LOGIC */
-  if(item.glass && item.bottle){
-    wineOpt.style.display = "block";
-    document.getElementById('glassPrice').textContent = "$" + item.glass;
-    document.getElementById('bottlePrice').textContent = "$" + item.bottle;
-    priceEl.textContent = "$" + item.glass; // default display
-  } else {
-    priceEl.textContent = "$" + item.price;
-  }
-
-  document.getElementById('specialRequestInput').value = "";
-  document.getElementById('qtyValue').textContent = 1;
-
-  const bg = document.getElementById('modalBg');
-  bg.style.display = "flex";
-  setTimeout(()=> bg.classList.add('show'), 10);
-}
-
-function closeModalAnimated(){
-  const bg = document.getElementById('modalBg');
-  bg.classList.remove('show');
-  setTimeout(()=> bg.style.display = "none", 180);
-}
-
-function closeModalInstant(){
-  const bg = document.getElementById('modalBg');
-  bg.classList.remove('show');
-  bg.style.display = "none";
-}
-
-/* Qty */
-function qtyChange(dir){
-  let q = Number(document.getElementById('qtyValue').textContent);
-  q += dir;
-  if(q < 1) q = 1;
-  document.getElementById('qtyValue').textContent = q;
-}
-
-/* CART ADD */
-function pushToCart(itemObj){
-  let match = cart.find(i =>
-    i.id === itemObj.id &&
-    i.option === itemObj.option &&
-    i.spicy === itemObj.spicy &&
-    i.fries === itemObj.fries &&
-    i.request === itemObj.request
-  );
-
-  if(match) match.qty += itemObj.qty;
-  else cart.push(itemObj);
-
-  saveCart();
-}
-
-/* assign add button click */
-document.getElementById('modalAddBtn').onclick = function (e) {
-  e.preventDefault();
-  e.stopPropagation();
-
-  if (!currentItem) return;
-
-  let finalName = currentItem.name;
-  let finalPrice = Number(currentItem.price || 0);
-  let option = "";
-  let fries = "";
-  let spicy = "";
-  let request = document.getElementById("specialRequestInput").value.trim();
-  let qty = Number(document.getElementById("qtyValue").textContent);
-
-  /* WINE OPTION (GLASS / BOTTLE) */
-if(currentItem.glass && currentItem.bottle){
-  const w = document.querySelector('input[name="wine_choice"]:checked');
-  if(!w){
-    alert("Please select Glass or Bottle");
-    return;
-  }
-
-  if(w.value === "glass"){
-    option = "Glass";
-    finalPrice = currentItem.glass;
-    finalName += " (Glass)";
-  } else {
-    option = "Bottle";
-    finalPrice = currentItem.bottle;
-    finalName += " (Bottle)";
-  }
-}
-
-  /* SAVE CART */
-  cart.push({
-    id: currentItem.id,
-    name: finalName,
-    price: finalPrice,
-    qty: qty,
-    option: option,
-    fries: fries,
-    spicy: spicy,
-    request: request
-  });
-
-  saveCart();
-
-  /* visual feedback */
-  this.classList.add('btn-animate');
-  bubbleToCart();
-  document.getElementById('cartBtn').classList.add('cart-animate');
-
-  setTimeout(() => {
-    this.classList.remove('btn-animate');
-    document.getElementById('cartBtn').classList.remove('cart-animate');
-    closeModalInstant();
-  }, 220);
-};
-  
-function bubbleToCart(){
-  const modal = document.querySelector('.modal-card');
-  const cartBtn = document.getElementById('cartBtn');
-  if(!modal || !cartBtn) return;
-
-  const m = modal.getBoundingClientRect();
-  const c = cartBtn.getBoundingClientRect();
-
-  const bubble = document.createElement('div');
-  bubble.className = 'cart-bubble';
-
-  bubble.style.top = (m.top + m.height / 2 - 11) + 'px';
-  bubble.style.left = (m.left + m.width / 2 - 11) + 'px';
-
-  document.body.appendChild(bubble);
-
-  bubble.animate([
-  {
-    transform: 'scale(1)',
-    opacity: 0.85
-  },
-  {
-    top: (c.top + c.height / 2 - 11) + 'px',
-    left: (c.left + c.width / 2 - 11) + 'px',
-    transform: 'scale(0.6)',
-    opacity: 0.9
-  }
-],{
-  duration: 600,
-  easing: 'cubic-bezier(.22,.61,.36,1)',
-  fill: 'forwards'
-});
-
-  setTimeout(() => bubble.remove(), 700);
-}
-
-/* OPEN CART PAGE */
-document.getElementById('cartBtn').onclick = function(){
-  window.location.href = "cart.html";
-};
-</script>
 </html>
