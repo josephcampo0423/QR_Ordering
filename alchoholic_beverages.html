@@ -85,7 +85,7 @@ a{color:inherit;text-decoration:none}
 /* modal header */
 .modal-title{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
 .modal-title > div{flex:1;min-width:0}
-.modal-name{font-weight:900;color:var(--gold);font-size:20px;line-height:1.15;}
+.modal-name{font-weight:900;color:var(--gold);font-size:20px;line-height:1.25;}
 .modal-price{font-size:15px;font-weight:800;color:#fff;margin-top:6px;opacity:0.95;}
 .modal-desc{color:var(--muted);margin-top:12px;font-size:14px;white-space:normal}
 
@@ -643,13 +643,13 @@ textarea{width:100%;height:84px;border-radius:12px;border:1px solid rgba(255,255
     <div class="option-block" id="sizeWrap" style="display:none">
       <div class="option-cards" id="sizeOptions">
         <label class="option-card" onclick="selectSize('Glass')">
-          <input type="radio" name="size">
+          <input type="radio" name="size" id="sizeGlass">
           <span class="label-text">Glass</span>
           <span class="price-addon" id="glassPrice"></span>
         </label>
-    
+        
         <label class="option-card" onclick="selectSize('Bottle')">
-          <input type="radio" name="size">
+          <input type="radio" name="size" id="sizeBottle">
           <span class="label-text">Bottle</span>
           <span class="price-addon" id="bottlePrice"></span>
         </label>
@@ -765,6 +765,7 @@ function openItem(name, priceText, desc, glassPrice = null, bottlePrice = null){
     document.getElementById('glassPrice').textContent = `$${glassPrice}`;
     document.getElementById('bottlePrice').textContent = `$${bottlePrice}`;
     document.getElementById('modalPrice').textContent = `$${glassPrice} / $${bottlePrice}`;
+    document.getElementById('sizeGlass').checked = true;
   }else{
     // Premium
     sizeWrap.style.display = 'none';
