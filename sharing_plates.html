@@ -68,7 +68,14 @@ a{color:inherit;text-decoration:none}
 .item-left{min-width:0}
 .item-title{font-weight:900;font-size:15px;white-space:normal;line-height:1.05}
 .item-desc{color:var(--muted);font-size:13px;margin-top:6px;white-space:normal}
-.price{color:#ddd;font-weight:800;min-width:54px;text-align:right}
+.price{
+  color:var(--muted);
+  font-weight:700;
+  font-size:13px;             
+  min-width:54px;
+  text-align:right;
+  line-height:1.2;
+}
 
 /* Modal backdrop & card */
 .modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.62);backdrop-filter:blur(6px);align-items:center;justify-content:center;z-index:120000;padding:18px}
@@ -88,6 +95,44 @@ a{color:inherit;text-decoration:none}
 .modal-name{font-weight:900;color:var(--gold);font-size:18px;line-height:1.05}
 .modal-price{font-weight:800;color:#fff;font-size:14px;opacity:0.95;margin-top:6px}
 .modal-desc{color:var(--muted);margin-top:12px;font-size:14px;white-space:normal}
+/* PROMO BANNER (Premium) */
+.promo-banner{
+  margin-top:14px;
+  padding:14px 16px;
+  border-radius:14px;
+  background:
+    linear-gradient(180deg, rgba(212,175,55,0.08), rgba(0,0,0,0.6));
+  border:1px solid rgba(212,175,55,0.35);
+  display:flex;
+  align-items:center;
+  gap:14px;
+  box-shadow:
+    inset 0 0 0 0.5px rgba(255,255,255,0.12),
+    0 10px 28px rgba(0,0,0,0.6);
+}
+
+.promo-badge{
+  background:var(--gold);
+  color:#000;
+  font-weight:900;
+  font-size:11px;
+  padding:6px 10px;
+  border-radius:999px;
+  letter-spacing:0.6px;
+  flex-shrink:0;
+}
+
+.promo-text{
+  font-size:13px;
+  color:#f0e6c2;
+  line-height:1.35;
+}
+
+.promo-text span{
+  color:var(--muted);
+  font-size:12px;
+}
+
 
 /* fixed close button size (prevents stretching) */
 .modal-close-btn{
@@ -476,6 +521,14 @@ textarea{width:100%;height:84px;border-radius:12px;border:1px solid rgba(255,255
     </div>
 
     <div id="modalDesc" class="modal-desc">Description ...</div>
+    <!-- PROMOTION BANNER -->
+    <div id="promoBanner" class="promo-banner" style="display:none">
+      <div class="promo-badge">PROMO</div>
+      <div class="promo-text">
+        <strong>$12 ONLY</strong> with any beverage order<br>
+        <span>1 drink = 1 promo redemption</span>
+      </div>
+    </div>
 
     <!-- prosciutto option (premium cards) -->
     <div id="prosciuttoOption" class="option-block" style="display:none">
@@ -621,6 +674,17 @@ function openItem(item){
   document.getElementById('modalNamePrice').textContent = item.name;
   document.getElementById('modalPrice').textContent = "$" + item.price;
   document.getElementById('modalDesc').textContent = item.desc;
+  
+  /* PROMO ELIGIBILITY */
+  const promoIds = ['salmon', 'octopus', 'oysters'];
+  const promoBanner = document.getElementById('promoBanner');
+  
+  if (promoIds.includes(item.id)) {
+    promoBanner.style.display = 'flex';
+  } else {
+    promoBanner.style.display = 'none';
+  }
+
 
   /* Show/hide options */
   document.getElementById('prosciuttoOption').style.display = item.prosciutto ? 'block' : 'none';
