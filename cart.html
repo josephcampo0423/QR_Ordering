@@ -295,7 +295,19 @@ body{
 </div>
 
 <script>
-function getCart(){ return JSON.parse(localStorage.getItem("cart") || "[]"); }
+function getCart(){
+  try{
+    const raw = localStorage.getItem("cart");
+    if(!raw) return [];
+    const parsed = JSON.parse(raw);
+    return Array.isArray(parsed) ? parsed : [];
+  }catch(e){
+    console.warn("Cart corrupted, resetting.", e);
+    localStorage.removeItem("cart");
+    return [];
+  }
+}
+
 function saveCart(c){ localStorage.setItem("cart", JSON.stringify(c)); }
 
 /* ================= PROMOTION ENGINE (CART PAGE) ================= */
