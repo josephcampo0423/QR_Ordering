@@ -129,7 +129,7 @@ a{color:inherit;text-decoration:none}
 }
 
 .option-radio input{
-  accent-color: var(--gold);
+  accent-color: #2f80ed;
 }
 
 .option-radio span{
@@ -143,6 +143,17 @@ a{color:inherit;text-decoration:none}
   font-size:13px;
   font-weight:800;
   color:var(--gold);
+}
+
+/* single-row radio options (martini & house pour) */
+.option-group.inline .option-radio{
+  flex: 1 1 auto;
+  margin-bottom: 0;
+}
+
+.option-group.inline{
+  display: flex;
+  gap: 10px;
 }
 
 /* ensure very long addon text doesn't wrap and stays succinct */
@@ -738,61 +749,54 @@ function renderOptions(itemName){
 
   wrap.style.display = 'block';
 
-  /* SIZE (Desserts) */
-  if(config.size){
-    renderRadioGroup("Size", config.size, "size");
-  }
 
-  /* ADDONS (Molten Cake) */
-  if(config.addon){
-    renderRadioGroup("Addon", config.addon, "addon");
-  }
+function renderRadioGroup(title, options, key){
+  const group = document.createElement('div');
 
-  /* COFFEE */
-  if(config === "coffee"){
-    renderRadioGroup("Temperature", [
-      {label:"Hot", price:0},
-      {label:"Ice", price:1}
-    ], "option");
+  // 👇 force inline layout ONLY for martini & house pour
+  const inlineItems = [
+    "CLASSIC MARTINI",
+    "VODKA",
+    "GIN",
+    "WHISKY",
+    "TEQUILA",
+    "BRANDY",
+    "BOURBON"
+  ];
 
-    renderRadioGroup("Extras", [
-      {label:"None", price:0},
-      {label:"Extra Shot", price:1},
-      {label:"Oat Milk", price:1.5}
-    ], "addon");
-  }
-
-  function renderRadioGroup(title, options, key){
-    const group = document.createElement('div');
+  if(inlineItems.includes(currentItem.name)){
+    group.className = 'option-group inline';
+  } else {
     group.className = 'option-group';
-    group.innerHTML = `<div class="option-title">${title}</div>`;
-
-    options.forEach((opt, i)=>{
-      const label = document.createElement('label');
-      label.className = 'option-radio';
-
-      const input = document.createElement('input');
-      input.type = 'radio';
-      input.name = key;
-      input.checked = i === 0;
-
-      selectedOptions[key] = options[0];
-
-      input.onchange = () => selectedOptions[key] = opt;
-
-      const text = document.createElement('span');
-      text.textContent = opt.label;
-
-      const price = document.createElement('span');
-      price.className = 'addon-price';
-      price.textContent = opt.price ? `+$${opt.price}` : '';
-
-      label.append(input, text, price);
-      group.appendChild(label);
-    });
-
-    wrap.appendChild(group);
   }
+
+  group.innerHTML = `<div class="option-title">${title}</div>`;
+
+  options.forEach((opt, i)=>{
+    const label = document.createElement('label');
+    label.className = 'option-radio';
+
+    const input = document.createElement('input');
+    input.type = 'radio';
+    input.name = key;
+    input.checked = i === 0;
+
+    selectedOptions[key] = options[0];
+    input.onchange = () => selectedOptions[key] = opt;
+
+    const text = document.createElement('span');
+    text.textContent = opt.label;
+
+    const price = document.createElement('span');
+    price.className = 'addon-price';
+    price.textContent = opt.price ? `+$${opt.price}` : '';
+
+    label.append(input, text, price);
+    group.appendChild(label);
+  });
+
+  wrap.appendChild(group);
+}
 }
 
 
