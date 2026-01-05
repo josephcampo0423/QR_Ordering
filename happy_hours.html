@@ -728,6 +728,9 @@ function renderOptions(itemName){
   selectedOptions = {};
 
   const config = itemOptions[itemName];
+  if(config && config.choice){
+    renderRadioGroup("Choose One", config.choice, "choice");
+  }
   if(!config){
     wrap.style.display = 'none';
     return;
@@ -794,38 +797,65 @@ function renderOptions(itemName){
 
 
 const itemOptions = {
-  "TIRAMISU KUEH PIE TEE": {
-    size: [
-      { label:"3 pcs", price:9 },
-      { label:"5 pcs", price:15 }
-    ]
-  },
-  "TIRAMISU YUZU KUEH PIE TEE": {
-    size: [
-      { label:"3 pcs", price:9 },
-      { label:"5 pcs", price:15 }
-    ]
-  },
-  "MOLTEN CHOCOLATE LAVA CAKE": {
-    addon: [
-      { label:"With Chocolate Gelato", price:0 },
-      { label:"With Vanilla Gelato", price:0 }
+
+  /* CLASSIC MARTINI */
+  "CLASSIC MARTINI": {
+    choice: [
+      { label: "Gin", price: 0 },
+      { label: "Vodka", price: 0 }
     ]
   },
 
-  /* ☕ COFFEE */
-  "ESPRESSO": "coffee",
-  "AMERICANO": "coffee",
-  "LATTE": "coffee",
-  "CAPPUCCINO": "coffee",
-  "BUTTERSCOTCH LATTE": "coffee",
-  "CARAMEL LATTE": "coffee",
-  "MOCHA LATTE": "coffee",
-  "HAZELNUT LATTE": "coffee",
-  "DIRTY MATCHA LATTE": "coffee",
-  "MATCHA LATTE": "coffee",
-  "CHAI LATTE": "coffee",
-  "PREMIUM CHOCOLATE": "coffee"
+  /* ASSORTED VIRGIN MOJITO */
+  "ASSORTED VIRGIN MOJITO": {
+    choice: [
+      { label: "Classic", price: 0 },
+      { label: "Mango", price: 0 },
+      { label: "Strawberry", price: 0 },
+      { label: "Blueberry", price: 0 },
+      { label: "Peach", price: 0 },
+      { label: "Yuzu", price: 0 },
+      { label: "Fresh Lime", price: 0 }
+    ]
+  },
+
+  /* HOUSE POUR LIQUOR */
+  "VODKA": {
+    choice: [
+      { label: "Neat", price: 0 },
+      { label: "On the Rocks", price: 0 }
+    ]
+  },
+  "GIN": {
+    choice: [
+      { label: "Neat", price: 0 },
+      { label: "On the Rocks", price: 0 }
+    ]
+  },
+  "WHISKY": {
+    choice: [
+      { label: "Neat", price: 0 },
+      { label: "On the Rocks", price: 0 }
+    ]
+  },
+  "TEQUILA": {
+    choice: [
+      { label: "Neat", price: 0 },
+      { label: "On the Rocks", price: 0 }
+    ]
+  },
+  "BRANDY": {
+    choice: [
+      { label: "Neat", price: 0 },
+      { label: "On the Rocks", price: 0 }
+    ]
+  },
+  "BOURBON": {
+    choice: [
+      { label: "Neat", price: 0 },
+      { label: "On the Rocks", price: 0 }
+    ]
+  }
 };
 
 function closeModalAnimated(){
@@ -874,6 +904,9 @@ document.getElementById('modalAddBtn').onclick = function(e){
 
   let basePrice = currentItem.price;
   let optionText = [];
+  if(selectedOptions.choice){
+    optionText.push(selectedOptions.choice.label);
+  }
   let addons = [];
 
   /* SIZE */
