@@ -395,8 +395,8 @@ function renderCart(){
       displayName = temp + " " + displayName;
     }
     
-    const pizzaParts = (it.category === "pizza" && cleanName.includes("/"))
-      ? cleanName.split("/").map(p => p.trim())
+    const pizzaParts = (it.category === "pizza" && displayName.includes("/"))
+      ? displayName.split("/").map(p => p.trim())
       : null;
     
     name.textContent = pizzaParts ? pizzaParts[0] : displayName;    
