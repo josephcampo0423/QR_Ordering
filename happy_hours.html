@@ -774,6 +774,7 @@ function renderOptions(itemName){
 }
 
 function renderRadioGroup(title, options, key){
+  const wrap = document.getElementById('modalOptions'); // ✅ FIX
   const group = document.createElement('div');
   group.className = 'option-group';
 
@@ -782,7 +783,6 @@ function renderRadioGroup(title, options, key){
   const list = document.createElement('div');
   list.className = 'option-list';
 
-  // items that should be inline (below title)
   const inlineItems = [
     "CLASSIC MARTINI",
     "VODKA",
@@ -796,8 +796,7 @@ function renderRadioGroup(title, options, key){
   if(inlineItems.includes(currentItem.name)){
     list.classList.add('inline');
   }
-  
-  
+
   if(currentItem.name === "ASSORTED VIRGIN MOJITO"){
     list.classList.add('compact');
   }
@@ -828,8 +827,6 @@ function renderRadioGroup(title, options, key){
   group.appendChild(list);
   wrap.appendChild(group);
 }
-
-
 
 
 const itemOptions = {
