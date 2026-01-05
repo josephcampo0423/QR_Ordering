@@ -679,12 +679,12 @@ function openItem(item){
   const promoIds = ['salmon', 'octopus', 'oysters'];
   const promoBanner = document.getElementById('promoBanner');
   
-  if (promoIds.includes(item.id)) {
-    promoBanner.style.display = 'flex';
-  } else {
-    promoBanner.style.display = 'none';
-  }
-
+  const eligible = PROMO_IDS.includes(item.id);
+  const availablePromo = getAvailablePromos();
+  
+  promoBanner.style.display =
+    eligible && availablePromo > 0 ? 'flex' : 'none';
+  
 
   /* Show/hide options */
   document.getElementById('prosciuttoOption').style.display = item.prosciutto ? 'block' : 'none';
@@ -757,6 +757,29 @@ function pushToCart(itemObj){
   saveCart();
 }
 
+/* PROMO CONFIG */
+const PROMO_PRICE = 12;
+const PROMO_IDS = ['salmon', 'octopus', 'oysters'];
+
+/* beverage detection (alcohol + non-alcohol pages) */
+function isBeverage(item){
+  return item.category === 'beverage' || item.type === 'drink';
+}
+
+/* count available promo redemptions */
+function getAvailablePromos(){
+  const drinkQty = cart
+    .filter(i => isBeverage(i))
+    .reduce((sum,i)=>sum+i.qty,0);
+
+  const usedPromos = cart
+    .filter(i => i.promoApplied)
+    .reduce((sum,i)=>sum+i.qty,0);
+
+  return Math.max(drinkQty - usedPromos, 0);
+}
+
+
 /* assign add button click */
 document.getElementById('modalAddBtn').onclick = function (e) {
   e.preventDefault();
@@ -766,6 +789,17 @@ document.getElementById('modalAddBtn').onclick = function (e) {
 
   let finalName = currentItem.name;
   let finalPrice = Number(currentItem.price);
+  let promoApplied = false;
+
+  /* PROMO PRICE LOGIC (STRICT) */
+  if (PROMO_IDS.includes(currentItem.id)) {
+    const availablePromo = getAvailablePromos();
+    if (availablePromo > 0) {
+      finalPrice = PROMO_PRICE;
+      promoApplied = true;
+    }
+  }
+  
   let option = "";
   let fries = "";
   let spicy = "";
@@ -810,13 +844,14 @@ document.getElementById('modalAddBtn').onclick = function (e) {
   /* SAVE CART */
   cart.push({
     id: currentItem.id,
-    name: finalName,
+    name: finalName + (promoApplied ? ' (Drink Promo)' : ''),
     price: finalPrice,
     qty: qty,
     option: option,
     fries: fries,
     spicy: spicy,
-    request: request
+    request: request,
+    promoApplied: promoApplied
   });
 
   saveCart();
