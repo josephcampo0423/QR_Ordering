@@ -626,14 +626,26 @@ function openItem(item){
   document.getElementById('friesSelector').style.display = (item.type === 'fries') ? 'block' : 'none';
   document.getElementById('spiceOption').style.display = item.hasSpiceOption ? 'block' : 'none';
 
-  /* Reset option selections */
+    /* Reset option selections */
   document.querySelectorAll('#prosciuttoOption input, #friesSelector input, #spiceOption input')
     .forEach(el => el.checked = false);
 
-  /* preselect spicy for mussels */
-  if(item.hasSpiceOption){
-    document.querySelector('input[name="spice_choice"][value="spicy"]').checked = true;
+  /* ✅ Default: Truffle Brie → Regular */
+  if (item.prosciutto) {
+    const regularOpt = document.querySelector('input[name="truf_opt"][value="regular"]');
+    if (regularOpt) regularOpt.checked = true;
   }
+
+  /* ✅ Default: Fries → Skin-on Fries */
+  if (item.type === 'fries') {
+    const skinOn = document.querySelector('input[name="fries_choice"][value="Skin-on Fries"]');
+    if (skinOn) skinOn.checked = true;
+  }
+
+  /* preselect spicy for mussels */
+  if (item.hasSpiceOption) {
+    document.querySelector('input[name="spice_choice"][value="spicy"]').checked = true;
+  }}
 
   document.getElementById('specialRequestInput').value = "";
   document.getElementById('qtyValue').textContent = 1;
