@@ -41,23 +41,21 @@ a{color:inherit;text-decoration:none}
 .container{padding:12px 12px 140px 12px}
 
 /* Tabs (centered) */
-.tab-row{display:flex;gap:8px;overflow:auto;padding:12px 6px 6px;white-space:nowrap;justify-content:center}
-.tab{padding:10px 14px;border-radius:999px;border:1px solid rgba(255,255,255,0.03);color:var(--gold);background:transparent;cursor:pointer;font-weight:700;flex:0 0 auto}
-.tab.active{background:rgba(212,175,55,0.08)}
-
-.tabs{
+.tab-row{
+  display:flex;
+  gap:8px;
+  overflow-x:auto;
+  padding:12px 6px 6px;
+  white-space:nowrap;
   justify-content:flex-start;
   scroll-behavior:smooth;
 }
 
-.tabs::-webkit-scrollbar{
+.tab-row::-webkit-scrollbar{
   display:none;
 }
-
-.tabs{
-  overflow-x:auto;
-  white-space:nowrap;
-}
+.tab{padding:10px 14px;border-radius:999px;border:1px solid rgba(255,255,255,0.03);color:var(--gold);background:transparent;cursor:pointer;font-weight:700;flex:0 0 auto}
+.tab.active{background:rgba(212,175,55,0.08)}
 
 
 /* Section title (inside tab content) */
@@ -111,6 +109,10 @@ a{color:inherit;text-decoration:none}
 
 .option-group{
   margin-top:14px;
+}
+
+#modalOptions{
+  margin-bottom:20px;
 }
 
 .option-title{
@@ -217,12 +219,6 @@ a{color:inherit;text-decoration:none}
   resize:none;
   box-sizing:border-box;
 }
-
-/* ensure very long addon text doesn't wrap and stays succinct */
-.option-card .label-text, .option-card .price-addon {max-width:180px;}
-
-/* textarea (special request) */
-textarea{width:100%;height:84px;border-radius:12px;border:1px solid rgba(255,255,255,0.06);background:rgba(0,0,0,0.35);padding:10px;color:#fff;font-size:14px;resize:none;outline:none;margin-top:8px}
 
 /* qty row */
 .qty-row{display:flex;align-items:center;gap:12px;margin-top:12px}
@@ -678,7 +674,7 @@ textarea{width:100%;height:84px;border-radius:12px;border:1px solid rgba(255,255
     <div id="modalOptions" class="modal-options" style="display:none;"></div>
 
     <!-- special request -->
-    <div class="option-block">
+    <div class="special-request">
       <div style="font-weight:700;color:#ddd;margin-bottom:8px">Special Request (Optional)</div>
       <textarea id="specialRequestInput"></textarea>
     </div>
@@ -956,8 +952,6 @@ function pushToCart(itemObj){
   let match = cart.find(i =>
     i.id === itemObj.id &&
     i.option === itemObj.option &&
-    i.spicy === itemObj.spicy &&
-    i.fries === itemObj.fries &&
     i.request === itemObj.request
   );
 
