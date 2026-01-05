@@ -297,11 +297,63 @@ body{
 <script>
 function getCart(){ return JSON.parse(localStorage.getItem("cart") || "[]"); }
 function saveCart(c){ localStorage.setItem("cart", JSON.stringify(c)); }
+
+/* ================= PROMOTION ENGINE (CART PAGE) ================= */
+
+const PROMO_PRICE = 12;
+const PROMO_IDS = ['salmon', 'octopus', 'oysters'];
+
+/* Detect beverage items */
+function isBeverageItem(it){
+  return it.type === 'drink' || it.category === 'beverage';
+}
+
+/* Normalize ID from item name */
+function getItemId(it){
+  return (it.id || it.name || "")
+    .toLowerCase();
+}
+
+/* Apply promo pricing strictly */
+function applyPromotions(cart){
+  let drinkCount = 0;
+
+  cart.forEach(it=>{
+    if(isBeverageItem(it)) drinkCount += it.qty;
+  });
+
+  let promoAvailable = drinkCount;
+
+  cart.forEach(it=>{
+    const id = getItemId(it);
+    const eligible = PROMO_IDS.some(p => id.includes(p));
+
+    /* store original price once */
+    if(it.basePrice == null){
+      it.basePrice = Number(it.unitPrice ?? it.price);
+    }
+
+    if(eligible && promoAvailable > 0){
+      it.unitPrice = PROMO_PRICE;
+      it.promoApplied = true;
+      promoAvailable--;
+    } else {
+      it.unitPrice = it.basePrice;
+      it.promoApplied = false;
+    }
+  });
+
+  return cart;
+}
+
+
 function clearCart(){ saveCart([]); renderCart(); }
 
 /* Render Cart */
 function renderCart(){
-  const cart = getCart();
+  let cart = getCart();
+  cart = applyPromotions(cart);
+  saveCart(cart);
   const wrap = document.getElementById("cartList");
   const summary = document.getElementById("summaryBox");
   const actions = document.getElementById("actionButtons");
