@@ -617,6 +617,7 @@ let currentItem = null;
 function openItem(item){
   currentItem = item;
   window._currentItem = item;
+
   document.getElementById('modalNamePrice').textContent = item.name;
   document.getElementById('modalPrice').textContent = "$" + item.price;
   document.getElementById('modalDesc').textContent = item.desc;
@@ -626,26 +627,26 @@ function openItem(item){
   document.getElementById('friesSelector').style.display = (item.type === 'fries') ? 'block' : 'none';
   document.getElementById('spiceOption').style.display = item.hasSpiceOption ? 'block' : 'none';
 
-    /* Reset option selections */
+  /* Reset option selections */
   document.querySelectorAll('#prosciuttoOption input, #friesSelector input, #spiceOption input')
     .forEach(el => el.checked = false);
 
-  /* ✅ Default: Truffle Brie → Regular */
+  /* Default: Truffle Brie → Regular */
   if (item.prosciutto) {
     const regularOpt = document.querySelector('input[name="truf_opt"][value="regular"]');
     if (regularOpt) regularOpt.checked = true;
   }
 
-  /* ✅ Default: Fries → Skin-on Fries */
+  /* Default: Fries → Skin-on Fries */
   if (item.type === 'fries') {
     const skinOn = document.querySelector('input[name="fries_choice"][value="Skin-on Fries"]');
     if (skinOn) skinOn.checked = true;
   }
 
-  /* preselect spicy for mussels */
+  /* Default: Mussels → Spicy */
   if (item.hasSpiceOption) {
     document.querySelector('input[name="spice_choice"][value="spicy"]').checked = true;
-  }}
+  }
 
   document.getElementById('specialRequestInput').value = "";
   document.getElementById('qtyValue').textContent = 1;
@@ -653,7 +654,7 @@ function openItem(item){
   /* Show modal */
   const bg = document.getElementById('modalBg');
   bg.style.display = "flex";
-  setTimeout(()=> bg.classList.add('show'), 10);
+  setTimeout(() => bg.classList.add('show'), 10);
 }
 
 function closeModalAnimated(){
