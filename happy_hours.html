@@ -94,17 +94,6 @@ a{color:inherit;text-decoration:none}
   flex:0 0 auto;width:36px;height:36px;border-radius:50%;border:1px solid var(--gold);background:transparent;color:var(--gold);display:flex;align-items:center;justify-content:center;cursor:pointer;font-weight:700;font-size:15px;padding:0;
 }
 
-/* Option cards (premium) */
-.option-block{margin-top:12px}
-.option-cards{display:flex;gap:10px;flex-wrap:wrap}
-.option-card{
-  display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:12px;background:var(--option-bg);border:1px solid var(--option-border);cursor:pointer;min-width:120px;flex:0 0 auto;
-  transition:transform .12s ease,box-shadow .12s ease;
-}
-.option-card input{margin:0}
-.option-card .label-text{font-weight:700;color:#ddd;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.option-card .price-addon{font-weight:800;color:var(--gold);font-size:13px;white-space:nowrap;margin-left:6px}
-
 .option-group{
   margin-top:14px;
 }
@@ -782,7 +771,7 @@ function renderOptions(itemName){
   }
 
   wrap.style.display = 'block';
-
+}
 
 function renderRadioGroup(title, options, key){
   const group = document.createElement('div');
@@ -839,7 +828,8 @@ function renderRadioGroup(title, options, key){
   group.appendChild(list);
   wrap.appendChild(group);
 }
-}
+
+
 
 
 const itemOptions = {
@@ -953,30 +943,6 @@ document.getElementById('modalAddBtn').onclick = function(e){
   if(selectedOptions.choice){
     optionText.push(selectedOptions.choice.label);
   }
-  let addons = [];
-
-  /* SIZE */
-  if(selectedOptions.size){
-    basePrice = selectedOptions.size.price;
-    optionText.push(selectedOptions.size.label);
-  }
-
-  /* OPTION (Hot / Ice) */
-  if(selectedOptions.option){
-    optionText.push(selectedOptions.option.label);
-    basePrice += selectedOptions.option.price || 0;
-  }
-
-  /* ADDONS */
-  if(selectedOptions.addon){
-    if(selectedOptions.addon.label !== "None"){
-      addons.push({
-        name: selectedOptions.addon.label,
-        price: selectedOptions.addon.price || 0
-      });
-      basePrice += selectedOptions.addon.price || 0;
-    }
-  }
 
   const cartItem = {
     id: currentItem.id,
@@ -984,7 +950,6 @@ document.getElementById('modalAddBtn').onclick = function(e){
     unitPrice: basePrice,
     qty: qty,
     option: optionText.join(" / "),
-    addons: addons,
     request: request
   };
 
