@@ -635,8 +635,30 @@ textarea{width:100%;height:84px;border-radius:12px;border:1px solid rgba(255,255
 </body>
 
 <script>
+
+function normalizeCartItem(it){
+  return {
+    id: String(it.id || ""),
+    name: String(it.name || ""),
+    qty: Number(it.qty || 1),
+
+    unitPrice: Number(it.unitPrice ?? it.price ?? 0),
+    basePrice: Number(it.basePrice ?? it.unitPrice ?? it.price ?? 0),
+
+    category: it.category || "",
+    type: it.type || "",
+
+    option: it.option || "",
+    fries: it.fries || "",
+    spicy: it.spicy || "",
+    request: it.request || "",
+
+    promoApplied: Boolean(it.promoApplied)
+  };
+}
+
 /* GLOBAL CART */
-let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+let cart = (JSON.parse(localStorage.getItem('cart') || '[]') || []).map(normalizeCartItem);
 
 function saveCart(){
   localStorage.setItem('cart', JSON.stringify(cart));
@@ -679,7 +701,7 @@ function openItem(item){
   const promoIds = ['salmon', 'octopus', 'oysters'];
   const promoBanner = document.getElementById('promoBanner');
   
-  const eligible = PROMO_IDS.includes(item.id);
+  const eligible = promoIds.includes(item.id);
   const availablePromo = getAvailablePromos();
   
   promoBanner.style.display =
