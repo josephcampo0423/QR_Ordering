@@ -679,7 +679,7 @@ function openItem(item){
   const promoIds = ['salmon', 'octopus', 'oysters'];
   const promoBanner = document.getElementById('promoBanner');
   
-  const eligible = promoIds.includes(item.id);
+  const eligible = PROMO_IDS.includes(item.id);
   const availablePromo = getAvailablePromos();
   
   promoBanner.style.display =
