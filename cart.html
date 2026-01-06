@@ -295,6 +295,33 @@ body{
 </div>
 
 <script>
+
+function normalizeCartItem(it){
+  return {
+    id: String(it?.id || ""),
+    name: String(it?.name || ""),
+    qty: Number(it?.qty || 1),
+
+    unitPrice: Number(it?.unitPrice ?? it?.price ?? 0),
+    basePrice: Number(it?.basePrice ?? it?.unitPrice ?? it?.price ?? 0),
+
+    category: it?.category || "",
+    type: it?.type || "",
+
+    option: it?.option || "",
+    fries: it?.fries || "",
+    spicy: it?.spicy || "",
+    doneness: it?.doneness || "",
+    request: it?.request || "",
+
+    addons: Array.isArray(it?.addons) ? it.addons : [],
+    pastaType: it?.pastaType || "",
+    size: it?.size || null,
+
+    promoApplied: Boolean(it?.promoApplied)
+  };
+}
+
 function getCart(){
   try{
     const raw = localStorage.getItem("cart");
