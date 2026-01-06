@@ -308,8 +308,13 @@ function getCart(){
   }
 }
 
-function saveCart(c){ localStorage.setItem("cart", JSON.stringify(c)); }
-
+function saveCart(c){
+  try{
+    localStorage.setItem("cart", JSON.stringify(c));
+  }catch(e){
+    console.warn("Safari storage blocked, cart not persisted", e);
+  }
+}
 /* ================= PROMOTION ENGINE (CART PAGE) ================= */
 
 const PROMO_PRICE = 12;
@@ -359,13 +364,14 @@ function applyPromotions(cart){
 }
 
 
-function clearCart(){ saveCart([]); renderCart(); }
+function clearCart(){   try{ localStorage.removeItem("cart"); }catch(e){}   renderCart(); }
 
 /* Render Cart */
 function renderCart(){
   let cart = getCart();
   cart = applyPromotions(cart);
-  saveCart(cart);
+  
+  // saveCart(cart); // ❌ do NOT write during render (Safari-safe)
   const wrap = document.getElementById("cartList");
   const summary = document.getElementById("summaryBox");
   const actions = document.getElementById("actionButtons");
