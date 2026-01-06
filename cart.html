@@ -299,10 +299,12 @@ function getCart(){
   try{
     const raw = localStorage.getItem("cart");
     if(!raw) return [];
+
     const parsed = JSON.parse(raw);
-    return Array.isArray(parsed) ? parsed : [];
+    if(!Array.isArray(parsed)) return [];
+
+    return parsed.map(normalizeCartItem);
   }catch(e){
-    console.warn("Cart corrupted, resetting.", e);
     localStorage.removeItem("cart");
     return [];
   }
@@ -369,7 +371,7 @@ function clearCart(){   try{ localStorage.removeItem("cart"); }catch(e){}   rend
 /* Render Cart */
 function renderCart(){
   let cart = getCart();
-  cart = applyPromotions(cart);
+  
   
   // saveCart(cart); // ❌ do NOT write during render (Safari-safe)
   const wrap = document.getElementById("cartList");
@@ -393,7 +395,8 @@ function renderCart(){
   let subtotal = 0;
 
   cart.forEach((it, idx)=>{
-    subtotal += (it.unitPrice ?? it.price) * it.qty;
+    const price = it.promoApplied ? PROMO_PRICE : (it.unitPrice ?? it.price);
+    subtotal += price * it.qty;
 
     const row = document.createElement("div");
     row.className = "cart-item";
