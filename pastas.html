@@ -1325,76 +1325,78 @@ function openItem(item){
     }
   }
 
-  /* ---------- ADDONS ---------- */
+/* ---------- ADDONS ---------- */
 const addonOption = document.getElementById('addonOption');
 const addonWrap = document.getElementById('addonWrap');
 
 addonWrap.innerHTML = '';
-addonOption.style.display = 'block';
-
+selectedAddons = [];
 
 if(item.addons && item.addons.length){
-  item.addons.forEach(addon => {
+  addonOption.style.display = 'block';
+
+  const isSingleSelect =
+    item.id === 'bisque' ||
+    item.id === 'chickenbroth';
+
+  item.addons.forEach((addon, index) => {
     const el = document.createElement('div');
     el.className = 'addon-option';
+
     el.innerHTML = `
       <span class="addon-name">${addon.name}</span>
       <span class="addon-price">+$${addon.price}</span>
     `;
 
+    /* ---------- DEFAULT SELECTION ---------- */
+    if(
+      (!isSingleSelect && addon.name === 'Plain') ||
+      (isSingleSelect && index === 0)
+    ){
+      el.classList.add('active');
+      selectedAddons.push(addon);
+    }
+
     el.onclick = () => {
-    
-      const isSingleSelect =
-        currentItem.id === 'bisque' ||
-        currentItem.id === 'chickenbroth';
-    
-      /* Clear Plain if choosing premium */
-      if(addon.name !== 'Plain'){
-        selectedAddons = selectedAddons.filter(a => a.name !== 'Plain');
-        document.querySelectorAll('.addon-option').forEach(o=>{
-          if(o.querySelector('.addon-name')?.textContent === 'Plain'){
-            o.classList.remove('active');
-          }
-        });
-      }
-    
-      const index = selectedAddons.findIndex(a => a.name === addon.name);
-    
-      /* Toggle OFF */
-      if(index > -1){
-        selectedAddons.splice(index,1);
-        el.classList.remove('active');
-        return;
-      }
-    
-      /* SINGLE SELECT ITEMS (BISQUE & CHICKEN BROTH) */
+
+      /* SINGLE SELECT (BISQUE & CHICKEN BROTH) */
       if(isSingleSelect){
-        selectedAddons = [];
+        selectedAddons = [addon];
         document.querySelectorAll('.addon-option')
           .forEach(o => o.classList.remove('active'));
-    
-        selectedAddons.push(addon);
         el.classList.add('active');
         return;
       }
-    
-      /* MULTI SELECT ITEMS (MAX 2) */
+
+      /* MULTI SELECT (MAX 2) */
+      const idx = selectedAddons.findIndex(a => a.name === addon.name);
+
+      if(idx > -1){
+        selectedAddons.splice(idx,1);
+        el.classList.remove('active');
+        return;
+      }
+
       if(selectedAddons.length >= 2) return;
-    
+
+      /* Remove Plain if selecting premium */
+      selectedAddons = selectedAddons.filter(a => a.name !== 'Plain');
+      document.querySelectorAll('.addon-option').forEach(o=>{
+        if(o.querySelector('.addon-name').textContent === 'Plain'){
+          o.classList.remove('active');
+        }
+      });
+
       selectedAddons.push(addon);
       el.classList.add('active');
     };
 
     addonWrap.appendChild(el);
   });
+
 } else {
   addonOption.style.display = 'none';
 }
-
-  /* Default select Plain if exists */
-  const plain = [...document.querySelectorAll('.option-card input')]
-    .find(i => i.dataset.name === 'Plain');
-  if(plain) plain.checked = true;
   
     /* Show modal */
     const bg = document.getElementById('modalBg');
