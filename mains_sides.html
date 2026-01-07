@@ -521,8 +521,16 @@ function openItem(item){
   /* Show/hide options */
   document.getElementById('donenessOption').style.display = item.hasDoneness ? 'block' : 'none';
 
-  /* Reset option selections */  
+  /* Reset option selections */
   document.querySelectorAll('input[name="doneness"]').forEach(r => r.checked = false);
+  
+  /* Default doneness = Medium Rare */
+  if (item.hasDoneness) {
+    const defaultDoneness = document.querySelector(
+      'input[name="doneness"][value="Medium Rare"]'
+    );
+    if (defaultDoneness) defaultDoneness.checked = true;
+  }
 
   document.getElementById('specialRequestInput').value = "";
   document.getElementById('qtyValue').textContent = 1;
