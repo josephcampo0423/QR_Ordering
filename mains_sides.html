@@ -105,6 +105,39 @@ a{color:inherit;text-decoration:none}
 .option-card .label-text{font-weight:700;color:#ddd;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .option-card .price-addon{font-weight:800;color:var(--gold);font-size:13px;white-space:nowrap;margin-left:6px}
 
+/* DONENESS – SELECTED STATE (GOLD) */
+.option-card input[type="radio"]{
+  display:none; /* hide native radio */
+}
+
+.option-card{
+  transition:all .18s ease;
+}
+
+/* when radio is checked → highlight card */
+.option-card input[type="radio"]:checked + .label-text{
+  color:#000;
+}
+
+.option-card input[type="radio"]:checked{
+  /* no-op, but keeps selector readable */
+}
+
+.option-card:has(input[type="radio"]:checked){
+  border-color: var(--gold);
+  background: rgba(212,175,55,0.08);
+  box-shadow: 0 0 0 1px rgba(212,175,55,0.35) inset;
+}
+
+/* optional: subtle gold dot effect */
+.option-card:has(input[type="radio"]:checked)::before{
+  content:'';
+  width:12px;
+  height:12px;
+  border-radius:50%;
+  background:var(--gold);
+  box-shadow:0 0 0 2px rgba(212,175,55,.35);
+}
 
 /* ensure very long addon text doesn't wrap and stays succinct */
 .option-card .label-text, .option-card .price-addon {max-width:180px;}
